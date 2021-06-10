@@ -61,13 +61,36 @@ func NewVtolVehicleStatus() *VtolVehicleStatus {
 	return &self
 }
 
-func (t *VtolVehicleStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VtolVehicleStatus) Clone() *VtolVehicleStatus {
+	c := &VtolVehicleStatus{}
+	c.Timestamp = t.Timestamp
+	c.VtolInRwMode = t.VtolInRwMode
+	c.VtolInTransMode = t.VtolInTransMode
+	c.InTransitionToFw = t.InTransitionToFw
+	c.VtolTransitionFailsafe = t.VtolTransitionFailsafe
+	c.FwPermanentStab = t.FwPermanentStab
+	return c
+}
+
+func (t *VtolVehicleStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VtolVehicleStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.VtolInRwMode = false
+	t.VtolInTransMode = false
+	t.InTransitionToFw = false
+	t.VtolTransitionFailsafe = false
+	t.FwPermanentStab = false
+}
+
+// CloneVtolVehicleStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVtolVehicleStatusSlice(dst, src []VtolVehicleStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

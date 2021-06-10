@@ -48,13 +48,24 @@ func NewTeleportRelative_Response() *TeleportRelative_Response {
 	return &self
 }
 
-func (t *TeleportRelative_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TeleportRelative_Response) Clone() *TeleportRelative_Response {
+	c := &TeleportRelative_Response{}
+	return c
+}
+
+func (t *TeleportRelative_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TeleportRelative_Response) SetDefaults() {
-	
+}
+
+// CloneTeleportRelative_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTeleportRelative_ResponseSlice(dst, src []TeleportRelative_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

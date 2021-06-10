@@ -60,15 +60,44 @@ func NewInteractiveMarker() *InteractiveMarker {
 	return &self
 }
 
-func (t *InteractiveMarker) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InteractiveMarker) Clone() *InteractiveMarker {
+	c := &InteractiveMarker{}
+	c.Header = *t.Header.Clone()
+	c.Pose = *t.Pose.Clone()
+	c.Name = t.Name
+	c.Description = t.Description
+	c.Scale = t.Scale
+	if t.MenuEntries != nil {
+		c.MenuEntries = make([]MenuEntry, len(t.MenuEntries))
+		CloneMenuEntrySlice(c.MenuEntries, t.MenuEntries)
+	}
+	if t.Controls != nil {
+		c.Controls = make([]InteractiveMarkerControl, len(t.Controls))
+		CloneInteractiveMarkerControlSlice(c.Controls, t.Controls)
+	}
+	return c
+}
+
+func (t *InteractiveMarker) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InteractiveMarker) SetDefaults() {
 	t.Header.SetDefaults()
 	t.Pose.SetDefaults()
-	
+	t.Name = ""
+	t.Description = ""
+	t.Scale = 0
+	t.MenuEntries = nil
+	t.Controls = nil
+}
+
+// CloneInteractiveMarkerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInteractiveMarkerSlice(dst, src []InteractiveMarker) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -59,13 +59,49 @@ func NewLoadNode_Request() *LoadNode_Request {
 	return &self
 }
 
-func (t *LoadNode_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LoadNode_Request) Clone() *LoadNode_Request {
+	c := &LoadNode_Request{}
+	c.PackageName = t.PackageName
+	c.PluginName = t.PluginName
+	c.NodeName = t.NodeName
+	c.NodeNamespace = t.NodeNamespace
+	c.LogLevel = t.LogLevel
+	if t.RemapRules != nil {
+		c.RemapRules = make([]string, len(t.RemapRules))
+		copy(c.RemapRules, t.RemapRules)
+	}
+	if t.Parameters != nil {
+		c.Parameters = make([]rcl_interfaces_msg.Parameter, len(t.Parameters))
+		rcl_interfaces_msg.CloneParameterSlice(c.Parameters, t.Parameters)
+	}
+	if t.ExtraArguments != nil {
+		c.ExtraArguments = make([]rcl_interfaces_msg.Parameter, len(t.ExtraArguments))
+		rcl_interfaces_msg.CloneParameterSlice(c.ExtraArguments, t.ExtraArguments)
+	}
+	return c
+}
+
+func (t *LoadNode_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LoadNode_Request) SetDefaults() {
-	
+	t.PackageName = ""
+	t.PluginName = ""
+	t.NodeName = ""
+	t.NodeNamespace = ""
+	t.LogLevel = 0
+	t.RemapRules = nil
+	t.Parameters = nil
+	t.ExtraArguments = nil
+}
+
+// CloneLoadNode_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLoadNode_RequestSlice(dst, src []LoadNode_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

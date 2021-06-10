@@ -199,13 +199,54 @@ func NewVehicleCommand() *VehicleCommand {
 	return &self
 }
 
-func (t *VehicleCommand) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleCommand) Clone() *VehicleCommand {
+	c := &VehicleCommand{}
+	c.Timestamp = t.Timestamp
+	c.Param1 = t.Param1
+	c.Param2 = t.Param2
+	c.Param3 = t.Param3
+	c.Param4 = t.Param4
+	c.Param5 = t.Param5
+	c.Param6 = t.Param6
+	c.Param7 = t.Param7
+	c.Command = t.Command
+	c.TargetSystem = t.TargetSystem
+	c.TargetComponent = t.TargetComponent
+	c.SourceSystem = t.SourceSystem
+	c.SourceComponent = t.SourceComponent
+	c.Confirmation = t.Confirmation
+	c.FromExternal = t.FromExternal
+	return c
+}
+
+func (t *VehicleCommand) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleCommand) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Param1 = 0
+	t.Param2 = 0
+	t.Param3 = 0
+	t.Param4 = 0
+	t.Param5 = 0
+	t.Param6 = 0
+	t.Param7 = 0
+	t.Command = 0
+	t.TargetSystem = 0
+	t.TargetComponent = 0
+	t.SourceSystem = 0
+	t.SourceComponent = 0
+	t.Confirmation = 0
+	t.FromExternal = false
+}
+
+// CloneVehicleCommandSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleCommandSlice(dst, src []VehicleCommand) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

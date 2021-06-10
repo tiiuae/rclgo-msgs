@@ -58,13 +58,38 @@ func NewEkf2Timestamps() *Ekf2Timestamps {
 	return &self
 }
 
-func (t *Ekf2Timestamps) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Ekf2Timestamps) Clone() *Ekf2Timestamps {
+	c := &Ekf2Timestamps{}
+	c.Timestamp = t.Timestamp
+	c.AirspeedTimestampRel = t.AirspeedTimestampRel
+	c.DistanceSensorTimestampRel = t.DistanceSensorTimestampRel
+	c.OpticalFlowTimestampRel = t.OpticalFlowTimestampRel
+	c.VehicleAirDataTimestampRel = t.VehicleAirDataTimestampRel
+	c.VehicleMagnetometerTimestampRel = t.VehicleMagnetometerTimestampRel
+	c.VisualOdometryTimestampRel = t.VisualOdometryTimestampRel
+	return c
+}
+
+func (t *Ekf2Timestamps) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Ekf2Timestamps) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AirspeedTimestampRel = 0
+	t.DistanceSensorTimestampRel = 0
+	t.OpticalFlowTimestampRel = 0
+	t.VehicleAirDataTimestampRel = 0
+	t.VehicleMagnetometerTimestampRel = 0
+	t.VisualOdometryTimestampRel = 0
+}
+
+// CloneEkf2TimestampsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEkf2TimestampsSlice(dst, src []Ekf2Timestamps) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

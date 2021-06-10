@@ -93,13 +93,98 @@ func NewTelemetryStatus() *TelemetryStatus {
 	return &self
 }
 
-func (t *TelemetryStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TelemetryStatus) Clone() *TelemetryStatus {
+	c := &TelemetryStatus{}
+	c.Timestamp = t.Timestamp
+	c.Type = t.Type
+	c.Mode = t.Mode
+	c.FlowControl = t.FlowControl
+	c.Forwarding = t.Forwarding
+	c.MavlinkV2 = t.MavlinkV2
+	c.Ftp = t.Ftp
+	c.Streams = t.Streams
+	c.DataRate = t.DataRate
+	c.RateMultiplier = t.RateMultiplier
+	c.TxRateAvg = t.TxRateAvg
+	c.TxErrorRateAvg = t.TxErrorRateAvg
+	c.TxMessageCount = t.TxMessageCount
+	c.TxBufferOverruns = t.TxBufferOverruns
+	c.RxRateAvg = t.RxRateAvg
+	c.RxMessageCount = t.RxMessageCount
+	c.RxMessageCountSupported = t.RxMessageCountSupported
+	c.RxMessageLostCount = t.RxMessageLostCount
+	c.RxBufferOverruns = t.RxBufferOverruns
+	c.RxParseErrors = t.RxParseErrors
+	c.RxPacketDropCount = t.RxPacketDropCount
+	c.RxMessageLostRate = t.RxMessageLostRate
+	c.HeartbeatTypeAntennaTracker = t.HeartbeatTypeAntennaTracker
+	c.HeartbeatTypeGcs = t.HeartbeatTypeGcs
+	c.HeartbeatTypeOnboardController = t.HeartbeatTypeOnboardController
+	c.HeartbeatTypeGimbal = t.HeartbeatTypeGimbal
+	c.HeartbeatTypeAdsb = t.HeartbeatTypeAdsb
+	c.HeartbeatTypeCamera = t.HeartbeatTypeCamera
+	c.HeartbeatComponentTelemetryRadio = t.HeartbeatComponentTelemetryRadio
+	c.HeartbeatComponentLog = t.HeartbeatComponentLog
+	c.HeartbeatComponentOsd = t.HeartbeatComponentOsd
+	c.HeartbeatComponentObstacleAvoidance = t.HeartbeatComponentObstacleAvoidance
+	c.HeartbeatComponentVio = t.HeartbeatComponentVio
+	c.HeartbeatComponentPairingManager = t.HeartbeatComponentPairingManager
+	c.HeartbeatComponentUdpBridge = t.HeartbeatComponentUdpBridge
+	c.HeartbeatComponentUartBridge = t.HeartbeatComponentUartBridge
+	c.AvoidanceSystemHealthy = t.AvoidanceSystemHealthy
+	return c
+}
+
+func (t *TelemetryStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TelemetryStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Type = 0
+	t.Mode = 0
+	t.FlowControl = false
+	t.Forwarding = false
+	t.MavlinkV2 = false
+	t.Ftp = false
+	t.Streams = 0
+	t.DataRate = 0
+	t.RateMultiplier = 0
+	t.TxRateAvg = 0
+	t.TxErrorRateAvg = 0
+	t.TxMessageCount = 0
+	t.TxBufferOverruns = 0
+	t.RxRateAvg = 0
+	t.RxMessageCount = 0
+	t.RxMessageCountSupported = 0
+	t.RxMessageLostCount = 0
+	t.RxBufferOverruns = 0
+	t.RxParseErrors = 0
+	t.RxPacketDropCount = 0
+	t.RxMessageLostRate = 0
+	t.HeartbeatTypeAntennaTracker = false
+	t.HeartbeatTypeGcs = false
+	t.HeartbeatTypeOnboardController = false
+	t.HeartbeatTypeGimbal = false
+	t.HeartbeatTypeAdsb = false
+	t.HeartbeatTypeCamera = false
+	t.HeartbeatComponentTelemetryRadio = false
+	t.HeartbeatComponentLog = false
+	t.HeartbeatComponentOsd = false
+	t.HeartbeatComponentObstacleAvoidance = false
+	t.HeartbeatComponentVio = false
+	t.HeartbeatComponentPairingManager = false
+	t.HeartbeatComponentUdpBridge = false
+	t.HeartbeatComponentUartBridge = false
+	t.AvoidanceSystemHealthy = false
+}
+
+// CloneTelemetryStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTelemetryStatusSlice(dst, src []TelemetryStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

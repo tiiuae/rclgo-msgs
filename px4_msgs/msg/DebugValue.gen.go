@@ -51,13 +51,30 @@ func NewDebugValue() *DebugValue {
 	return &self
 }
 
-func (t *DebugValue) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DebugValue) Clone() *DebugValue {
+	c := &DebugValue{}
+	c.Timestamp = t.Timestamp
+	c.Ind = t.Ind
+	c.Value = t.Value
+	return c
+}
+
+func (t *DebugValue) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DebugValue) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Ind = 0
+	t.Value = 0
+}
+
+// CloneDebugValueSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDebugValueSlice(dst, src []DebugValue) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

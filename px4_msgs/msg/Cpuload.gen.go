@@ -51,13 +51,30 @@ func NewCpuload() *Cpuload {
 	return &self
 }
 
-func (t *Cpuload) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Cpuload) Clone() *Cpuload {
+	c := &Cpuload{}
+	c.Timestamp = t.Timestamp
+	c.Load = t.Load
+	c.RamUsage = t.RamUsage
+	return c
+}
+
+func (t *Cpuload) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Cpuload) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Load = 0
+	t.RamUsage = 0
+}
+
+// CloneCpuloadSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCpuloadSlice(dst, src []Cpuload) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -51,14 +51,26 @@ func NewListParameters_Response() *ListParameters_Response {
 	return &self
 }
 
-func (t *ListParameters_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ListParameters_Response) Clone() *ListParameters_Response {
+	c := &ListParameters_Response{}
+	c.Result = *t.Result.Clone()
+	return c
+}
+
+func (t *ListParameters_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ListParameters_Response) SetDefaults() {
 	t.Result.SetDefaults()
-	
+}
+
+// CloneListParameters_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneListParameters_ResponseSlice(dst, src []ListParameters_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

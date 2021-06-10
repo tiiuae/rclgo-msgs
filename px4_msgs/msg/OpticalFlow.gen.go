@@ -71,13 +71,58 @@ func NewOpticalFlow() *OpticalFlow {
 	return &self
 }
 
-func (t *OpticalFlow) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OpticalFlow) Clone() *OpticalFlow {
+	c := &OpticalFlow{}
+	c.Timestamp = t.Timestamp
+	c.SensorId = t.SensorId
+	c.PixelFlowXIntegral = t.PixelFlowXIntegral
+	c.PixelFlowYIntegral = t.PixelFlowYIntegral
+	c.GyroXRateIntegral = t.GyroXRateIntegral
+	c.GyroYRateIntegral = t.GyroYRateIntegral
+	c.GyroZRateIntegral = t.GyroZRateIntegral
+	c.GroundDistanceM = t.GroundDistanceM
+	c.IntegrationTimespan = t.IntegrationTimespan
+	c.TimeSinceLastSonarUpdate = t.TimeSinceLastSonarUpdate
+	c.FrameCountSinceLastReadout = t.FrameCountSinceLastReadout
+	c.GyroTemperature = t.GyroTemperature
+	c.Quality = t.Quality
+	c.MaxFlowRate = t.MaxFlowRate
+	c.MinGroundDistance = t.MinGroundDistance
+	c.MaxGroundDistance = t.MaxGroundDistance
+	c.Mode = t.Mode
+	return c
+}
+
+func (t *OpticalFlow) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OpticalFlow) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.SensorId = 0
+	t.PixelFlowXIntegral = 0
+	t.PixelFlowYIntegral = 0
+	t.GyroXRateIntegral = 0
+	t.GyroYRateIntegral = 0
+	t.GyroZRateIntegral = 0
+	t.GroundDistanceM = 0
+	t.IntegrationTimespan = 0
+	t.TimeSinceLastSonarUpdate = 0
+	t.FrameCountSinceLastReadout = 0
+	t.GyroTemperature = 0
+	t.Quality = 0
+	t.MaxFlowRate = 0
+	t.MinGroundDistance = 0
+	t.MaxGroundDistance = 0
+	t.Mode = 0
+}
+
+// CloneOpticalFlowSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOpticalFlowSlice(dst, src []OpticalFlow) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

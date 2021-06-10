@@ -52,13 +52,30 @@ func NewCollisionConstraints() *CollisionConstraints {
 	return &self
 }
 
-func (t *CollisionConstraints) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CollisionConstraints) Clone() *CollisionConstraints {
+	c := &CollisionConstraints{}
+	c.Timestamp = t.Timestamp
+	c.OriginalSetpoint = t.OriginalSetpoint
+	c.AdaptedSetpoint = t.AdaptedSetpoint
+	return c
+}
+
+func (t *CollisionConstraints) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CollisionConstraints) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.OriginalSetpoint = [2]float32{}
+	t.AdaptedSetpoint = [2]float32{}
+}
+
+// CloneCollisionConstraintsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCollisionConstraintsSlice(dst, src []CollisionConstraints) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

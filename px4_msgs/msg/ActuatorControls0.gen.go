@@ -73,13 +73,30 @@ func NewActuatorControls0() *ActuatorControls0 {
 	return &self
 }
 
-func (t *ActuatorControls0) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ActuatorControls0) Clone() *ActuatorControls0 {
+	c := &ActuatorControls0{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Control = t.Control
+	return c
+}
+
+func (t *ActuatorControls0) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ActuatorControls0) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Control = [8]float32{}
+}
+
+// CloneActuatorControls0Slice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneActuatorControls0Slice(dst, src []ActuatorControls0) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

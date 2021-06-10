@@ -56,13 +56,40 @@ func NewRadioStatus() *RadioStatus {
 	return &self
 }
 
-func (t *RadioStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RadioStatus) Clone() *RadioStatus {
+	c := &RadioStatus{}
+	c.Timestamp = t.Timestamp
+	c.Rssi = t.Rssi
+	c.RemoteRssi = t.RemoteRssi
+	c.Txbuf = t.Txbuf
+	c.Noise = t.Noise
+	c.RemoteNoise = t.RemoteNoise
+	c.Rxerrors = t.Rxerrors
+	c.Fix = t.Fix
+	return c
+}
+
+func (t *RadioStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RadioStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Rssi = 0
+	t.RemoteRssi = 0
+	t.Txbuf = 0
+	t.Noise = 0
+	t.RemoteNoise = 0
+	t.Rxerrors = 0
+	t.Fix = 0
+}
+
+// CloneRadioStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRadioStatusSlice(dst, src []RadioStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

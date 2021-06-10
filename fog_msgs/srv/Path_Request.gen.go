@@ -51,14 +51,26 @@ func NewPath_Request() *Path_Request {
 	return &self
 }
 
-func (t *Path_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Path_Request) Clone() *Path_Request {
+	c := &Path_Request{}
+	c.Path = *t.Path.Clone()
+	return c
+}
+
+func (t *Path_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Path_Request) SetDefaults() {
 	t.Path.SetDefaults()
-	
+}
+
+// ClonePath_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePath_RequestSlice(dst, src []Path_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

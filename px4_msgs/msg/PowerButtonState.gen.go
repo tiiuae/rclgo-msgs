@@ -56,13 +56,28 @@ func NewPowerButtonState() *PowerButtonState {
 	return &self
 }
 
-func (t *PowerButtonState) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PowerButtonState) Clone() *PowerButtonState {
+	c := &PowerButtonState{}
+	c.Timestamp = t.Timestamp
+	c.Event = t.Event
+	return c
+}
+
+func (t *PowerButtonState) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PowerButtonState) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Event = 0
+}
+
+// ClonePowerButtonStateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePowerButtonStateSlice(dst, src []PowerButtonState) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

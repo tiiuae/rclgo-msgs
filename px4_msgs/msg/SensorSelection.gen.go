@@ -51,13 +51,30 @@ func NewSensorSelection() *SensorSelection {
 	return &self
 }
 
-func (t *SensorSelection) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorSelection) Clone() *SensorSelection {
+	c := &SensorSelection{}
+	c.Timestamp = t.Timestamp
+	c.AccelDeviceId = t.AccelDeviceId
+	c.GyroDeviceId = t.GyroDeviceId
+	return c
+}
+
+func (t *SensorSelection) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorSelection) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AccelDeviceId = 0
+	t.GyroDeviceId = 0
+}
+
+// CloneSensorSelectionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorSelectionSlice(dst, src []SensorSelection) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

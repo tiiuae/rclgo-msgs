@@ -51,13 +51,28 @@ func NewPath_Response() *Path_Response {
 	return &self
 }
 
-func (t *Path_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Path_Response) Clone() *Path_Response {
+	c := &Path_Response{}
+	c.Success = t.Success
+	c.Message = t.Message
+	return c
+}
+
+func (t *Path_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Path_Response) SetDefaults() {
-	
+	t.Success = false
+	t.Message = ""
+}
+
+// ClonePath_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePath_ResponseSlice(dst, src []Path_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

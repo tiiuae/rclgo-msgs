@@ -51,13 +51,29 @@ func NewSetParametersAtomically_Request() *SetParametersAtomically_Request {
 	return &self
 }
 
-func (t *SetParametersAtomically_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetParametersAtomically_Request) Clone() *SetParametersAtomically_Request {
+	c := &SetParametersAtomically_Request{}
+	if t.Parameters != nil {
+		c.Parameters = make([]rcl_interfaces_msg.Parameter, len(t.Parameters))
+		rcl_interfaces_msg.CloneParameterSlice(c.Parameters, t.Parameters)
+	}
+	return c
+}
+
+func (t *SetParametersAtomically_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetParametersAtomically_Request) SetDefaults() {
-	
+	t.Parameters = nil
+}
+
+// CloneSetParametersAtomically_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetParametersAtomically_RequestSlice(dst, src []SetParametersAtomically_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

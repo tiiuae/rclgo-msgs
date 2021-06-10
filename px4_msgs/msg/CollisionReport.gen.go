@@ -56,13 +56,40 @@ func NewCollisionReport() *CollisionReport {
 	return &self
 }
 
-func (t *CollisionReport) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CollisionReport) Clone() *CollisionReport {
+	c := &CollisionReport{}
+	c.Timestamp = t.Timestamp
+	c.Src = t.Src
+	c.Id = t.Id
+	c.Action = t.Action
+	c.ThreatLevel = t.ThreatLevel
+	c.TimeToMinimumDelta = t.TimeToMinimumDelta
+	c.AltitudeMinimumDelta = t.AltitudeMinimumDelta
+	c.HorizontalMinimumDelta = t.HorizontalMinimumDelta
+	return c
+}
+
+func (t *CollisionReport) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CollisionReport) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Src = 0
+	t.Id = 0
+	t.Action = 0
+	t.ThreatLevel = 0
+	t.TimeToMinimumDelta = 0
+	t.AltitudeMinimumDelta = 0
+	t.HorizontalMinimumDelta = 0
+}
+
+// CloneCollisionReportSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCollisionReportSlice(dst, src []CollisionReport) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

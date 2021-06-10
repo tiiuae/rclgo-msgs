@@ -50,13 +50,26 @@ func NewUpdateFilename_Request() *UpdateFilename_Request {
 	return &self
 }
 
-func (t *UpdateFilename_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UpdateFilename_Request) Clone() *UpdateFilename_Request {
+	c := &UpdateFilename_Request{}
+	c.Filename = t.Filename
+	return c
+}
+
+func (t *UpdateFilename_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UpdateFilename_Request) SetDefaults() {
-	
+	t.Filename = ""
+}
+
+// CloneUpdateFilename_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUpdateFilename_RequestSlice(dst, src []UpdateFilename_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

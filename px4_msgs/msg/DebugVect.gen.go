@@ -54,13 +54,34 @@ func NewDebugVect() *DebugVect {
 	return &self
 }
 
-func (t *DebugVect) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DebugVect) Clone() *DebugVect {
+	c := &DebugVect{}
+	c.Timestamp = t.Timestamp
+	c.Name = t.Name
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	return c
+}
+
+func (t *DebugVect) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DebugVect) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Name = [10]byte{}
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+}
+
+// CloneDebugVectSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDebugVectSlice(dst, src []DebugVect) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

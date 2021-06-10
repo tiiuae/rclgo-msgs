@@ -65,13 +65,56 @@ func NewSensorCorrection() *SensorCorrection {
 	return &self
 }
 
-func (t *SensorCorrection) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorCorrection) Clone() *SensorCorrection {
+	c := &SensorCorrection{}
+	c.Timestamp = t.Timestamp
+	c.GyroDeviceIds = t.GyroDeviceIds
+	c.GyroOffset0 = t.GyroOffset0
+	c.GyroOffset1 = t.GyroOffset1
+	c.GyroOffset2 = t.GyroOffset2
+	c.GyroOffset3 = t.GyroOffset3
+	c.AccelDeviceIds = t.AccelDeviceIds
+	c.AccelOffset0 = t.AccelOffset0
+	c.AccelOffset1 = t.AccelOffset1
+	c.AccelOffset2 = t.AccelOffset2
+	c.AccelOffset3 = t.AccelOffset3
+	c.BaroDeviceIds = t.BaroDeviceIds
+	c.BaroOffset0 = t.BaroOffset0
+	c.BaroOffset1 = t.BaroOffset1
+	c.BaroOffset2 = t.BaroOffset2
+	c.BaroOffset3 = t.BaroOffset3
+	return c
+}
+
+func (t *SensorCorrection) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorCorrection) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.GyroDeviceIds = [4]uint32{}
+	t.GyroOffset0 = [3]float32{}
+	t.GyroOffset1 = [3]float32{}
+	t.GyroOffset2 = [3]float32{}
+	t.GyroOffset3 = [3]float32{}
+	t.AccelDeviceIds = [4]uint32{}
+	t.AccelOffset0 = [3]float32{}
+	t.AccelOffset1 = [3]float32{}
+	t.AccelOffset2 = [3]float32{}
+	t.AccelOffset3 = [3]float32{}
+	t.BaroDeviceIds = [4]uint32{}
+	t.BaroOffset0 = 0
+	t.BaroOffset1 = 0
+	t.BaroOffset2 = 0
+	t.BaroOffset3 = 0
+}
+
+// CloneSensorCorrectionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorCorrectionSlice(dst, src []SensorCorrection) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

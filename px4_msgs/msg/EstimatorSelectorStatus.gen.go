@@ -65,13 +65,56 @@ func NewEstimatorSelectorStatus() *EstimatorSelectorStatus {
 	return &self
 }
 
-func (t *EstimatorSelectorStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorSelectorStatus) Clone() *EstimatorSelectorStatus {
+	c := &EstimatorSelectorStatus{}
+	c.Timestamp = t.Timestamp
+	c.PrimaryInstance = t.PrimaryInstance
+	c.InstancesAvailable = t.InstancesAvailable
+	c.InstanceChangedCount = t.InstanceChangedCount
+	c.LastInstanceChange = t.LastInstanceChange
+	c.AccelDeviceId = t.AccelDeviceId
+	c.BaroDeviceId = t.BaroDeviceId
+	c.GyroDeviceId = t.GyroDeviceId
+	c.MagDeviceId = t.MagDeviceId
+	c.CombinedTestRatio = t.CombinedTestRatio
+	c.RelativeTestRatio = t.RelativeTestRatio
+	c.Healthy = t.Healthy
+	c.AccumulatedGyroError = t.AccumulatedGyroError
+	c.AccumulatedAccelError = t.AccumulatedAccelError
+	c.GyroFaultDetected = t.GyroFaultDetected
+	c.AccelFaultDetected = t.AccelFaultDetected
+	return c
+}
+
+func (t *EstimatorSelectorStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorSelectorStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.PrimaryInstance = 0
+	t.InstancesAvailable = 0
+	t.InstanceChangedCount = 0
+	t.LastInstanceChange = 0
+	t.AccelDeviceId = 0
+	t.BaroDeviceId = 0
+	t.GyroDeviceId = 0
+	t.MagDeviceId = 0
+	t.CombinedTestRatio = [9]float32{}
+	t.RelativeTestRatio = [9]float32{}
+	t.Healthy = [9]bool{}
+	t.AccumulatedGyroError = [4]float32{}
+	t.AccumulatedAccelError = [4]float32{}
+	t.GyroFaultDetected = false
+	t.AccelFaultDetected = false
+}
+
+// CloneEstimatorSelectorStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorSelectorStatusSlice(dst, src []EstimatorSelectorStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

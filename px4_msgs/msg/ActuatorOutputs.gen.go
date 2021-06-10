@@ -56,13 +56,30 @@ func NewActuatorOutputs() *ActuatorOutputs {
 	return &self
 }
 
-func (t *ActuatorOutputs) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ActuatorOutputs) Clone() *ActuatorOutputs {
+	c := &ActuatorOutputs{}
+	c.Timestamp = t.Timestamp
+	c.Noutputs = t.Noutputs
+	c.Output = t.Output
+	return c
+}
+
+func (t *ActuatorOutputs) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ActuatorOutputs) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Noutputs = 0
+	t.Output = [16]float32{}
+}
+
+// CloneActuatorOutputsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneActuatorOutputsSlice(dst, src []ActuatorOutputs) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

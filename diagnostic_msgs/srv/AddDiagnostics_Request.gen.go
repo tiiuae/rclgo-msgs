@@ -50,13 +50,26 @@ func NewAddDiagnostics_Request() *AddDiagnostics_Request {
 	return &self
 }
 
-func (t *AddDiagnostics_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *AddDiagnostics_Request) Clone() *AddDiagnostics_Request {
+	c := &AddDiagnostics_Request{}
+	c.LoadNamespace = t.LoadNamespace
+	return c
+}
+
+func (t *AddDiagnostics_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *AddDiagnostics_Request) SetDefaults() {
-	
+	t.LoadNamespace = ""
+}
+
+// CloneAddDiagnostics_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneAddDiagnostics_RequestSlice(dst, src []AddDiagnostics_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

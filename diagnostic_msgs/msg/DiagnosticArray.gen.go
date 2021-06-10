@@ -52,14 +52,31 @@ func NewDiagnosticArray() *DiagnosticArray {
 	return &self
 }
 
-func (t *DiagnosticArray) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DiagnosticArray) Clone() *DiagnosticArray {
+	c := &DiagnosticArray{}
+	c.Header = *t.Header.Clone()
+	if t.Status != nil {
+		c.Status = make([]DiagnosticStatus, len(t.Status))
+		CloneDiagnosticStatusSlice(c.Status, t.Status)
+	}
+	return c
+}
+
+func (t *DiagnosticArray) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DiagnosticArray) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.Status = nil
+}
+
+// CloneDiagnosticArraySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDiagnosticArraySlice(dst, src []DiagnosticArray) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

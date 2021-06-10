@@ -59,13 +59,36 @@ func NewUlogStream() *UlogStream {
 	return &self
 }
 
-func (t *UlogStream) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UlogStream) Clone() *UlogStream {
+	c := &UlogStream{}
+	c.Timestamp = t.Timestamp
+	c.Length = t.Length
+	c.FirstMessageOffset = t.FirstMessageOffset
+	c.MsgSequence = t.MsgSequence
+	c.Flags = t.Flags
+	c.Data = t.Data
+	return c
+}
+
+func (t *UlogStream) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UlogStream) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Length = 0
+	t.FirstMessageOffset = 0
+	t.MsgSequence = 0
+	t.Flags = 0
+	t.Data = [249]uint8{}
+}
+
+// CloneUlogStreamSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUlogStreamSlice(dst, src []UlogStream) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

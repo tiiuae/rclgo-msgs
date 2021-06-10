@@ -80,13 +80,88 @@ func NewVehicleStatusFlags() *VehicleStatusFlags {
 	return &self
 }
 
-func (t *VehicleStatusFlags) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleStatusFlags) Clone() *VehicleStatusFlags {
+	c := &VehicleStatusFlags{}
+	c.Timestamp = t.Timestamp
+	c.ConditionCalibrationEnabled = t.ConditionCalibrationEnabled
+	c.ConditionSystemSensorsInitialized = t.ConditionSystemSensorsInitialized
+	c.ConditionSystemHotplugTimeout = t.ConditionSystemHotplugTimeout
+	c.ConditionSystemReturnedToHome = t.ConditionSystemReturnedToHome
+	c.ConditionAutoMissionAvailable = t.ConditionAutoMissionAvailable
+	c.ConditionAngularVelocityValid = t.ConditionAngularVelocityValid
+	c.ConditionAttitudeValid = t.ConditionAttitudeValid
+	c.ConditionLocalAltitudeValid = t.ConditionLocalAltitudeValid
+	c.ConditionLocalPositionValid = t.ConditionLocalPositionValid
+	c.ConditionLocalVelocityValid = t.ConditionLocalVelocityValid
+	c.ConditionGlobalPositionValid = t.ConditionGlobalPositionValid
+	c.ConditionHomePositionValid = t.ConditionHomePositionValid
+	c.ConditionPowerInputValid = t.ConditionPowerInputValid
+	c.ConditionBatteryHealthy = t.ConditionBatteryHealthy
+	c.ConditionEscsError = t.ConditionEscsError
+	c.CircuitBreakerEngagedPowerCheck = t.CircuitBreakerEngagedPowerCheck
+	c.CircuitBreakerEngagedAirspdCheck = t.CircuitBreakerEngagedAirspdCheck
+	c.CircuitBreakerEngagedEnginefailureCheck = t.CircuitBreakerEngagedEnginefailureCheck
+	c.CircuitBreakerFlightTerminationDisabled = t.CircuitBreakerFlightTerminationDisabled
+	c.CircuitBreakerEngagedUsbCheck = t.CircuitBreakerEngagedUsbCheck
+	c.CircuitBreakerEngagedPosfailureCheck = t.CircuitBreakerEngagedPosfailureCheck
+	c.CircuitBreakerVtolFwArmingCheck = t.CircuitBreakerVtolFwArmingCheck
+	c.OffboardControlSignalFoundOnce = t.OffboardControlSignalFoundOnce
+	c.OffboardControlSignalLost = t.OffboardControlSignalLost
+	c.RcSignalFoundOnce = t.RcSignalFoundOnce
+	c.RcInputBlocked = t.RcInputBlocked
+	c.RcCalibrationValid = t.RcCalibrationValid
+	c.VtolTransitionFailure = t.VtolTransitionFailure
+	c.UsbConnected = t.UsbConnected
+	c.AvoidanceSystemRequired = t.AvoidanceSystemRequired
+	c.AvoidanceSystemValid = t.AvoidanceSystemValid
+	return c
+}
+
+func (t *VehicleStatusFlags) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleStatusFlags) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.ConditionCalibrationEnabled = false
+	t.ConditionSystemSensorsInitialized = false
+	t.ConditionSystemHotplugTimeout = false
+	t.ConditionSystemReturnedToHome = false
+	t.ConditionAutoMissionAvailable = false
+	t.ConditionAngularVelocityValid = false
+	t.ConditionAttitudeValid = false
+	t.ConditionLocalAltitudeValid = false
+	t.ConditionLocalPositionValid = false
+	t.ConditionLocalVelocityValid = false
+	t.ConditionGlobalPositionValid = false
+	t.ConditionHomePositionValid = false
+	t.ConditionPowerInputValid = false
+	t.ConditionBatteryHealthy = false
+	t.ConditionEscsError = false
+	t.CircuitBreakerEngagedPowerCheck = false
+	t.CircuitBreakerEngagedAirspdCheck = false
+	t.CircuitBreakerEngagedEnginefailureCheck = false
+	t.CircuitBreakerFlightTerminationDisabled = false
+	t.CircuitBreakerEngagedUsbCheck = false
+	t.CircuitBreakerEngagedPosfailureCheck = false
+	t.CircuitBreakerVtolFwArmingCheck = false
+	t.OffboardControlSignalFoundOnce = false
+	t.OffboardControlSignalLost = false
+	t.RcSignalFoundOnce = false
+	t.RcInputBlocked = false
+	t.RcCalibrationValid = false
+	t.VtolTransitionFailure = false
+	t.UsbConnected = false
+	t.AvoidanceSystemRequired = false
+	t.AvoidanceSystemValid = false
+}
+
+// CloneVehicleStatusFlagsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleStatusFlagsSlice(dst, src []VehicleStatusFlags) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -55,13 +55,38 @@ func NewVehicleAirData() *VehicleAirData {
 	return &self
 }
 
-func (t *VehicleAirData) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleAirData) Clone() *VehicleAirData {
+	c := &VehicleAirData{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.BaroDeviceId = t.BaroDeviceId
+	c.BaroAltMeter = t.BaroAltMeter
+	c.BaroTempCelcius = t.BaroTempCelcius
+	c.BaroPressurePa = t.BaroPressurePa
+	c.Rho = t.Rho
+	return c
+}
+
+func (t *VehicleAirData) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleAirData) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.BaroDeviceId = 0
+	t.BaroAltMeter = 0
+	t.BaroTempCelcius = 0
+	t.BaroPressurePa = 0
+	t.Rho = 0
+}
+
+// CloneVehicleAirDataSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleAirDataSlice(dst, src []VehicleAirData) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -73,13 +73,42 @@ func NewGimbalManagerInformation() *GimbalManagerInformation {
 	return &self
 }
 
-func (t *GimbalManagerInformation) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GimbalManagerInformation) Clone() *GimbalManagerInformation {
+	c := &GimbalManagerInformation{}
+	c.Timestamp = t.Timestamp
+	c.CapFlags = t.CapFlags
+	c.GimbalDeviceId = t.GimbalDeviceId
+	c.RollMin = t.RollMin
+	c.RollMax = t.RollMax
+	c.PitchMin = t.PitchMin
+	c.PitchMax = t.PitchMax
+	c.YawMin = t.YawMin
+	c.YawMax = t.YawMax
+	return c
+}
+
+func (t *GimbalManagerInformation) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GimbalManagerInformation) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.CapFlags = 0
+	t.GimbalDeviceId = 0
+	t.RollMin = 0
+	t.RollMax = 0
+	t.PitchMin = 0
+	t.PitchMax = 0
+	t.YawMin = 0
+	t.YawMax = 0
+}
+
+// CloneGimbalManagerInformationSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGimbalManagerInformationSlice(dst, src []GimbalManagerInformation) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

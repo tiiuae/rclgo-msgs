@@ -50,13 +50,28 @@ func NewMultirotorMotorLimits() *MultirotorMotorLimits {
 	return &self
 }
 
-func (t *MultirotorMotorLimits) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MultirotorMotorLimits) Clone() *MultirotorMotorLimits {
+	c := &MultirotorMotorLimits{}
+	c.Timestamp = t.Timestamp
+	c.SaturationStatus = t.SaturationStatus
+	return c
+}
+
+func (t *MultirotorMotorLimits) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MultirotorMotorLimits) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.SaturationStatus = 0
+}
+
+// CloneMultirotorMotorLimitsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMultirotorMotorLimitsSlice(dst, src []MultirotorMotorLimits) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

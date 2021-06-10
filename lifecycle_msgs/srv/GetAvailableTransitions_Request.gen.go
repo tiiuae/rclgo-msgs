@@ -48,13 +48,24 @@ func NewGetAvailableTransitions_Request() *GetAvailableTransitions_Request {
 	return &self
 }
 
-func (t *GetAvailableTransitions_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetAvailableTransitions_Request) Clone() *GetAvailableTransitions_Request {
+	c := &GetAvailableTransitions_Request{}
+	return c
+}
+
+func (t *GetAvailableTransitions_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetAvailableTransitions_Request) SetDefaults() {
-	
+}
+
+// CloneGetAvailableTransitions_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetAvailableTransitions_RequestSlice(dst, src []GetAvailableTransitions_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

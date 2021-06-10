@@ -51,13 +51,29 @@ func NewGetAvailableTransitions_Response() *GetAvailableTransitions_Response {
 	return &self
 }
 
-func (t *GetAvailableTransitions_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetAvailableTransitions_Response) Clone() *GetAvailableTransitions_Response {
+	c := &GetAvailableTransitions_Response{}
+	if t.AvailableTransitions != nil {
+		c.AvailableTransitions = make([]lifecycle_msgs_msg.TransitionDescription, len(t.AvailableTransitions))
+		lifecycle_msgs_msg.CloneTransitionDescriptionSlice(c.AvailableTransitions, t.AvailableTransitions)
+	}
+	return c
+}
+
+func (t *GetAvailableTransitions_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetAvailableTransitions_Response) SetDefaults() {
-	
+	t.AvailableTransitions = nil
+}
+
+// CloneGetAvailableTransitions_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetAvailableTransitions_ResponseSlice(dst, src []GetAvailableTransitions_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -50,13 +50,28 @@ func NewSensorPreflightMag() *SensorPreflightMag {
 	return &self
 }
 
-func (t *SensorPreflightMag) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorPreflightMag) Clone() *SensorPreflightMag {
+	c := &SensorPreflightMag{}
+	c.Timestamp = t.Timestamp
+	c.MagInconsistencyAngle = t.MagInconsistencyAngle
+	return c
+}
+
+func (t *SensorPreflightMag) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorPreflightMag) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.MagInconsistencyAngle = 0
+}
+
+// CloneSensorPreflightMagSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorPreflightMagSlice(dst, src []SensorPreflightMag) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

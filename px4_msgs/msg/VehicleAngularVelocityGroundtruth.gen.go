@@ -52,13 +52,30 @@ func NewVehicleAngularVelocityGroundtruth() *VehicleAngularVelocityGroundtruth {
 	return &self
 }
 
-func (t *VehicleAngularVelocityGroundtruth) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleAngularVelocityGroundtruth) Clone() *VehicleAngularVelocityGroundtruth {
+	c := &VehicleAngularVelocityGroundtruth{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Xyz = t.Xyz
+	return c
+}
+
+func (t *VehicleAngularVelocityGroundtruth) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleAngularVelocityGroundtruth) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Xyz = [3]float32{}
+}
+
+// CloneVehicleAngularVelocityGroundtruthSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleAngularVelocityGroundtruthSlice(dst, src []VehicleAngularVelocityGroundtruth) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

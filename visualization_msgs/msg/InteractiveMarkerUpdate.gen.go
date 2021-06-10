@@ -59,13 +59,45 @@ func NewInteractiveMarkerUpdate() *InteractiveMarkerUpdate {
 	return &self
 }
 
-func (t *InteractiveMarkerUpdate) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InteractiveMarkerUpdate) Clone() *InteractiveMarkerUpdate {
+	c := &InteractiveMarkerUpdate{}
+	c.ServerId = t.ServerId
+	c.SeqNum = t.SeqNum
+	c.Type = t.Type
+	if t.Markers != nil {
+		c.Markers = make([]InteractiveMarker, len(t.Markers))
+		CloneInteractiveMarkerSlice(c.Markers, t.Markers)
+	}
+	if t.Poses != nil {
+		c.Poses = make([]InteractiveMarkerPose, len(t.Poses))
+		CloneInteractiveMarkerPoseSlice(c.Poses, t.Poses)
+	}
+	if t.Erases != nil {
+		c.Erases = make([]string, len(t.Erases))
+		copy(c.Erases, t.Erases)
+	}
+	return c
+}
+
+func (t *InteractiveMarkerUpdate) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InteractiveMarkerUpdate) SetDefaults() {
-	
+	t.ServerId = ""
+	t.SeqNum = 0
+	t.Type = 0
+	t.Markers = nil
+	t.Poses = nil
+	t.Erases = nil
+}
+
+// CloneInteractiveMarkerUpdateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInteractiveMarkerUpdateSlice(dst, src []InteractiveMarkerUpdate) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

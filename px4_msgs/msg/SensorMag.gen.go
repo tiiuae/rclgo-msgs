@@ -60,13 +60,42 @@ func NewSensorMag() *SensorMag {
 	return &self
 }
 
-func (t *SensorMag) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorMag) Clone() *SensorMag {
+	c := &SensorMag{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DeviceId = t.DeviceId
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.Temperature = t.Temperature
+	c.ErrorCount = t.ErrorCount
+	c.IsExternal = t.IsExternal
+	return c
+}
+
+func (t *SensorMag) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorMag) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DeviceId = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.Temperature = 0
+	t.ErrorCount = 0
+	t.IsExternal = false
+}
+
+// CloneSensorMagSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorMagSlice(dst, src []SensorMag) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

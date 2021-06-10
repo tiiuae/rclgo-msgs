@@ -62,13 +62,52 @@ func NewVehicleControlMode() *VehicleControlMode {
 	return &self
 }
 
-func (t *VehicleControlMode) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleControlMode) Clone() *VehicleControlMode {
+	c := &VehicleControlMode{}
+	c.Timestamp = t.Timestamp
+	c.FlagArmed = t.FlagArmed
+	c.FlagExternalManualOverrideOk = t.FlagExternalManualOverrideOk
+	c.FlagControlManualEnabled = t.FlagControlManualEnabled
+	c.FlagControlAutoEnabled = t.FlagControlAutoEnabled
+	c.FlagControlOffboardEnabled = t.FlagControlOffboardEnabled
+	c.FlagControlRatesEnabled = t.FlagControlRatesEnabled
+	c.FlagControlAttitudeEnabled = t.FlagControlAttitudeEnabled
+	c.FlagControlAccelerationEnabled = t.FlagControlAccelerationEnabled
+	c.FlagControlVelocityEnabled = t.FlagControlVelocityEnabled
+	c.FlagControlPositionEnabled = t.FlagControlPositionEnabled
+	c.FlagControlAltitudeEnabled = t.FlagControlAltitudeEnabled
+	c.FlagControlClimbRateEnabled = t.FlagControlClimbRateEnabled
+	c.FlagControlTerminationEnabled = t.FlagControlTerminationEnabled
+	return c
+}
+
+func (t *VehicleControlMode) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleControlMode) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.FlagArmed = false
+	t.FlagExternalManualOverrideOk = false
+	t.FlagControlManualEnabled = false
+	t.FlagControlAutoEnabled = false
+	t.FlagControlOffboardEnabled = false
+	t.FlagControlRatesEnabled = false
+	t.FlagControlAttitudeEnabled = false
+	t.FlagControlAccelerationEnabled = false
+	t.FlagControlVelocityEnabled = false
+	t.FlagControlPositionEnabled = false
+	t.FlagControlAltitudeEnabled = false
+	t.FlagControlClimbRateEnabled = false
+	t.FlagControlTerminationEnabled = false
+}
+
+// CloneVehicleControlModeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleControlModeSlice(dst, src []VehicleControlMode) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

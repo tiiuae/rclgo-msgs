@@ -69,13 +69,64 @@ func NewOnboardComputerStatus() *OnboardComputerStatus {
 	return &self
 }
 
-func (t *OnboardComputerStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OnboardComputerStatus) Clone() *OnboardComputerStatus {
+	c := &OnboardComputerStatus{}
+	c.Timestamp = t.Timestamp
+	c.Uptime = t.Uptime
+	c.Type = t.Type
+	c.CpuCores = t.CpuCores
+	c.CpuCombined = t.CpuCombined
+	c.GpuCores = t.GpuCores
+	c.GpuCombined = t.GpuCombined
+	c.TemperatureBoard = t.TemperatureBoard
+	c.TemperatureCore = t.TemperatureCore
+	c.FanSpeed = t.FanSpeed
+	c.RamUsage = t.RamUsage
+	c.RamTotal = t.RamTotal
+	c.StorageType = t.StorageType
+	c.StorageUsage = t.StorageUsage
+	c.StorageTotal = t.StorageTotal
+	c.LinkType = t.LinkType
+	c.LinkTxRate = t.LinkTxRate
+	c.LinkRxRate = t.LinkRxRate
+	c.LinkTxMax = t.LinkTxMax
+	c.LinkRxMax = t.LinkRxMax
+	return c
+}
+
+func (t *OnboardComputerStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OnboardComputerStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Uptime = 0
+	t.Type = 0
+	t.CpuCores = [8]uint8{}
+	t.CpuCombined = [10]uint8{}
+	t.GpuCores = [4]uint8{}
+	t.GpuCombined = [10]uint8{}
+	t.TemperatureBoard = 0
+	t.TemperatureCore = [8]int8{}
+	t.FanSpeed = [4]int16{}
+	t.RamUsage = 0
+	t.RamTotal = 0
+	t.StorageType = [4]uint32{}
+	t.StorageUsage = [4]uint32{}
+	t.StorageTotal = [4]uint32{}
+	t.LinkType = [6]uint32{}
+	t.LinkTxRate = [6]uint32{}
+	t.LinkRxRate = [6]uint32{}
+	t.LinkTxMax = [6]uint32{}
+	t.LinkRxMax = [6]uint32{}
+}
+
+// CloneOnboardComputerStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOnboardComputerStatusSlice(dst, src []OnboardComputerStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -62,13 +62,52 @@ func NewVehicleGlobalPosition() *VehicleGlobalPosition {
 	return &self
 }
 
-func (t *VehicleGlobalPosition) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleGlobalPosition) Clone() *VehicleGlobalPosition {
+	c := &VehicleGlobalPosition{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.AltEllipsoid = t.AltEllipsoid
+	c.DeltaAlt = t.DeltaAlt
+	c.LatLonResetCounter = t.LatLonResetCounter
+	c.AltResetCounter = t.AltResetCounter
+	c.Eph = t.Eph
+	c.Epv = t.Epv
+	c.TerrainAlt = t.TerrainAlt
+	c.TerrainAltValid = t.TerrainAltValid
+	c.DeadReckoning = t.DeadReckoning
+	return c
+}
+
+func (t *VehicleGlobalPosition) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleGlobalPosition) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.AltEllipsoid = 0
+	t.DeltaAlt = 0
+	t.LatLonResetCounter = 0
+	t.AltResetCounter = 0
+	t.Eph = 0
+	t.Epv = 0
+	t.TerrainAlt = 0
+	t.TerrainAltValid = false
+	t.DeadReckoning = false
+}
+
+// CloneVehicleGlobalPositionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleGlobalPositionSlice(dst, src []VehicleGlobalPosition) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

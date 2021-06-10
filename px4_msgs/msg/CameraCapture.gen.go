@@ -58,13 +58,42 @@ func NewCameraCapture() *CameraCapture {
 	return &self
 }
 
-func (t *CameraCapture) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CameraCapture) Clone() *CameraCapture {
+	c := &CameraCapture{}
+	c.Timestamp = t.Timestamp
+	c.TimestampUtc = t.TimestampUtc
+	c.Seq = t.Seq
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.GroundDistance = t.GroundDistance
+	c.Q = t.Q
+	c.Result = t.Result
+	return c
+}
+
+func (t *CameraCapture) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CameraCapture) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampUtc = 0
+	t.Seq = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.GroundDistance = 0
+	t.Q = [4]float32{}
+	t.Result = 0
+}
+
+// CloneCameraCaptureSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCameraCaptureSlice(dst, src []CameraCapture) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

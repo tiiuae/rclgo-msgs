@@ -50,14 +50,31 @@ func NewParticipantEntitiesInfo() *ParticipantEntitiesInfo {
 	return &self
 }
 
-func (t *ParticipantEntitiesInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParticipantEntitiesInfo) Clone() *ParticipantEntitiesInfo {
+	c := &ParticipantEntitiesInfo{}
+	c.Gid = *t.Gid.Clone()
+	if t.NodeEntitiesInfoSeq != nil {
+		c.NodeEntitiesInfoSeq = make([]NodeEntitiesInfo, len(t.NodeEntitiesInfoSeq))
+		CloneNodeEntitiesInfoSlice(c.NodeEntitiesInfoSeq, t.NodeEntitiesInfoSeq)
+	}
+	return c
+}
+
+func (t *ParticipantEntitiesInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParticipantEntitiesInfo) SetDefaults() {
 	t.Gid.SetDefaults()
-	
+	t.NodeEntitiesInfoSeq = nil
+}
+
+// CloneParticipantEntitiesInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParticipantEntitiesInfoSlice(dst, src []ParticipantEntitiesInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

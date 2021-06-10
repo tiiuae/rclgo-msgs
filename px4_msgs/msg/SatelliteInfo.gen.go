@@ -60,13 +60,40 @@ func NewSatelliteInfo() *SatelliteInfo {
 	return &self
 }
 
-func (t *SatelliteInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SatelliteInfo) Clone() *SatelliteInfo {
+	c := &SatelliteInfo{}
+	c.Timestamp = t.Timestamp
+	c.Count = t.Count
+	c.Svid = t.Svid
+	c.Used = t.Used
+	c.Elevation = t.Elevation
+	c.Azimuth = t.Azimuth
+	c.Snr = t.Snr
+	c.Prn = t.Prn
+	return c
+}
+
+func (t *SatelliteInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SatelliteInfo) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Count = 0
+	t.Svid = [20]uint8{}
+	t.Used = [20]uint8{}
+	t.Elevation = [20]uint8{}
+	t.Azimuth = [20]uint8{}
+	t.Snr = [20]uint8{}
+	t.Prn = [20]uint8{}
+}
+
+// CloneSatelliteInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSatelliteInfoSlice(dst, src []SatelliteInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

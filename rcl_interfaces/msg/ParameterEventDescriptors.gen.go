@@ -51,13 +51,39 @@ func NewParameterEventDescriptors() *ParameterEventDescriptors {
 	return &self
 }
 
-func (t *ParameterEventDescriptors) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParameterEventDescriptors) Clone() *ParameterEventDescriptors {
+	c := &ParameterEventDescriptors{}
+	if t.NewParameters != nil {
+		c.NewParameters = make([]ParameterDescriptor, len(t.NewParameters))
+		CloneParameterDescriptorSlice(c.NewParameters, t.NewParameters)
+	}
+	if t.ChangedParameters != nil {
+		c.ChangedParameters = make([]ParameterDescriptor, len(t.ChangedParameters))
+		CloneParameterDescriptorSlice(c.ChangedParameters, t.ChangedParameters)
+	}
+	if t.DeletedParameters != nil {
+		c.DeletedParameters = make([]ParameterDescriptor, len(t.DeletedParameters))
+		CloneParameterDescriptorSlice(c.DeletedParameters, t.DeletedParameters)
+	}
+	return c
+}
+
+func (t *ParameterEventDescriptors) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParameterEventDescriptors) SetDefaults() {
-	
+	t.NewParameters = nil
+	t.ChangedParameters = nil
+	t.DeletedParameters = nil
+}
+
+// CloneParameterEventDescriptorsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterEventDescriptorsSlice(dst, src []ParameterEventDescriptors) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

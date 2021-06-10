@@ -51,13 +51,28 @@ func NewSetParametersResult() *SetParametersResult {
 	return &self
 }
 
-func (t *SetParametersResult) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetParametersResult) Clone() *SetParametersResult {
+	c := &SetParametersResult{}
+	c.Successful = t.Successful
+	c.Reason = t.Reason
+	return c
+}
+
+func (t *SetParametersResult) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetParametersResult) SetDefaults() {
-	
+	t.Successful = false
+	t.Reason = ""
+}
+
+// CloneSetParametersResultSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetParametersResultSlice(dst, src []SetParametersResult) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

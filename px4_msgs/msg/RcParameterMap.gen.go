@@ -61,13 +61,40 @@ func NewRcParameterMap() *RcParameterMap {
 	return &self
 }
 
-func (t *RcParameterMap) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RcParameterMap) Clone() *RcParameterMap {
+	c := &RcParameterMap{}
+	c.Timestamp = t.Timestamp
+	c.Valid = t.Valid
+	c.ParamIndex = t.ParamIndex
+	c.ParamId = t.ParamId
+	c.Scale = t.Scale
+	c.Value0 = t.Value0
+	c.ValueMin = t.ValueMin
+	c.ValueMax = t.ValueMax
+	return c
+}
+
+func (t *RcParameterMap) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RcParameterMap) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Valid = [3]bool{}
+	t.ParamIndex = [3]int32{}
+	t.ParamId = [51]byte{}
+	t.Scale = [3]float32{}
+	t.Value0 = [3]float32{}
+	t.ValueMin = [3]float32{}
+	t.ValueMax = [3]float32{}
+}
+
+// CloneRcParameterMapSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRcParameterMapSlice(dst, src []RcParameterMap) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

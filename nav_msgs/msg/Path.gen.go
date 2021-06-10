@@ -54,14 +54,31 @@ func NewPath() *Path {
 	return &self
 }
 
-func (t *Path) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Path) Clone() *Path {
+	c := &Path{}
+	c.Header = *t.Header.Clone()
+	if t.Poses != nil {
+		c.Poses = make([]geometry_msgs_msg.PoseStamped, len(t.Poses))
+		geometry_msgs_msg.ClonePoseStampedSlice(c.Poses, t.Poses)
+	}
+	return c
+}
+
+func (t *Path) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Path) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.Poses = nil
+}
+
+// ClonePathSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePathSlice(dst, src []Path) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -75,13 +75,78 @@ func NewSensorGps() *SensorGps {
 	return &self
 }
 
-func (t *SensorGps) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorGps) Clone() *SensorGps {
+	c := &SensorGps{}
+	c.Timestamp = t.Timestamp
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.AltEllipsoid = t.AltEllipsoid
+	c.SVarianceMS = t.SVarianceMS
+	c.CVarianceRad = t.CVarianceRad
+	c.FixType = t.FixType
+	c.Eph = t.Eph
+	c.Epv = t.Epv
+	c.Hdop = t.Hdop
+	c.Vdop = t.Vdop
+	c.NoisePerMs = t.NoisePerMs
+	c.AutomaticGainControl = t.AutomaticGainControl
+	c.JammingIndicator = t.JammingIndicator
+	c.JammingState = t.JammingState
+	c.VelMS = t.VelMS
+	c.VelNMS = t.VelNMS
+	c.VelEMS = t.VelEMS
+	c.VelDMS = t.VelDMS
+	c.CogRad = t.CogRad
+	c.VelNedValid = t.VelNedValid
+	c.TimestampTimeRelative = t.TimestampTimeRelative
+	c.TimeUtcUsec = t.TimeUtcUsec
+	c.SatellitesUsed = t.SatellitesUsed
+	c.Heading = t.Heading
+	c.HeadingOffset = t.HeadingOffset
+	return c
+}
+
+func (t *SensorGps) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorGps) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.AltEllipsoid = 0
+	t.SVarianceMS = 0
+	t.CVarianceRad = 0
+	t.FixType = 0
+	t.Eph = 0
+	t.Epv = 0
+	t.Hdop = 0
+	t.Vdop = 0
+	t.NoisePerMs = 0
+	t.AutomaticGainControl = 0
+	t.JammingIndicator = 0
+	t.JammingState = 0
+	t.VelMS = 0
+	t.VelNMS = 0
+	t.VelEMS = 0
+	t.VelDMS = 0
+	t.CogRad = 0
+	t.VelNedValid = false
+	t.TimestampTimeRelative = 0
+	t.TimeUtcUsec = 0
+	t.SatellitesUsed = 0
+	t.Heading = 0
+	t.HeadingOffset = 0
+}
+
+// CloneSensorGpsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorGpsSlice(dst, src []SensorGps) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

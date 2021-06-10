@@ -52,13 +52,30 @@ func NewOrbTestLarge() *OrbTestLarge {
 	return &self
 }
 
-func (t *OrbTestLarge) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OrbTestLarge) Clone() *OrbTestLarge {
+	c := &OrbTestLarge{}
+	c.Timestamp = t.Timestamp
+	c.Val = t.Val
+	c.Junk = t.Junk
+	return c
+}
+
+func (t *OrbTestLarge) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OrbTestLarge) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Val = 0
+	t.Junk = [512]uint8{}
+}
+
+// CloneOrbTestLargeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOrbTestLargeSlice(dst, src []OrbTestLarge) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

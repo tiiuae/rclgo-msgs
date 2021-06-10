@@ -62,13 +62,38 @@ func NewOrbitStatus() *OrbitStatus {
 	return &self
 }
 
-func (t *OrbitStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OrbitStatus) Clone() *OrbitStatus {
+	c := &OrbitStatus{}
+	c.Timestamp = t.Timestamp
+	c.Radius = t.Radius
+	c.Frame = t.Frame
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.YawBehaviour = t.YawBehaviour
+	return c
+}
+
+func (t *OrbitStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OrbitStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Radius = 0
+	t.Frame = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.YawBehaviour = 0
+}
+
+// CloneOrbitStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOrbitStatusSlice(dst, src []OrbitStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

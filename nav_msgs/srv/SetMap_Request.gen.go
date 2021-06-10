@@ -54,15 +54,28 @@ func NewSetMap_Request() *SetMap_Request {
 	return &self
 }
 
-func (t *SetMap_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetMap_Request) Clone() *SetMap_Request {
+	c := &SetMap_Request{}
+	c.Map = *t.Map.Clone()
+	c.InitialPose = *t.InitialPose.Clone()
+	return c
+}
+
+func (t *SetMap_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetMap_Request) SetDefaults() {
 	t.Map.SetDefaults()
 	t.InitialPose.SetDefaults()
-	
+}
+
+// CloneSetMap_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetMap_RequestSlice(dst, src []SetMap_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

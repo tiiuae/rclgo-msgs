@@ -49,13 +49,29 @@ func NewGoalStatusArray() *GoalStatusArray {
 	return &self
 }
 
-func (t *GoalStatusArray) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GoalStatusArray) Clone() *GoalStatusArray {
+	c := &GoalStatusArray{}
+	if t.StatusList != nil {
+		c.StatusList = make([]GoalStatus, len(t.StatusList))
+		CloneGoalStatusSlice(c.StatusList, t.StatusList)
+	}
+	return c
+}
+
+func (t *GoalStatusArray) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GoalStatusArray) SetDefaults() {
-	
+	t.StatusList = nil
+}
+
+// CloneGoalStatusArraySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGoalStatusArraySlice(dst, src []GoalStatusArray) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

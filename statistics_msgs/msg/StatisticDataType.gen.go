@@ -56,13 +56,24 @@ func NewStatisticDataType() *StatisticDataType {
 	return &self
 }
 
-func (t *StatisticDataType) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *StatisticDataType) Clone() *StatisticDataType {
+	c := &StatisticDataType{}
+	return c
+}
+
+func (t *StatisticDataType) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *StatisticDataType) SetDefaults() {
-	
+}
+
+// CloneStatisticDataTypeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneStatisticDataTypeSlice(dst, src []StatisticDataType) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

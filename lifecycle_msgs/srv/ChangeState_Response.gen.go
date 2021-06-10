@@ -49,13 +49,26 @@ func NewChangeState_Response() *ChangeState_Response {
 	return &self
 }
 
-func (t *ChangeState_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ChangeState_Response) Clone() *ChangeState_Response {
+	c := &ChangeState_Response{}
+	c.Success = t.Success
+	return c
+}
+
+func (t *ChangeState_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ChangeState_Response) SetDefaults() {
-	
+	t.Success = false
+}
+
+// CloneChangeState_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneChangeState_ResponseSlice(dst, src []ChangeState_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

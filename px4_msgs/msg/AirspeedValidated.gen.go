@@ -56,13 +56,40 @@ func NewAirspeedValidated() *AirspeedValidated {
 	return &self
 }
 
-func (t *AirspeedValidated) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *AirspeedValidated) Clone() *AirspeedValidated {
+	c := &AirspeedValidated{}
+	c.Timestamp = t.Timestamp
+	c.IndicatedAirspeedMS = t.IndicatedAirspeedMS
+	c.CalibratedAirspeedMS = t.CalibratedAirspeedMS
+	c.TrueAirspeedMS = t.TrueAirspeedMS
+	c.CalibratedGroundMinusWindMS = t.CalibratedGroundMinusWindMS
+	c.TrueGroundMinusWindMS = t.TrueGroundMinusWindMS
+	c.AirspeedSensorMeasurementValid = t.AirspeedSensorMeasurementValid
+	c.SelectedAirspeedIndex = t.SelectedAirspeedIndex
+	return c
+}
+
+func (t *AirspeedValidated) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *AirspeedValidated) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.IndicatedAirspeedMS = 0
+	t.CalibratedAirspeedMS = 0
+	t.TrueAirspeedMS = 0
+	t.CalibratedGroundMinusWindMS = 0
+	t.TrueGroundMinusWindMS = 0
+	t.AirspeedSensorMeasurementValid = false
+	t.SelectedAirspeedIndex = 0
+}
+
+// CloneAirspeedValidatedSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneAirspeedValidatedSlice(dst, src []AirspeedValidated) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

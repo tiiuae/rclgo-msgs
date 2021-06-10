@@ -55,13 +55,36 @@ func NewAdcReport() *AdcReport {
 	return &self
 }
 
-func (t *AdcReport) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *AdcReport) Clone() *AdcReport {
+	c := &AdcReport{}
+	c.Timestamp = t.Timestamp
+	c.DeviceId = t.DeviceId
+	c.ChannelId = t.ChannelId
+	c.RawData = t.RawData
+	c.Resolution = t.Resolution
+	c.VRef = t.VRef
+	return c
+}
+
+func (t *AdcReport) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *AdcReport) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.DeviceId = 0
+	t.ChannelId = [12]int16{}
+	t.RawData = [12]int32{}
+	t.Resolution = 0
+	t.VRef = 0
+}
+
+// CloneAdcReportSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneAdcReportSlice(dst, src []AdcReport) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -57,14 +57,39 @@ func NewOccupancyGridUpdate() *OccupancyGridUpdate {
 	return &self
 }
 
-func (t *OccupancyGridUpdate) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OccupancyGridUpdate) Clone() *OccupancyGridUpdate {
+	c := &OccupancyGridUpdate{}
+	c.Header = *t.Header.Clone()
+	c.X = t.X
+	c.Y = t.Y
+	c.Width = t.Width
+	c.Height = t.Height
+	if t.Data != nil {
+		c.Data = make([]int8, len(t.Data))
+		copy(c.Data, t.Data)
+	}
+	return c
+}
+
+func (t *OccupancyGridUpdate) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OccupancyGridUpdate) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.X = 0
+	t.Y = 0
+	t.Width = 0
+	t.Height = 0
+	t.Data = nil
+}
+
+// CloneOccupancyGridUpdateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOccupancyGridUpdateSlice(dst, src []OccupancyGridUpdate) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

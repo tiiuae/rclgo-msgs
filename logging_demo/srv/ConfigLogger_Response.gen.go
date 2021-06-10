@@ -49,13 +49,26 @@ func NewConfigLogger_Response() *ConfigLogger_Response {
 	return &self
 }
 
-func (t *ConfigLogger_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ConfigLogger_Response) Clone() *ConfigLogger_Response {
+	c := &ConfigLogger_Response{}
+	c.Success = t.Success
+	return c
+}
+
+func (t *ConfigLogger_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ConfigLogger_Response) SetDefaults() {
-	
+	t.Success = false
+}
+
+// CloneConfigLogger_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneConfigLogger_ResponseSlice(dst, src []ConfigLogger_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

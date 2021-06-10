@@ -79,13 +79,56 @@ func NewGimbalDeviceInformation() *GimbalDeviceInformation {
 	return &self
 }
 
-func (t *GimbalDeviceInformation) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GimbalDeviceInformation) Clone() *GimbalDeviceInformation {
+	c := &GimbalDeviceInformation{}
+	c.Timestamp = t.Timestamp
+	c.VendorName = t.VendorName
+	c.ModelName = t.ModelName
+	c.CustomName = t.CustomName
+	c.FirmwareVersion = t.FirmwareVersion
+	c.HardwareVersion = t.HardwareVersion
+	c.Uid = t.Uid
+	c.CapFlags = t.CapFlags
+	c.CustomCapFlags = t.CustomCapFlags
+	c.RollMin = t.RollMin
+	c.RollMax = t.RollMax
+	c.PitchMin = t.PitchMin
+	c.PitchMax = t.PitchMax
+	c.YawMin = t.YawMin
+	c.YawMax = t.YawMax
+	c.GimbalDeviceCompid = t.GimbalDeviceCompid
+	return c
+}
+
+func (t *GimbalDeviceInformation) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GimbalDeviceInformation) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.VendorName = [32]uint8{}
+	t.ModelName = [32]uint8{}
+	t.CustomName = [32]uint8{}
+	t.FirmwareVersion = 0
+	t.HardwareVersion = 0
+	t.Uid = 0
+	t.CapFlags = 0
+	t.CustomCapFlags = 0
+	t.RollMin = 0
+	t.RollMax = 0
+	t.PitchMin = 0
+	t.PitchMax = 0
+	t.YawMin = 0
+	t.YawMax = 0
+	t.GimbalDeviceCompid = 0
+}
+
+// CloneGimbalDeviceInformationSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGimbalDeviceInformationSlice(dst, src []GimbalDeviceInformation) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

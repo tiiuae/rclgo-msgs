@@ -60,13 +60,36 @@ func NewTestMotor() *TestMotor {
 	return &self
 }
 
-func (t *TestMotor) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TestMotor) Clone() *TestMotor {
+	c := &TestMotor{}
+	c.Timestamp = t.Timestamp
+	c.Action = t.Action
+	c.MotorNumber = t.MotorNumber
+	c.Value = t.Value
+	c.TimeoutMs = t.TimeoutMs
+	c.DriverInstance = t.DriverInstance
+	return c
+}
+
+func (t *TestMotor) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TestMotor) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Action = 0
+	t.MotorNumber = 0
+	t.Value = 0
+	t.TimeoutMs = 0
+	t.DriverInstance = 0
+}
+
+// CloneTestMotorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTestMotorSlice(dst, src []TestMotor) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

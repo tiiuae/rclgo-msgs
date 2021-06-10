@@ -60,13 +60,48 @@ func NewHomePosition() *HomePosition {
 	return &self
 }
 
-func (t *HomePosition) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *HomePosition) Clone() *HomePosition {
+	c := &HomePosition{}
+	c.Timestamp = t.Timestamp
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.Yaw = t.Yaw
+	c.ValidAlt = t.ValidAlt
+	c.ValidHpos = t.ValidHpos
+	c.ValidLpos = t.ValidLpos
+	c.ManualHome = t.ManualHome
+	return c
+}
+
+func (t *HomePosition) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *HomePosition) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.Yaw = 0
+	t.ValidAlt = false
+	t.ValidHpos = false
+	t.ValidLpos = false
+	t.ManualHome = false
+}
+
+// CloneHomePositionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneHomePositionSlice(dst, src []HomePosition) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

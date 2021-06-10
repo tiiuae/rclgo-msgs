@@ -55,13 +55,38 @@ func NewGetPointMapROI_Request() *GetPointMapROI_Request {
 	return &self
 }
 
-func (t *GetPointMapROI_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetPointMapROI_Request) Clone() *GetPointMapROI_Request {
+	c := &GetPointMapROI_Request{}
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.R = t.R
+	c.LX = t.LX
+	c.LY = t.LY
+	c.LZ = t.LZ
+	return c
+}
+
+func (t *GetPointMapROI_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetPointMapROI_Request) SetDefaults() {
-	
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.R = 0
+	t.LX = 0
+	t.LY = 0
+	t.LZ = 0
+}
+
+// CloneGetPointMapROI_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetPointMapROI_RequestSlice(dst, src []GetPointMapROI_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

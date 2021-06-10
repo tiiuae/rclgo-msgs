@@ -49,13 +49,26 @@ func NewSetMap_Response() *SetMap_Response {
 	return &self
 }
 
-func (t *SetMap_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetMap_Response) Clone() *SetMap_Response {
+	c := &SetMap_Response{}
+	c.Success = t.Success
+	return c
+}
+
+func (t *SetMap_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetMap_Response) SetDefaults() {
-	
+	t.Success = false
+}
+
+// CloneSetMap_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetMap_ResponseSlice(dst, src []SetMap_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

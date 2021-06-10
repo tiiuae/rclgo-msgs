@@ -51,13 +51,34 @@ func NewListNodes_Response() *ListNodes_Response {
 	return &self
 }
 
-func (t *ListNodes_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ListNodes_Response) Clone() *ListNodes_Response {
+	c := &ListNodes_Response{}
+	if t.FullNodeNames != nil {
+		c.FullNodeNames = make([]string, len(t.FullNodeNames))
+		copy(c.FullNodeNames, t.FullNodeNames)
+	}
+	if t.UniqueIds != nil {
+		c.UniqueIds = make([]uint64, len(t.UniqueIds))
+		copy(c.UniqueIds, t.UniqueIds)
+	}
+	return c
+}
+
+func (t *ListNodes_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ListNodes_Response) SetDefaults() {
-	
+	t.FullNodeNames = nil
+	t.UniqueIds = nil
+}
+
+// CloneListNodes_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneListNodes_ResponseSlice(dst, src []ListNodes_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

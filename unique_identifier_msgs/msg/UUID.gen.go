@@ -50,13 +50,26 @@ func NewUUID() *UUID {
 	return &self
 }
 
-func (t *UUID) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UUID) Clone() *UUID {
+	c := &UUID{}
+	c.Uuid = t.Uuid
+	return c
+}
+
+func (t *UUID) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UUID) SetDefaults() {
-	
+	t.Uuid = [16]uint8{}
+}
+
+// CloneUUIDSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUUIDSlice(dst, src []UUID) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

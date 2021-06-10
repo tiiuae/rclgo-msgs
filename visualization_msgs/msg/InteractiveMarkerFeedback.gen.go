@@ -70,16 +70,42 @@ func NewInteractiveMarkerFeedback() *InteractiveMarkerFeedback {
 	return &self
 }
 
-func (t *InteractiveMarkerFeedback) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InteractiveMarkerFeedback) Clone() *InteractiveMarkerFeedback {
+	c := &InteractiveMarkerFeedback{}
+	c.Header = *t.Header.Clone()
+	c.ClientId = t.ClientId
+	c.MarkerName = t.MarkerName
+	c.ControlName = t.ControlName
+	c.EventType = t.EventType
+	c.Pose = *t.Pose.Clone()
+	c.MenuEntryId = t.MenuEntryId
+	c.MousePoint = *t.MousePoint.Clone()
+	c.MousePointValid = t.MousePointValid
+	return c
+}
+
+func (t *InteractiveMarkerFeedback) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InteractiveMarkerFeedback) SetDefaults() {
 	t.Header.SetDefaults()
+	t.ClientId = ""
+	t.MarkerName = ""
+	t.ControlName = ""
+	t.EventType = 0
 	t.Pose.SetDefaults()
+	t.MenuEntryId = 0
 	t.MousePoint.SetDefaults()
-	
+	t.MousePointValid = false
+}
+
+// CloneInteractiveMarkerFeedbackSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInteractiveMarkerFeedbackSlice(dst, src []InteractiveMarkerFeedback) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

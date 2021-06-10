@@ -56,14 +56,44 @@ func NewParameterDescriptor() *ParameterDescriptor {
 	return &self
 }
 
-func (t *ParameterDescriptor) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParameterDescriptor) Clone() *ParameterDescriptor {
+	c := &ParameterDescriptor{}
+	c.Name = t.Name
+	c.Type = t.Type
+	c.Description = t.Description
+	c.AdditionalConstraints = t.AdditionalConstraints
+	c.ReadOnly = t.ReadOnly
+	if t.FloatingPointRange != nil {
+		c.FloatingPointRange = make([]FloatingPointRange, len(t.FloatingPointRange))
+		CloneFloatingPointRangeSlice(c.FloatingPointRange, t.FloatingPointRange)
+	}
+	if t.IntegerRange != nil {
+		c.IntegerRange = make([]IntegerRange, len(t.IntegerRange))
+		CloneIntegerRangeSlice(c.IntegerRange, t.IntegerRange)
+	}
+	return c
+}
+
+func (t *ParameterDescriptor) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParameterDescriptor) SetDefaults() {
+	t.Name = ""
+	t.Type = 0
+	t.Description = ""
+	t.AdditionalConstraints = ""
 	t.ReadOnly = false
-	
+	t.FloatingPointRange = nil
+	t.IntegerRange = nil
+}
+
+// CloneParameterDescriptorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterDescriptorSlice(dst, src []ParameterDescriptor) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

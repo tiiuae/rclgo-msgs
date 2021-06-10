@@ -64,13 +64,40 @@ func NewVehicleRoi() *VehicleRoi {
 	return &self
 }
 
-func (t *VehicleRoi) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleRoi) Clone() *VehicleRoi {
+	c := &VehicleRoi{}
+	c.Timestamp = t.Timestamp
+	c.Mode = t.Mode
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.RollOffset = t.RollOffset
+	c.PitchOffset = t.PitchOffset
+	c.YawOffset = t.YawOffset
+	return c
+}
+
+func (t *VehicleRoi) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleRoi) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Mode = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.RollOffset = 0
+	t.PitchOffset = 0
+	t.YawOffset = 0
+}
+
+// CloneVehicleRoiSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleRoiSlice(dst, src []VehicleRoi) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

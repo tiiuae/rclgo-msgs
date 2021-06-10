@@ -50,13 +50,26 @@ func NewKill_Request() *Kill_Request {
 	return &self
 }
 
-func (t *Kill_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Kill_Request) Clone() *Kill_Request {
+	c := &Kill_Request{}
+	c.Name = t.Name
+	return c
+}
+
+func (t *Kill_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Kill_Request) SetDefaults() {
-	
+	t.Name = ""
+}
+
+// CloneKill_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneKill_RequestSlice(dst, src []Kill_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -55,13 +55,38 @@ func NewPing() *Ping {
 	return &self
 }
 
-func (t *Ping) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Ping) Clone() *Ping {
+	c := &Ping{}
+	c.Timestamp = t.Timestamp
+	c.PingTime = t.PingTime
+	c.PingSequence = t.PingSequence
+	c.DroppedPackets = t.DroppedPackets
+	c.RttMs = t.RttMs
+	c.SystemId = t.SystemId
+	c.ComponentId = t.ComponentId
+	return c
+}
+
+func (t *Ping) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Ping) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.PingTime = 0
+	t.PingSequence = 0
+	t.DroppedPackets = 0
+	t.RttMs = 0
+	t.SystemId = 0
+	t.ComponentId = 0
+}
+
+// ClonePingSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePingSlice(dst, src []Ping) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

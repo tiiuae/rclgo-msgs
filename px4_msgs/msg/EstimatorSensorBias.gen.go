@@ -66,13 +66,58 @@ func NewEstimatorSensorBias() *EstimatorSensorBias {
 	return &self
 }
 
-func (t *EstimatorSensorBias) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorSensorBias) Clone() *EstimatorSensorBias {
+	c := &EstimatorSensorBias{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.GyroDeviceId = t.GyroDeviceId
+	c.GyroBias = t.GyroBias
+	c.GyroBiasLimit = t.GyroBiasLimit
+	c.GyroBiasVariance = t.GyroBiasVariance
+	c.GyroBiasValid = t.GyroBiasValid
+	c.AccelDeviceId = t.AccelDeviceId
+	c.AccelBias = t.AccelBias
+	c.AccelBiasLimit = t.AccelBiasLimit
+	c.AccelBiasVariance = t.AccelBiasVariance
+	c.AccelBiasValid = t.AccelBiasValid
+	c.MagDeviceId = t.MagDeviceId
+	c.MagBias = t.MagBias
+	c.MagBiasLimit = t.MagBiasLimit
+	c.MagBiasVariance = t.MagBiasVariance
+	c.MagBiasValid = t.MagBiasValid
+	return c
+}
+
+func (t *EstimatorSensorBias) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorSensorBias) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.GyroDeviceId = 0
+	t.GyroBias = [3]float32{}
+	t.GyroBiasLimit = 0
+	t.GyroBiasVariance = [3]float32{}
+	t.GyroBiasValid = false
+	t.AccelDeviceId = 0
+	t.AccelBias = [3]float32{}
+	t.AccelBiasLimit = 0
+	t.AccelBiasVariance = [3]float32{}
+	t.AccelBiasValid = false
+	t.MagDeviceId = 0
+	t.MagBias = [3]float32{}
+	t.MagBiasLimit = 0
+	t.MagBiasVariance = [3]float32{}
+	t.MagBiasValid = false
+}
+
+// CloneEstimatorSensorBiasSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorSensorBiasSlice(dst, src []EstimatorSensorBias) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

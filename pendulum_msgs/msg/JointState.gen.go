@@ -51,13 +51,30 @@ func NewJointState() *JointState {
 	return &self
 }
 
-func (t *JointState) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *JointState) Clone() *JointState {
+	c := &JointState{}
+	c.Position = t.Position
+	c.Velocity = t.Velocity
+	c.Effort = t.Effort
+	return c
+}
+
+func (t *JointState) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *JointState) SetDefaults() {
-	
+	t.Position = 0
+	t.Velocity = 0
+	t.Effort = 0
+}
+
+// CloneJointStateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneJointStateSlice(dst, src []JointState) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

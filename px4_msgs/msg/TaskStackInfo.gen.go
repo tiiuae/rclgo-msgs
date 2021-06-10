@@ -55,13 +55,30 @@ func NewTaskStackInfo() *TaskStackInfo {
 	return &self
 }
 
-func (t *TaskStackInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TaskStackInfo) Clone() *TaskStackInfo {
+	c := &TaskStackInfo{}
+	c.Timestamp = t.Timestamp
+	c.StackFree = t.StackFree
+	c.TaskName = t.TaskName
+	return c
+}
+
+func (t *TaskStackInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TaskStackInfo) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.StackFree = 0
+	t.TaskName = [24]byte{}
+}
+
+// CloneTaskStackInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTaskStackInfoSlice(dst, src []TaskStackInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

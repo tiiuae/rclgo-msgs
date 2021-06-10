@@ -58,13 +58,28 @@ func NewTakeoffStatus() *TakeoffStatus {
 	return &self
 }
 
-func (t *TakeoffStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TakeoffStatus) Clone() *TakeoffStatus {
+	c := &TakeoffStatus{}
+	c.Timestamp = t.Timestamp
+	c.TakeoffState = t.TakeoffState
+	return c
+}
+
+func (t *TakeoffStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TakeoffStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TakeoffState = 0
+}
+
+// CloneTakeoffStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTakeoffStatusSlice(dst, src []TakeoffStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

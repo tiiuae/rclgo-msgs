@@ -52,13 +52,32 @@ func NewPwmInput() *PwmInput {
 	return &self
 }
 
-func (t *PwmInput) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PwmInput) Clone() *PwmInput {
+	c := &PwmInput{}
+	c.Timestamp = t.Timestamp
+	c.ErrorCount = t.ErrorCount
+	c.PulseWidth = t.PulseWidth
+	c.Period = t.Period
+	return c
+}
+
+func (t *PwmInput) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PwmInput) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.ErrorCount = 0
+	t.PulseWidth = 0
+	t.Period = 0
+}
+
+// ClonePwmInputSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePwmInputSlice(dst, src []PwmInput) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

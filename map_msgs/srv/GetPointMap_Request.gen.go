@@ -48,13 +48,24 @@ func NewGetPointMap_Request() *GetPointMap_Request {
 	return &self
 }
 
-func (t *GetPointMap_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetPointMap_Request) Clone() *GetPointMap_Request {
+	c := &GetPointMap_Request{}
+	return c
+}
+
+func (t *GetPointMap_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetPointMap_Request) SetDefaults() {
-	
+}
+
+// CloneGetPointMap_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetPointMap_RequestSlice(dst, src []GetPointMap_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

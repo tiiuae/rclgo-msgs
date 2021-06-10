@@ -53,13 +53,34 @@ func NewLandingTargetInnovations() *LandingTargetInnovations {
 	return &self
 }
 
-func (t *LandingTargetInnovations) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LandingTargetInnovations) Clone() *LandingTargetInnovations {
+	c := &LandingTargetInnovations{}
+	c.Timestamp = t.Timestamp
+	c.InnovX = t.InnovX
+	c.InnovY = t.InnovY
+	c.InnovCovX = t.InnovCovX
+	c.InnovCovY = t.InnovCovY
+	return c
+}
+
+func (t *LandingTargetInnovations) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LandingTargetInnovations) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.InnovX = 0
+	t.InnovY = 0
+	t.InnovCovX = 0
+	t.InnovCovY = 0
+}
+
+// CloneLandingTargetInnovationsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLandingTargetInnovationsSlice(dst, src []LandingTargetInnovations) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

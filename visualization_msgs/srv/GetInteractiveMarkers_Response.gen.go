@@ -52,13 +52,31 @@ func NewGetInteractiveMarkers_Response() *GetInteractiveMarkers_Response {
 	return &self
 }
 
-func (t *GetInteractiveMarkers_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetInteractiveMarkers_Response) Clone() *GetInteractiveMarkers_Response {
+	c := &GetInteractiveMarkers_Response{}
+	c.SequenceNumber = t.SequenceNumber
+	if t.Markers != nil {
+		c.Markers = make([]visualization_msgs_msg.InteractiveMarker, len(t.Markers))
+		visualization_msgs_msg.CloneInteractiveMarkerSlice(c.Markers, t.Markers)
+	}
+	return c
+}
+
+func (t *GetInteractiveMarkers_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetInteractiveMarkers_Response) SetDefaults() {
-	
+	t.SequenceNumber = 0
+	t.Markers = nil
+}
+
+// CloneGetInteractiveMarkers_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetInteractiveMarkers_ResponseSlice(dst, src []GetInteractiveMarkers_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

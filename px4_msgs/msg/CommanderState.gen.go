@@ -67,13 +67,28 @@ func NewCommanderState() *CommanderState {
 	return &self
 }
 
-func (t *CommanderState) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CommanderState) Clone() *CommanderState {
+	c := &CommanderState{}
+	c.Timestamp = t.Timestamp
+	c.MainState = t.MainState
+	return c
+}
+
+func (t *CommanderState) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CommanderState) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.MainState = 0
+}
+
+// CloneCommanderStateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCommanderStateSlice(dst, src []CommanderState) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

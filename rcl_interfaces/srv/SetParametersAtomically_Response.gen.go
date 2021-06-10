@@ -51,14 +51,26 @@ func NewSetParametersAtomically_Response() *SetParametersAtomically_Response {
 	return &self
 }
 
-func (t *SetParametersAtomically_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetParametersAtomically_Response) Clone() *SetParametersAtomically_Response {
+	c := &SetParametersAtomically_Response{}
+	c.Result = *t.Result.Clone()
+	return c
+}
+
+func (t *SetParametersAtomically_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetParametersAtomically_Response) SetDefaults() {
 	t.Result.SetDefaults()
-	
+}
+
+// CloneSetParametersAtomically_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetParametersAtomically_ResponseSlice(dst, src []SetParametersAtomically_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

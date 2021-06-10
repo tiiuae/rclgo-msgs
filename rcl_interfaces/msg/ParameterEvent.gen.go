@@ -56,14 +56,43 @@ func NewParameterEvent() *ParameterEvent {
 	return &self
 }
 
-func (t *ParameterEvent) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParameterEvent) Clone() *ParameterEvent {
+	c := &ParameterEvent{}
+	c.Stamp = *t.Stamp.Clone()
+	c.Node = t.Node
+	if t.NewParameters != nil {
+		c.NewParameters = make([]Parameter, len(t.NewParameters))
+		CloneParameterSlice(c.NewParameters, t.NewParameters)
+	}
+	if t.ChangedParameters != nil {
+		c.ChangedParameters = make([]Parameter, len(t.ChangedParameters))
+		CloneParameterSlice(c.ChangedParameters, t.ChangedParameters)
+	}
+	if t.DeletedParameters != nil {
+		c.DeletedParameters = make([]Parameter, len(t.DeletedParameters))
+		CloneParameterSlice(c.DeletedParameters, t.DeletedParameters)
+	}
+	return c
+}
+
+func (t *ParameterEvent) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParameterEvent) SetDefaults() {
 	t.Stamp.SetDefaults()
-	
+	t.Node = ""
+	t.NewParameters = nil
+	t.ChangedParameters = nil
+	t.DeletedParameters = nil
+}
+
+// CloneParameterEventSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterEventSlice(dst, src []ParameterEvent) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

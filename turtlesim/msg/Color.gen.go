@@ -51,13 +51,30 @@ func NewColor() *Color {
 	return &self
 }
 
-func (t *Color) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Color) Clone() *Color {
+	c := &Color{}
+	c.R = t.R
+	c.G = t.G
+	c.B = t.B
+	return c
+}
+
+func (t *Color) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Color) SetDefaults() {
-	
+	t.R = 0
+	t.G = 0
+	t.B = 0
+}
+
+// CloneColorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneColorSlice(dst, src []Color) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

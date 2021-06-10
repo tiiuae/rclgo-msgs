@@ -56,13 +56,38 @@ func NewProjectedMapInfo() *ProjectedMapInfo {
 	return &self
 }
 
-func (t *ProjectedMapInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ProjectedMapInfo) Clone() *ProjectedMapInfo {
+	c := &ProjectedMapInfo{}
+	c.FrameId = t.FrameId
+	c.X = t.X
+	c.Y = t.Y
+	c.Width = t.Width
+	c.Height = t.Height
+	c.MinZ = t.MinZ
+	c.MaxZ = t.MaxZ
+	return c
+}
+
+func (t *ProjectedMapInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ProjectedMapInfo) SetDefaults() {
-	
+	t.FrameId = ""
+	t.X = 0
+	t.Y = 0
+	t.Width = 0
+	t.Height = 0
+	t.MinZ = 0
+	t.MaxZ = 0
+}
+
+// CloneProjectedMapInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneProjectedMapInfoSlice(dst, src []ProjectedMapInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

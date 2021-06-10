@@ -64,13 +64,40 @@ func NewControlAllocatorStatus() *ControlAllocatorStatus {
 	return &self
 }
 
-func (t *ControlAllocatorStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ControlAllocatorStatus) Clone() *ControlAllocatorStatus {
+	c := &ControlAllocatorStatus{}
+	c.Timestamp = t.Timestamp
+	c.TorqueSetpointAchieved = t.TorqueSetpointAchieved
+	c.AllocatedTorque = t.AllocatedTorque
+	c.UnallocatedTorque = t.UnallocatedTorque
+	c.ThrustSetpointAchieved = t.ThrustSetpointAchieved
+	c.AllocatedThrust = t.AllocatedThrust
+	c.UnallocatedThrust = t.UnallocatedThrust
+	c.ActuatorSaturation = t.ActuatorSaturation
+	return c
+}
+
+func (t *ControlAllocatorStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ControlAllocatorStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TorqueSetpointAchieved = false
+	t.AllocatedTorque = [3]float32{}
+	t.UnallocatedTorque = [3]float32{}
+	t.ThrustSetpointAchieved = false
+	t.AllocatedThrust = [3]float32{}
+	t.UnallocatedThrust = [3]float32{}
+	t.ActuatorSaturation = [16]int8{}
+}
+
+// CloneControlAllocatorStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneControlAllocatorStatusSlice(dst, src []ControlAllocatorStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -53,13 +53,38 @@ func NewNodeEntitiesInfo() *NodeEntitiesInfo {
 	return &self
 }
 
-func (t *NodeEntitiesInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *NodeEntitiesInfo) Clone() *NodeEntitiesInfo {
+	c := &NodeEntitiesInfo{}
+	c.NodeNamespace = t.NodeNamespace
+	c.NodeName = t.NodeName
+	if t.ReaderGidSeq != nil {
+		c.ReaderGidSeq = make([]Gid, len(t.ReaderGidSeq))
+		CloneGidSlice(c.ReaderGidSeq, t.ReaderGidSeq)
+	}
+	if t.WriterGidSeq != nil {
+		c.WriterGidSeq = make([]Gid, len(t.WriterGidSeq))
+		CloneGidSlice(c.WriterGidSeq, t.WriterGidSeq)
+	}
+	return c
+}
+
+func (t *NodeEntitiesInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *NodeEntitiesInfo) SetDefaults() {
-	
+	t.NodeNamespace = ""
+	t.NodeName = ""
+	t.ReaderGidSeq = nil
+	t.WriterGidSeq = nil
+}
+
+// CloneNodeEntitiesInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneNodeEntitiesInfoSlice(dst, src []NodeEntitiesInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

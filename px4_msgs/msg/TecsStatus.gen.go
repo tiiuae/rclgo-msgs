@@ -83,13 +83,76 @@ func NewTecsStatus() *TecsStatus {
 	return &self
 }
 
-func (t *TecsStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TecsStatus) Clone() *TecsStatus {
+	c := &TecsStatus{}
+	c.Timestamp = t.Timestamp
+	c.AltitudeSp = t.AltitudeSp
+	c.AltitudeFiltered = t.AltitudeFiltered
+	c.HeightRateSetpoint = t.HeightRateSetpoint
+	c.HeightRate = t.HeightRate
+	c.EquivalentAirspeedSp = t.EquivalentAirspeedSp
+	c.TrueAirspeedSp = t.TrueAirspeedSp
+	c.TrueAirspeedFiltered = t.TrueAirspeedFiltered
+	c.TrueAirspeedDerivativeSp = t.TrueAirspeedDerivativeSp
+	c.TrueAirspeedDerivative = t.TrueAirspeedDerivative
+	c.TotalEnergyError = t.TotalEnergyError
+	c.EnergyDistributionError = t.EnergyDistributionError
+	c.TotalEnergyRateError = t.TotalEnergyRateError
+	c.EnergyDistributionRateError = t.EnergyDistributionRateError
+	c.TotalEnergy = t.TotalEnergy
+	c.TotalEnergyRate = t.TotalEnergyRate
+	c.TotalEnergyBalance = t.TotalEnergyBalance
+	c.TotalEnergyBalanceRate = t.TotalEnergyBalanceRate
+	c.TotalEnergySp = t.TotalEnergySp
+	c.TotalEnergyRateSp = t.TotalEnergyRateSp
+	c.TotalEnergyBalanceSp = t.TotalEnergyBalanceSp
+	c.TotalEnergyBalanceRateSp = t.TotalEnergyBalanceRateSp
+	c.ThrottleInteg = t.ThrottleInteg
+	c.PitchInteg = t.PitchInteg
+	c.ThrottleSp = t.ThrottleSp
+	c.Mode = t.Mode
+	return c
+}
+
+func (t *TecsStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TecsStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AltitudeSp = 0
+	t.AltitudeFiltered = 0
+	t.HeightRateSetpoint = 0
+	t.HeightRate = 0
+	t.EquivalentAirspeedSp = 0
+	t.TrueAirspeedSp = 0
+	t.TrueAirspeedFiltered = 0
+	t.TrueAirspeedDerivativeSp = 0
+	t.TrueAirspeedDerivative = 0
+	t.TotalEnergyError = 0
+	t.EnergyDistributionError = 0
+	t.TotalEnergyRateError = 0
+	t.EnergyDistributionRateError = 0
+	t.TotalEnergy = 0
+	t.TotalEnergyRate = 0
+	t.TotalEnergyBalance = 0
+	t.TotalEnergyBalanceRate = 0
+	t.TotalEnergySp = 0
+	t.TotalEnergyRateSp = 0
+	t.TotalEnergyBalanceSp = 0
+	t.TotalEnergyBalanceRateSp = 0
+	t.ThrottleInteg = 0
+	t.PitchInteg = 0
+	t.ThrottleSp = 0
+	t.Mode = 0
+}
+
+// CloneTecsStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTecsStatusSlice(dst, src []TecsStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

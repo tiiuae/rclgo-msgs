@@ -65,13 +65,31 @@ func NewSolidPrimitive() *SolidPrimitive {
 	return &self
 }
 
-func (t *SolidPrimitive) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SolidPrimitive) Clone() *SolidPrimitive {
+	c := &SolidPrimitive{}
+	c.Type = t.Type
+	if t.Dimensions != nil {
+		c.Dimensions = make([]float64, len(t.Dimensions))
+		copy(c.Dimensions, t.Dimensions)
+	}
+	return c
+}
+
+func (t *SolidPrimitive) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SolidPrimitive) SetDefaults() {
-	
+	t.Type = 0
+	t.Dimensions = nil
+}
+
+// CloneSolidPrimitiveSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSolidPrimitiveSlice(dst, src []SolidPrimitive) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

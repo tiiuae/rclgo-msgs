@@ -62,13 +62,38 @@ func NewSensorCombined() *SensorCombined {
 	return &self
 }
 
-func (t *SensorCombined) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorCombined) Clone() *SensorCombined {
+	c := &SensorCombined{}
+	c.Timestamp = t.Timestamp
+	c.GyroRad = t.GyroRad
+	c.GyroIntegralDt = t.GyroIntegralDt
+	c.AccelerometerTimestampRelative = t.AccelerometerTimestampRelative
+	c.AccelerometerMS2 = t.AccelerometerMS2
+	c.AccelerometerIntegralDt = t.AccelerometerIntegralDt
+	c.AccelerometerClipping = t.AccelerometerClipping
+	return c
+}
+
+func (t *SensorCombined) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorCombined) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.GyroRad = [3]float32{}
+	t.GyroIntegralDt = 0
+	t.AccelerometerTimestampRelative = 0
+	t.AccelerometerMS2 = [3]float32{}
+	t.AccelerometerIntegralDt = 0
+	t.AccelerometerClipping = 0
+}
+
+// CloneSensorCombinedSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorCombinedSlice(dst, src []SensorCombined) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

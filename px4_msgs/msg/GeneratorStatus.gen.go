@@ -85,13 +85,48 @@ func NewGeneratorStatus() *GeneratorStatus {
 	return &self
 }
 
-func (t *GeneratorStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GeneratorStatus) Clone() *GeneratorStatus {
+	c := &GeneratorStatus{}
+	c.Timestamp = t.Timestamp
+	c.Status = t.Status
+	c.BatteryCurrent = t.BatteryCurrent
+	c.LoadCurrent = t.LoadCurrent
+	c.PowerGenerated = t.PowerGenerated
+	c.BusVoltage = t.BusVoltage
+	c.BatCurrentSetpoint = t.BatCurrentSetpoint
+	c.Runtime = t.Runtime
+	c.TimeUntilMaintenance = t.TimeUntilMaintenance
+	c.GeneratorSpeed = t.GeneratorSpeed
+	c.RectifierTemperature = t.RectifierTemperature
+	c.GeneratorTemperature = t.GeneratorTemperature
+	return c
+}
+
+func (t *GeneratorStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GeneratorStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Status = 0
+	t.BatteryCurrent = 0
+	t.LoadCurrent = 0
+	t.PowerGenerated = 0
+	t.BusVoltage = 0
+	t.BatCurrentSetpoint = 0
+	t.Runtime = 0
+	t.TimeUntilMaintenance = 0
+	t.GeneratorSpeed = 0
+	t.RectifierTemperature = 0
+	t.GeneratorTemperature = 0
+}
+
+// CloneGeneratorStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGeneratorStatusSlice(dst, src []GeneratorStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

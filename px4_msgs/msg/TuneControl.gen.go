@@ -81,13 +81,38 @@ func NewTuneControl() *TuneControl {
 	return &self
 }
 
-func (t *TuneControl) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TuneControl) Clone() *TuneControl {
+	c := &TuneControl{}
+	c.Timestamp = t.Timestamp
+	c.TuneId = t.TuneId
+	c.TuneOverride = t.TuneOverride
+	c.Frequency = t.Frequency
+	c.Duration = t.Duration
+	c.Silence = t.Silence
+	c.Volume = t.Volume
+	return c
+}
+
+func (t *TuneControl) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TuneControl) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TuneId = 0
+	t.TuneOverride = false
+	t.Frequency = 0
+	t.Duration = 0
+	t.Silence = 0
+	t.Volume = 0
+}
+
+// CloneTuneControlSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTuneControlSlice(dst, src []TuneControl) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

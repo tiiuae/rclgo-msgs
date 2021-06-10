@@ -65,13 +65,58 @@ func NewLandingTargetPose() *LandingTargetPose {
 	return &self
 }
 
-func (t *LandingTargetPose) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LandingTargetPose) Clone() *LandingTargetPose {
+	c := &LandingTargetPose{}
+	c.Timestamp = t.Timestamp
+	c.IsStatic = t.IsStatic
+	c.RelPosValid = t.RelPosValid
+	c.RelVelValid = t.RelVelValid
+	c.XRel = t.XRel
+	c.YRel = t.YRel
+	c.ZRel = t.ZRel
+	c.VxRel = t.VxRel
+	c.VyRel = t.VyRel
+	c.CovXRel = t.CovXRel
+	c.CovYRel = t.CovYRel
+	c.CovVxRel = t.CovVxRel
+	c.CovVyRel = t.CovVyRel
+	c.AbsPosValid = t.AbsPosValid
+	c.XAbs = t.XAbs
+	c.YAbs = t.YAbs
+	c.ZAbs = t.ZAbs
+	return c
+}
+
+func (t *LandingTargetPose) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LandingTargetPose) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.IsStatic = false
+	t.RelPosValid = false
+	t.RelVelValid = false
+	t.XRel = 0
+	t.YRel = 0
+	t.ZRel = 0
+	t.VxRel = 0
+	t.VyRel = 0
+	t.CovXRel = 0
+	t.CovYRel = 0
+	t.CovVxRel = 0
+	t.CovVyRel = 0
+	t.AbsPosValid = false
+	t.XAbs = 0
+	t.YAbs = 0
+	t.ZAbs = 0
+}
+
+// CloneLandingTargetPoseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLandingTargetPoseSlice(dst, src []LandingTargetPose) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

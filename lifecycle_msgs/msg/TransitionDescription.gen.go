@@ -51,16 +51,30 @@ func NewTransitionDescription() *TransitionDescription {
 	return &self
 }
 
-func (t *TransitionDescription) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TransitionDescription) Clone() *TransitionDescription {
+	c := &TransitionDescription{}
+	c.Transition = *t.Transition.Clone()
+	c.StartState = *t.StartState.Clone()
+	c.GoalState = *t.GoalState.Clone()
+	return c
+}
+
+func (t *TransitionDescription) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TransitionDescription) SetDefaults() {
 	t.Transition.SetDefaults()
 	t.StartState.SetDefaults()
 	t.GoalState.SetDefaults()
-	
+}
+
+// CloneTransitionDescriptionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTransitionDescriptionSlice(dst, src []TransitionDescription) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

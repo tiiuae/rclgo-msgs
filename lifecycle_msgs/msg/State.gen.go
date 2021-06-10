@@ -64,13 +64,28 @@ func NewState() *State {
 	return &self
 }
 
-func (t *State) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *State) Clone() *State {
+	c := &State{}
+	c.Id = t.Id
+	c.Label = t.Label
+	return c
+}
+
+func (t *State) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *State) SetDefaults() {
-	
+	t.Id = 0
+	t.Label = ""
+}
+
+// CloneStateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneStateSlice(dst, src []State) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

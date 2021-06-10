@@ -95,13 +95,54 @@ func NewTransponderReport() *TransponderReport {
 	return &self
 }
 
-func (t *TransponderReport) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TransponderReport) Clone() *TransponderReport {
+	c := &TransponderReport{}
+	c.Timestamp = t.Timestamp
+	c.IcaoAddress = t.IcaoAddress
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.AltitudeType = t.AltitudeType
+	c.Altitude = t.Altitude
+	c.Heading = t.Heading
+	c.HorVelocity = t.HorVelocity
+	c.VerVelocity = t.VerVelocity
+	c.Callsign = t.Callsign
+	c.EmitterType = t.EmitterType
+	c.Tslc = t.Tslc
+	c.Flags = t.Flags
+	c.Squawk = t.Squawk
+	c.UasId = t.UasId
+	return c
+}
+
+func (t *TransponderReport) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TransponderReport) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.IcaoAddress = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.AltitudeType = 0
+	t.Altitude = 0
+	t.Heading = 0
+	t.HorVelocity = 0
+	t.VerVelocity = 0
+	t.Callsign = [9]byte{}
+	t.EmitterType = 0
+	t.Tslc = 0
+	t.Flags = 0
+	t.Squawk = 0
+	t.UasId = [18]uint8{}
+}
+
+// CloneTransponderReportSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTransponderReportSlice(dst, src []TransponderReport) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

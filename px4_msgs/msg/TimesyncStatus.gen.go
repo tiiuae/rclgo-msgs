@@ -53,13 +53,34 @@ func NewTimesyncStatus() *TimesyncStatus {
 	return &self
 }
 
-func (t *TimesyncStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TimesyncStatus) Clone() *TimesyncStatus {
+	c := &TimesyncStatus{}
+	c.Timestamp = t.Timestamp
+	c.RemoteTimestamp = t.RemoteTimestamp
+	c.ObservedOffset = t.ObservedOffset
+	c.EstimatedOffset = t.EstimatedOffset
+	c.RoundTripTime = t.RoundTripTime
+	return c
+}
+
+func (t *TimesyncStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TimesyncStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.RemoteTimestamp = 0
+	t.ObservedOffset = 0
+	t.EstimatedOffset = 0
+	t.RoundTripTime = 0
+}
+
+// CloneTimesyncStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTimesyncStatusSlice(dst, src []TimesyncStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

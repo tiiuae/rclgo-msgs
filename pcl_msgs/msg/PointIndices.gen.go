@@ -53,14 +53,31 @@ func NewPointIndices() *PointIndices {
 	return &self
 }
 
-func (t *PointIndices) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PointIndices) Clone() *PointIndices {
+	c := &PointIndices{}
+	c.Header = *t.Header.Clone()
+	if t.Indices != nil {
+		c.Indices = make([]int32, len(t.Indices))
+		copy(c.Indices, t.Indices)
+	}
+	return c
+}
+
+func (t *PointIndices) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PointIndices) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.Indices = nil
+}
+
+// ClonePointIndicesSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePointIndicesSlice(dst, src []PointIndices) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

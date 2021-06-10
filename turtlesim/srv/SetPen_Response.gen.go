@@ -48,13 +48,24 @@ func NewSetPen_Response() *SetPen_Response {
 	return &self
 }
 
-func (t *SetPen_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetPen_Response) Clone() *SetPen_Response {
+	c := &SetPen_Response{}
+	return c
+}
+
+func (t *SetPen_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetPen_Response) SetDefaults() {
-	
+}
+
+// CloneSetPen_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetPen_ResponseSlice(dst, src []SetPen_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

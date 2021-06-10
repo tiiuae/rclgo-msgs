@@ -57,13 +57,40 @@ func NewYawEstimatorStatus() *YawEstimatorStatus {
 	return &self
 }
 
-func (t *YawEstimatorStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *YawEstimatorStatus) Clone() *YawEstimatorStatus {
+	c := &YawEstimatorStatus{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.YawComposite = t.YawComposite
+	c.YawVariance = t.YawVariance
+	c.Yaw = t.Yaw
+	c.InnovVn = t.InnovVn
+	c.InnovVe = t.InnovVe
+	c.Weight = t.Weight
+	return c
+}
+
+func (t *YawEstimatorStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *YawEstimatorStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.YawComposite = 0
+	t.YawVariance = 0
+	t.Yaw = [5]float32{}
+	t.InnovVn = [5]float32{}
+	t.InnovVe = [5]float32{}
+	t.Weight = [5]float32{}
+}
+
+// CloneYawEstimatorStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneYawEstimatorStatusSlice(dst, src []YawEstimatorStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

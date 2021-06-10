@@ -83,13 +83,28 @@ func NewTransition() *Transition {
 	return &self
 }
 
-func (t *Transition) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Transition) Clone() *Transition {
+	c := &Transition{}
+	c.Id = t.Id
+	c.Label = t.Label
+	return c
+}
+
+func (t *Transition) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Transition) SetDefaults() {
-	
+	t.Id = 0
+	t.Label = ""
+}
+
+// CloneTransitionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTransitionSlice(dst, src []Transition) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

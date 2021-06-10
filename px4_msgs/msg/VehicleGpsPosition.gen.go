@@ -75,13 +75,78 @@ func NewVehicleGpsPosition() *VehicleGpsPosition {
 	return &self
 }
 
-func (t *VehicleGpsPosition) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleGpsPosition) Clone() *VehicleGpsPosition {
+	c := &VehicleGpsPosition{}
+	c.Timestamp = t.Timestamp
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.AltEllipsoid = t.AltEllipsoid
+	c.SVarianceMS = t.SVarianceMS
+	c.CVarianceRad = t.CVarianceRad
+	c.FixType = t.FixType
+	c.Eph = t.Eph
+	c.Epv = t.Epv
+	c.Hdop = t.Hdop
+	c.Vdop = t.Vdop
+	c.NoisePerMs = t.NoisePerMs
+	c.JammingIndicator = t.JammingIndicator
+	c.JammingState = t.JammingState
+	c.VelMS = t.VelMS
+	c.VelNMS = t.VelNMS
+	c.VelEMS = t.VelEMS
+	c.VelDMS = t.VelDMS
+	c.CogRad = t.CogRad
+	c.VelNedValid = t.VelNedValid
+	c.TimestampTimeRelative = t.TimestampTimeRelative
+	c.TimeUtcUsec = t.TimeUtcUsec
+	c.SatellitesUsed = t.SatellitesUsed
+	c.Heading = t.Heading
+	c.HeadingOffset = t.HeadingOffset
+	c.Selected = t.Selected
+	return c
+}
+
+func (t *VehicleGpsPosition) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleGpsPosition) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.AltEllipsoid = 0
+	t.SVarianceMS = 0
+	t.CVarianceRad = 0
+	t.FixType = 0
+	t.Eph = 0
+	t.Epv = 0
+	t.Hdop = 0
+	t.Vdop = 0
+	t.NoisePerMs = 0
+	t.JammingIndicator = 0
+	t.JammingState = 0
+	t.VelMS = 0
+	t.VelNMS = 0
+	t.VelEMS = 0
+	t.VelDMS = 0
+	t.CogRad = 0
+	t.VelNedValid = false
+	t.TimestampTimeRelative = 0
+	t.TimeUtcUsec = 0
+	t.SatellitesUsed = 0
+	t.Heading = 0
+	t.HeadingOffset = 0
+	t.Selected = 0
+}
+
+// CloneVehicleGpsPositionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleGpsPositionSlice(dst, src []VehicleGpsPosition) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

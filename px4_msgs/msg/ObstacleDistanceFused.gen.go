@@ -66,13 +66,40 @@ func NewObstacleDistanceFused() *ObstacleDistanceFused {
 	return &self
 }
 
-func (t *ObstacleDistanceFused) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ObstacleDistanceFused) Clone() *ObstacleDistanceFused {
+	c := &ObstacleDistanceFused{}
+	c.Timestamp = t.Timestamp
+	c.Frame = t.Frame
+	c.SensorType = t.SensorType
+	c.Distances = t.Distances
+	c.Increment = t.Increment
+	c.MinDistance = t.MinDistance
+	c.MaxDistance = t.MaxDistance
+	c.AngleOffset = t.AngleOffset
+	return c
+}
+
+func (t *ObstacleDistanceFused) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ObstacleDistanceFused) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Frame = 0
+	t.SensorType = 0
+	t.Distances = [72]uint16{}
+	t.Increment = 0
+	t.MinDistance = 0
+	t.MaxDistance = 0
+	t.AngleOffset = 0
+}
+
+// CloneObstacleDistanceFusedSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneObstacleDistanceFusedSlice(dst, src []ObstacleDistanceFused) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

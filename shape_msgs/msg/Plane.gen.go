@@ -50,13 +50,26 @@ func NewPlane() *Plane {
 	return &self
 }
 
-func (t *Plane) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Plane) Clone() *Plane {
+	c := &Plane{}
+	c.Coef = t.Coef
+	return c
+}
+
+func (t *Plane) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Plane) SetDefaults() {
-	
+	t.Coef = [4]float64{}
+}
+
+// ClonePlaneSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePlaneSlice(dst, src []Plane) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

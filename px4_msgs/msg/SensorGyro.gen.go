@@ -60,13 +60,42 @@ func NewSensorGyro() *SensorGyro {
 	return &self
 }
 
-func (t *SensorGyro) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorGyro) Clone() *SensorGyro {
+	c := &SensorGyro{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DeviceId = t.DeviceId
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.Temperature = t.Temperature
+	c.ErrorCount = t.ErrorCount
+	c.Samples = t.Samples
+	return c
+}
+
+func (t *SensorGyro) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorGyro) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DeviceId = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.Temperature = 0
+	t.ErrorCount = 0
+	t.Samples = 0
+}
+
+// CloneSensorGyroSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorGyroSlice(dst, src []SensorGyro) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

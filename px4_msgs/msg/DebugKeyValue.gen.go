@@ -52,13 +52,30 @@ func NewDebugKeyValue() *DebugKeyValue {
 	return &self
 }
 
-func (t *DebugKeyValue) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DebugKeyValue) Clone() *DebugKeyValue {
+	c := &DebugKeyValue{}
+	c.Timestamp = t.Timestamp
+	c.Key = t.Key
+	c.Value = t.Value
+	return c
+}
+
+func (t *DebugKeyValue) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DebugKeyValue) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Key = [10]byte{}
+	t.Value = 0
+}
+
+// CloneDebugKeyValueSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDebugKeyValueSlice(dst, src []DebugKeyValue) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

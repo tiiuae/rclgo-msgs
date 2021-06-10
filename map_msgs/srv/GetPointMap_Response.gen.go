@@ -51,14 +51,26 @@ func NewGetPointMap_Response() *GetPointMap_Response {
 	return &self
 }
 
-func (t *GetPointMap_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetPointMap_Response) Clone() *GetPointMap_Response {
+	c := &GetPointMap_Response{}
+	c.Map = *t.Map.Clone()
+	return c
+}
+
+func (t *GetPointMap_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetPointMap_Response) SetDefaults() {
 	t.Map.SetDefaults()
-	
+}
+
+// CloneGetPointMap_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetPointMap_ResponseSlice(dst, src []GetPointMap_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

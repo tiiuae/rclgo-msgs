@@ -59,13 +59,34 @@ func NewMenuEntry() *MenuEntry {
 	return &self
 }
 
-func (t *MenuEntry) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MenuEntry) Clone() *MenuEntry {
+	c := &MenuEntry{}
+	c.Id = t.Id
+	c.ParentId = t.ParentId
+	c.Title = t.Title
+	c.Command = t.Command
+	c.CommandType = t.CommandType
+	return c
+}
+
+func (t *MenuEntry) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MenuEntry) SetDefaults() {
-	
+	t.Id = 0
+	t.ParentId = 0
+	t.Title = ""
+	t.Command = ""
+	t.CommandType = 0
+}
+
+// CloneMenuEntrySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMenuEntrySlice(dst, src []MenuEntry) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

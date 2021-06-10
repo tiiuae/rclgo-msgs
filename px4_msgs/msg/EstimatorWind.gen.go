@@ -58,13 +58,44 @@ func NewEstimatorWind() *EstimatorWind {
 	return &self
 }
 
-func (t *EstimatorWind) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorWind) Clone() *EstimatorWind {
+	c := &EstimatorWind{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.WindspeedNorth = t.WindspeedNorth
+	c.WindspeedEast = t.WindspeedEast
+	c.VarianceNorth = t.VarianceNorth
+	c.VarianceEast = t.VarianceEast
+	c.TasInnov = t.TasInnov
+	c.TasInnovVar = t.TasInnovVar
+	c.BetaInnov = t.BetaInnov
+	c.BetaInnovVar = t.BetaInnovVar
+	return c
+}
+
+func (t *EstimatorWind) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorWind) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.WindspeedNorth = 0
+	t.WindspeedEast = 0
+	t.VarianceNorth = 0
+	t.VarianceEast = 0
+	t.TasInnov = 0
+	t.TasInnovVar = 0
+	t.BetaInnov = 0
+	t.BetaInnovVar = 0
+}
+
+// CloneEstimatorWindSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorWindSlice(dst, src []EstimatorWind) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

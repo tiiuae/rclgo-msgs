@@ -67,13 +67,42 @@ func NewEscReport() *EscReport {
 	return &self
 }
 
-func (t *EscReport) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EscReport) Clone() *EscReport {
+	c := &EscReport{}
+	c.Timestamp = t.Timestamp
+	c.EscErrorcount = t.EscErrorcount
+	c.EscRpm = t.EscRpm
+	c.EscVoltage = t.EscVoltage
+	c.EscCurrent = t.EscCurrent
+	c.EscTemperature = t.EscTemperature
+	c.EscAddress = t.EscAddress
+	c.EscState = t.EscState
+	c.Failures = t.Failures
+	return c
+}
+
+func (t *EscReport) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EscReport) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.EscErrorcount = 0
+	t.EscRpm = 0
+	t.EscVoltage = 0
+	t.EscCurrent = 0
+	t.EscTemperature = 0
+	t.EscAddress = 0
+	t.EscState = 0
+	t.Failures = 0
+}
+
+// CloneEscReportSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEscReportSlice(dst, src []EscReport) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

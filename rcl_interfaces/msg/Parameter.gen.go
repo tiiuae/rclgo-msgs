@@ -51,14 +51,28 @@ func NewParameter() *Parameter {
 	return &self
 }
 
-func (t *Parameter) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Parameter) Clone() *Parameter {
+	c := &Parameter{}
+	c.Name = t.Name
+	c.Value = *t.Value.Clone()
+	return c
+}
+
+func (t *Parameter) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Parameter) SetDefaults() {
+	t.Name = ""
 	t.Value.SetDefaults()
-	
+}
+
+// CloneParameterSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterSlice(dst, src []Parameter) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

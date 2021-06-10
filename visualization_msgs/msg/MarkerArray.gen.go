@@ -49,13 +49,29 @@ func NewMarkerArray() *MarkerArray {
 	return &self
 }
 
-func (t *MarkerArray) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MarkerArray) Clone() *MarkerArray {
+	c := &MarkerArray{}
+	if t.Markers != nil {
+		c.Markers = make([]Marker, len(t.Markers))
+		CloneMarkerSlice(c.Markers, t.Markers)
+	}
+	return c
+}
+
+func (t *MarkerArray) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MarkerArray) SetDefaults() {
-	
+	t.Markers = nil
+}
+
+// CloneMarkerArraySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMarkerArraySlice(dst, src []MarkerArray) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

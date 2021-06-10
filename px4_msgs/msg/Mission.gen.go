@@ -52,13 +52,32 @@ func NewMission() *Mission {
 	return &self
 }
 
-func (t *Mission) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Mission) Clone() *Mission {
+	c := &Mission{}
+	c.Timestamp = t.Timestamp
+	c.DatamanId = t.DatamanId
+	c.Count = t.Count
+	c.CurrentSeq = t.CurrentSeq
+	return c
+}
+
+func (t *Mission) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Mission) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.DatamanId = 0
+	t.Count = 0
+	t.CurrentSeq = 0
+}
+
+// CloneMissionSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMissionSlice(dst, src []Mission) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -56,14 +56,46 @@ func NewJointTrajectoryPoint() *JointTrajectoryPoint {
 	return &self
 }
 
-func (t *JointTrajectoryPoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *JointTrajectoryPoint) Clone() *JointTrajectoryPoint {
+	c := &JointTrajectoryPoint{}
+	if t.Positions != nil {
+		c.Positions = make([]float64, len(t.Positions))
+		copy(c.Positions, t.Positions)
+	}
+	if t.Velocities != nil {
+		c.Velocities = make([]float64, len(t.Velocities))
+		copy(c.Velocities, t.Velocities)
+	}
+	if t.Accelerations != nil {
+		c.Accelerations = make([]float64, len(t.Accelerations))
+		copy(c.Accelerations, t.Accelerations)
+	}
+	if t.Effort != nil {
+		c.Effort = make([]float64, len(t.Effort))
+		copy(c.Effort, t.Effort)
+	}
+	c.TimeFromStart = *t.TimeFromStart.Clone()
+	return c
+}
+
+func (t *JointTrajectoryPoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *JointTrajectoryPoint) SetDefaults() {
+	t.Positions = nil
+	t.Velocities = nil
+	t.Accelerations = nil
+	t.Effort = nil
 	t.TimeFromStart.SetDefaults()
-	
+}
+
+// CloneJointTrajectoryPointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneJointTrajectoryPointSlice(dst, src []JointTrajectoryPoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

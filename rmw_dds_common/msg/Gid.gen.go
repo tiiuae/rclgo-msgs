@@ -50,13 +50,26 @@ func NewGid() *Gid {
 	return &self
 }
 
-func (t *Gid) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Gid) Clone() *Gid {
+	c := &Gid{}
+	c.Data = t.Data
+	return c
+}
+
+func (t *Gid) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Gid) SetDefaults() {
-	
+	t.Data = [24]byte{}
+}
+
+// CloneGidSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGidSlice(dst, src []Gid) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

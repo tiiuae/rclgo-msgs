@@ -60,13 +60,48 @@ func NewPowerMonitor() *PowerMonitor {
 	return &self
 }
 
-func (t *PowerMonitor) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PowerMonitor) Clone() *PowerMonitor {
+	c := &PowerMonitor{}
+	c.Timestamp = t.Timestamp
+	c.VoltageV = t.VoltageV
+	c.CurrentA = t.CurrentA
+	c.PowerW = t.PowerW
+	c.Rconf = t.Rconf
+	c.Rsv = t.Rsv
+	c.Rbv = t.Rbv
+	c.Rp = t.Rp
+	c.Rc = t.Rc
+	c.Rcal = t.Rcal
+	c.Me = t.Me
+	c.Al = t.Al
+	return c
+}
+
+func (t *PowerMonitor) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PowerMonitor) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.VoltageV = 0
+	t.CurrentA = 0
+	t.PowerW = 0
+	t.Rconf = 0
+	t.Rsv = 0
+	t.Rbv = 0
+	t.Rp = 0
+	t.Rc = 0
+	t.Rcal = 0
+	t.Me = 0
+	t.Al = 0
+}
+
+// ClonePowerMonitorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePowerMonitorSlice(dst, src []PowerMonitor) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

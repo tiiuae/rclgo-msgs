@@ -54,14 +54,36 @@ func NewMultiDOFJointTrajectory() *MultiDOFJointTrajectory {
 	return &self
 }
 
-func (t *MultiDOFJointTrajectory) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MultiDOFJointTrajectory) Clone() *MultiDOFJointTrajectory {
+	c := &MultiDOFJointTrajectory{}
+	c.Header = *t.Header.Clone()
+	if t.JointNames != nil {
+		c.JointNames = make([]string, len(t.JointNames))
+		copy(c.JointNames, t.JointNames)
+	}
+	if t.Points != nil {
+		c.Points = make([]MultiDOFJointTrajectoryPoint, len(t.Points))
+		CloneMultiDOFJointTrajectoryPointSlice(c.Points, t.Points)
+	}
+	return c
+}
+
+func (t *MultiDOFJointTrajectory) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MultiDOFJointTrajectory) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.JointNames = nil
+	t.Points = nil
+}
+
+// CloneMultiDOFJointTrajectorySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMultiDOFJointTrajectorySlice(dst, src []MultiDOFJointTrajectory) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

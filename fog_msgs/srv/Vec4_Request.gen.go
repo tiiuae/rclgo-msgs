@@ -50,13 +50,29 @@ func NewVec4_Request() *Vec4_Request {
 	return &self
 }
 
-func (t *Vec4_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Vec4_Request) Clone() *Vec4_Request {
+	c := &Vec4_Request{}
+	if t.Goal != nil {
+		c.Goal = make([]float64, len(t.Goal))
+		copy(c.Goal, t.Goal)
+	}
+	return c
+}
+
+func (t *Vec4_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Vec4_Request) SetDefaults() {
-	
+	t.Goal = nil
+}
+
+// CloneVec4_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVec4_RequestSlice(dst, src []Vec4_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

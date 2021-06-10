@@ -60,13 +60,28 @@ func NewTF2Error() *TF2Error {
 	return &self
 }
 
-func (t *TF2Error) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TF2Error) Clone() *TF2Error {
+	c := &TF2Error{}
+	c.Error = t.Error
+	c.ErrorString = t.ErrorString
+	return c
+}
+
+func (t *TF2Error) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TF2Error) SetDefaults() {
-	
+	t.Error = 0
+	t.ErrorString = ""
+}
+
+// CloneTF2ErrorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTF2ErrorSlice(dst, src []TF2Error) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

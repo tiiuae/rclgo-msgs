@@ -49,13 +49,26 @@ func NewJointCommand() *JointCommand {
 	return &self
 }
 
-func (t *JointCommand) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *JointCommand) Clone() *JointCommand {
+	c := &JointCommand{}
+	c.Position = t.Position
+	return c
+}
+
+func (t *JointCommand) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *JointCommand) SetDefaults() {
-	
+	t.Position = 0
+}
+
+// CloneJointCommandSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneJointCommandSlice(dst, src []JointCommand) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

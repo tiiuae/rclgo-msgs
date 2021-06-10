@@ -66,13 +66,60 @@ func NewNavigatorMissionItem() *NavigatorMissionItem {
 	return &self
 }
 
-func (t *NavigatorMissionItem) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *NavigatorMissionItem) Clone() *NavigatorMissionItem {
+	c := &NavigatorMissionItem{}
+	c.Timestamp = t.Timestamp
+	c.InstanceCount = t.InstanceCount
+	c.SequenceCurrent = t.SequenceCurrent
+	c.NavCmd = t.NavCmd
+	c.Latitude = t.Latitude
+	c.Longitude = t.Longitude
+	c.TimeInside = t.TimeInside
+	c.AcceptanceRadius = t.AcceptanceRadius
+	c.LoiterRadius = t.LoiterRadius
+	c.Yaw = t.Yaw
+	c.Altitude = t.Altitude
+	c.Frame = t.Frame
+	c.Origin = t.Origin
+	c.LoiterExitXtrack = t.LoiterExitXtrack
+	c.ForceHeading = t.ForceHeading
+	c.AltitudeIsRelative = t.AltitudeIsRelative
+	c.Autocontinue = t.Autocontinue
+	c.VtolBackTransition = t.VtolBackTransition
+	return c
+}
+
+func (t *NavigatorMissionItem) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *NavigatorMissionItem) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.InstanceCount = 0
+	t.SequenceCurrent = 0
+	t.NavCmd = 0
+	t.Latitude = 0
+	t.Longitude = 0
+	t.TimeInside = 0
+	t.AcceptanceRadius = 0
+	t.LoiterRadius = 0
+	t.Yaw = 0
+	t.Altitude = 0
+	t.Frame = 0
+	t.Origin = 0
+	t.LoiterExitXtrack = false
+	t.ForceHeading = false
+	t.AltitudeIsRelative = false
+	t.Autocontinue = false
+	t.VtolBackTransition = false
+}
+
+// CloneNavigatorMissionItemSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneNavigatorMissionItemSlice(dst, src []NavigatorMissionItem) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

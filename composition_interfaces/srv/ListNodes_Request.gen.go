@@ -48,13 +48,24 @@ func NewListNodes_Request() *ListNodes_Request {
 	return &self
 }
 
-func (t *ListNodes_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ListNodes_Request) Clone() *ListNodes_Request {
+	c := &ListNodes_Request{}
+	return c
+}
+
+func (t *ListNodes_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ListNodes_Request) SetDefaults() {
-	
+}
+
+// CloneListNodes_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneListNodes_RequestSlice(dst, src []ListNodes_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

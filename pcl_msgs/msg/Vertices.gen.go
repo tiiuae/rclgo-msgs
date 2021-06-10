@@ -50,13 +50,29 @@ func NewVertices() *Vertices {
 	return &self
 }
 
-func (t *Vertices) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Vertices) Clone() *Vertices {
+	c := &Vertices{}
+	if t.Vertices != nil {
+		c.Vertices = make([]uint32, len(t.Vertices))
+		copy(c.Vertices, t.Vertices)
+	}
+	return c
+}
+
+func (t *Vertices) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Vertices) SetDefaults() {
-	
+	t.Vertices = nil
+}
+
+// CloneVerticesSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVerticesSlice(dst, src []Vertices) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

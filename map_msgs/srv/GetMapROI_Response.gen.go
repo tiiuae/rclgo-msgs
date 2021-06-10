@@ -51,14 +51,26 @@ func NewGetMapROI_Response() *GetMapROI_Response {
 	return &self
 }
 
-func (t *GetMapROI_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetMapROI_Response) Clone() *GetMapROI_Response {
+	c := &GetMapROI_Response{}
+	c.SubMap = *t.SubMap.Clone()
+	return c
+}
+
+func (t *GetMapROI_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetMapROI_Response) SetDefaults() {
 	t.SubMap.SetDefaults()
-	
+}
+
+// CloneGetMapROI_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetMapROI_ResponseSlice(dst, src []GetMapROI_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

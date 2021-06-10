@@ -53,13 +53,32 @@ func NewSpawn_Request() *Spawn_Request {
 	return &self
 }
 
-func (t *Spawn_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Spawn_Request) Clone() *Spawn_Request {
+	c := &Spawn_Request{}
+	c.X = t.X
+	c.Y = t.Y
+	c.Theta = t.Theta
+	c.Name = t.Name
+	return c
+}
+
+func (t *Spawn_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Spawn_Request) SetDefaults() {
-	
+	t.X = 0
+	t.Y = 0
+	t.Theta = 0
+	t.Name = ""
+}
+
+// CloneSpawn_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSpawn_RequestSlice(dst, src []Spawn_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

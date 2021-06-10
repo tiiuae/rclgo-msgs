@@ -57,15 +57,34 @@ func NewMapMetaData() *MapMetaData {
 	return &self
 }
 
-func (t *MapMetaData) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MapMetaData) Clone() *MapMetaData {
+	c := &MapMetaData{}
+	c.MapLoadTime = *t.MapLoadTime.Clone()
+	c.Resolution = t.Resolution
+	c.Width = t.Width
+	c.Height = t.Height
+	c.Origin = *t.Origin.Clone()
+	return c
+}
+
+func (t *MapMetaData) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MapMetaData) SetDefaults() {
 	t.MapLoadTime.SetDefaults()
+	t.Resolution = 0
+	t.Width = 0
+	t.Height = 0
 	t.Origin.SetDefaults()
-	
+}
+
+// CloneMapMetaDataSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMapMetaDataSlice(dst, src []MapMetaData) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

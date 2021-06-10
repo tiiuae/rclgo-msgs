@@ -61,13 +61,48 @@ func NewTrajectorySetpoint() *TrajectorySetpoint {
 	return &self
 }
 
-func (t *TrajectorySetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TrajectorySetpoint) Clone() *TrajectorySetpoint {
+	c := &TrajectorySetpoint{}
+	c.Timestamp = t.Timestamp
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.Yaw = t.Yaw
+	c.Yawspeed = t.Yawspeed
+	c.Vx = t.Vx
+	c.Vy = t.Vy
+	c.Vz = t.Vz
+	c.Acceleration = t.Acceleration
+	c.Jerk = t.Jerk
+	c.Thrust = t.Thrust
+	return c
+}
+
+func (t *TrajectorySetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TrajectorySetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.Yaw = 0
+	t.Yawspeed = 0
+	t.Vx = 0
+	t.Vy = 0
+	t.Vz = 0
+	t.Acceleration = [3]float32{}
+	t.Jerk = [3]float32{}
+	t.Thrust = [3]float32{}
+}
+
+// CloneTrajectorySetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTrajectorySetpointSlice(dst, src []TrajectorySetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

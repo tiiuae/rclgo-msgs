@@ -52,13 +52,32 @@ func NewWheelEncoders() *WheelEncoders {
 	return &self
 }
 
-func (t *WheelEncoders) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *WheelEncoders) Clone() *WheelEncoders {
+	c := &WheelEncoders{}
+	c.Timestamp = t.Timestamp
+	c.EncoderPosition = t.EncoderPosition
+	c.Speed = t.Speed
+	c.PulsesPerRev = t.PulsesPerRev
+	return c
+}
+
+func (t *WheelEncoders) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *WheelEncoders) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.EncoderPosition = 0
+	t.Speed = 0
+	t.PulsesPerRev = 0
+}
+
+// CloneWheelEncodersSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneWheelEncodersSlice(dst, src []WheelEncoders) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

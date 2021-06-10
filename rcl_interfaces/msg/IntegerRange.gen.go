@@ -51,13 +51,30 @@ func NewIntegerRange() *IntegerRange {
 	return &self
 }
 
-func (t *IntegerRange) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *IntegerRange) Clone() *IntegerRange {
+	c := &IntegerRange{}
+	c.FromValue = t.FromValue
+	c.ToValue = t.ToValue
+	c.Step = t.Step
+	return c
+}
+
+func (t *IntegerRange) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *IntegerRange) SetDefaults() {
-	
+	t.FromValue = 0
+	t.ToValue = 0
+	t.Step = 0
+}
+
+// CloneIntegerRangeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneIntegerRangeSlice(dst, src []IntegerRange) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

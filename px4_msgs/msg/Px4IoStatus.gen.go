@@ -92,13 +92,110 @@ func NewPx4IoStatus() *Px4IoStatus {
 	return &self
 }
 
-func (t *Px4IoStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Px4IoStatus) Clone() *Px4IoStatus {
+	c := &Px4IoStatus{}
+	c.Timestamp = t.Timestamp
+	c.FreeMemoryBytes = t.FreeMemoryBytes
+	c.VoltageV = t.VoltageV
+	c.RssiV = t.RssiV
+	c.StatusOutputsArmed = t.StatusOutputsArmed
+	c.StatusOverride = t.StatusOverride
+	c.StatusRcOk = t.StatusRcOk
+	c.StatusRcPpm = t.StatusRcPpm
+	c.StatusRcDsm = t.StatusRcDsm
+	c.StatusRcSbus = t.StatusRcSbus
+	c.StatusFmuOk = t.StatusFmuOk
+	c.StatusRawPwm = t.StatusRawPwm
+	c.StatusMixerOk = t.StatusMixerOk
+	c.StatusArmSync = t.StatusArmSync
+	c.StatusInitOk = t.StatusInitOk
+	c.StatusFailsafe = t.StatusFailsafe
+	c.StatusSafetyOff = t.StatusSafetyOff
+	c.StatusFmuInitialized = t.StatusFmuInitialized
+	c.StatusRcSt24 = t.StatusRcSt24
+	c.StatusRcSumd = t.StatusRcSumd
+	c.AlarmVbattLow = t.AlarmVbattLow
+	c.AlarmTemperature = t.AlarmTemperature
+	c.AlarmServoCurrent = t.AlarmServoCurrent
+	c.AlarmAccCurrent = t.AlarmAccCurrent
+	c.AlarmFmuLost = t.AlarmFmuLost
+	c.AlarmRcLost = t.AlarmRcLost
+	c.AlarmPwmError = t.AlarmPwmError
+	c.AlarmVservoFault = t.AlarmVservoFault
+	c.ArmingIoArmOk = t.ArmingIoArmOk
+	c.ArmingFmuArmed = t.ArmingFmuArmed
+	c.ArmingFmuPrearmed = t.ArmingFmuPrearmed
+	c.ArmingManualOverrideOk = t.ArmingManualOverrideOk
+	c.ArmingFailsafeCustom = t.ArmingFailsafeCustom
+	c.ArmingInairRestartOk = t.ArmingInairRestartOk
+	c.ArmingAlwaysPwmEnable = t.ArmingAlwaysPwmEnable
+	c.ArmingRcHandlingDisabled = t.ArmingRcHandlingDisabled
+	c.ArmingLockdown = t.ArmingLockdown
+	c.ArmingForceFailsafe = t.ArmingForceFailsafe
+	c.ArmingTerminationFailsafe = t.ArmingTerminationFailsafe
+	c.ArmingOverrideImmediate = t.ArmingOverrideImmediate
+	c.Actuators = t.Actuators
+	c.Servos = t.Servos
+	c.RawInputs = t.RawInputs
+	return c
+}
+
+func (t *Px4IoStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Px4IoStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.FreeMemoryBytes = 0
+	t.VoltageV = 0
+	t.RssiV = 0
+	t.StatusOutputsArmed = false
+	t.StatusOverride = false
+	t.StatusRcOk = false
+	t.StatusRcPpm = false
+	t.StatusRcDsm = false
+	t.StatusRcSbus = false
+	t.StatusFmuOk = false
+	t.StatusRawPwm = false
+	t.StatusMixerOk = false
+	t.StatusArmSync = false
+	t.StatusInitOk = false
+	t.StatusFailsafe = false
+	t.StatusSafetyOff = false
+	t.StatusFmuInitialized = false
+	t.StatusRcSt24 = false
+	t.StatusRcSumd = false
+	t.AlarmVbattLow = false
+	t.AlarmTemperature = false
+	t.AlarmServoCurrent = false
+	t.AlarmAccCurrent = false
+	t.AlarmFmuLost = false
+	t.AlarmRcLost = false
+	t.AlarmPwmError = false
+	t.AlarmVservoFault = false
+	t.ArmingIoArmOk = false
+	t.ArmingFmuArmed = false
+	t.ArmingFmuPrearmed = false
+	t.ArmingManualOverrideOk = false
+	t.ArmingFailsafeCustom = false
+	t.ArmingInairRestartOk = false
+	t.ArmingAlwaysPwmEnable = false
+	t.ArmingRcHandlingDisabled = false
+	t.ArmingLockdown = false
+	t.ArmingForceFailsafe = false
+	t.ArmingTerminationFailsafe = false
+	t.ArmingOverrideImmediate = false
+	t.Actuators = [8]int16{}
+	t.Servos = [8]uint16{}
+	t.RawInputs = [18]uint16{}
+}
+
+// ClonePx4IoStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePx4IoStatusSlice(dst, src []Px4IoStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

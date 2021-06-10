@@ -55,13 +55,30 @@ func NewMavlinkLog() *MavlinkLog {
 	return &self
 }
 
-func (t *MavlinkLog) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MavlinkLog) Clone() *MavlinkLog {
+	c := &MavlinkLog{}
+	c.Timestamp = t.Timestamp
+	c.Text = t.Text
+	c.Severity = t.Severity
+	return c
+}
+
+func (t *MavlinkLog) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MavlinkLog) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Text = [127]byte{}
+	t.Severity = 0
+}
+
+// CloneMavlinkLogSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMavlinkLogSlice(dst, src []MavlinkLog) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -51,13 +51,30 @@ func NewRtlFlightTime() *RtlFlightTime {
 	return &self
 }
 
-func (t *RtlFlightTime) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RtlFlightTime) Clone() *RtlFlightTime {
+	c := &RtlFlightTime{}
+	c.Timestamp = t.Timestamp
+	c.RtlTimeS = t.RtlTimeS
+	c.RtlLimitFraction = t.RtlLimitFraction
+	return c
+}
+
+func (t *RtlFlightTime) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RtlFlightTime) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.RtlTimeS = 0
+	t.RtlLimitFraction = 0
+}
+
+// CloneRtlFlightTimeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRtlFlightTimeSlice(dst, src []RtlFlightTime) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

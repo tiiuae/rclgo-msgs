@@ -48,13 +48,24 @@ func NewFrameGraph_Request() *FrameGraph_Request {
 	return &self
 }
 
-func (t *FrameGraph_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *FrameGraph_Request) Clone() *FrameGraph_Request {
+	c := &FrameGraph_Request{}
+	return c
+}
+
+func (t *FrameGraph_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *FrameGraph_Request) SetDefaults() {
-	
+}
+
+// CloneFrameGraph_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneFrameGraph_RequestSlice(dst, src []FrameGraph_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

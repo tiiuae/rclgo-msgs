@@ -53,13 +53,34 @@ func NewEkfGpsDrift() *EkfGpsDrift {
 	return &self
 }
 
-func (t *EkfGpsDrift) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EkfGpsDrift) Clone() *EkfGpsDrift {
+	c := &EkfGpsDrift{}
+	c.Timestamp = t.Timestamp
+	c.HposDriftRate = t.HposDriftRate
+	c.VposDriftRate = t.VposDriftRate
+	c.Hspd = t.Hspd
+	c.Blocked = t.Blocked
+	return c
+}
+
+func (t *EkfGpsDrift) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EkfGpsDrift) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.HposDriftRate = 0
+	t.VposDriftRate = 0
+	t.Hspd = 0
+	t.Blocked = false
+}
+
+// CloneEkfGpsDriftSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEkfGpsDriftSlice(dst, src []EkfGpsDrift) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

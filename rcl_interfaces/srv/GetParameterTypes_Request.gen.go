@@ -50,13 +50,29 @@ func NewGetParameterTypes_Request() *GetParameterTypes_Request {
 	return &self
 }
 
-func (t *GetParameterTypes_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetParameterTypes_Request) Clone() *GetParameterTypes_Request {
+	c := &GetParameterTypes_Request{}
+	if t.Names != nil {
+		c.Names = make([]string, len(t.Names))
+		copy(c.Names, t.Names)
+	}
+	return c
+}
+
+func (t *GetParameterTypes_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetParameterTypes_Request) SetDefaults() {
-	
+	t.Names = nil
+}
+
+// CloneGetParameterTypes_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetParameterTypes_RequestSlice(dst, src []GetParameterTypes_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

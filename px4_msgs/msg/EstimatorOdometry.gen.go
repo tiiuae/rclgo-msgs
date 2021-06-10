@@ -84,13 +84,58 @@ func NewEstimatorOdometry() *EstimatorOdometry {
 	return &self
 }
 
-func (t *EstimatorOdometry) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorOdometry) Clone() *EstimatorOdometry {
+	c := &EstimatorOdometry{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.LocalFrame = t.LocalFrame
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.Q = t.Q
+	c.QOffset = t.QOffset
+	c.PoseCovariance = t.PoseCovariance
+	c.VelocityFrame = t.VelocityFrame
+	c.Vx = t.Vx
+	c.Vy = t.Vy
+	c.Vz = t.Vz
+	c.Rollspeed = t.Rollspeed
+	c.Pitchspeed = t.Pitchspeed
+	c.Yawspeed = t.Yawspeed
+	c.VelocityCovariance = t.VelocityCovariance
+	return c
+}
+
+func (t *EstimatorOdometry) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorOdometry) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.LocalFrame = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.Q = [4]float32{}
+	t.QOffset = [4]float32{}
+	t.PoseCovariance = [21]float32{}
+	t.VelocityFrame = 0
+	t.Vx = 0
+	t.Vy = 0
+	t.Vz = 0
+	t.Rollspeed = 0
+	t.Pitchspeed = 0
+	t.Yawspeed = 0
+	t.VelocityCovariance = [21]float32{}
+}
+
+// CloneEstimatorOdometrySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorOdometrySlice(dst, src []EstimatorOdometry) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

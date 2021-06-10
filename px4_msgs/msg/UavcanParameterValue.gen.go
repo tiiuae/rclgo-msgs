@@ -57,13 +57,40 @@ func NewUavcanParameterValue() *UavcanParameterValue {
 	return &self
 }
 
-func (t *UavcanParameterValue) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UavcanParameterValue) Clone() *UavcanParameterValue {
+	c := &UavcanParameterValue{}
+	c.Timestamp = t.Timestamp
+	c.NodeId = t.NodeId
+	c.ParamId = t.ParamId
+	c.ParamIndex = t.ParamIndex
+	c.ParamCount = t.ParamCount
+	c.ParamType = t.ParamType
+	c.IntValue = t.IntValue
+	c.RealValue = t.RealValue
+	return c
+}
+
+func (t *UavcanParameterValue) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UavcanParameterValue) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.NodeId = 0
+	t.ParamId = [17]byte{}
+	t.ParamIndex = 0
+	t.ParamCount = 0
+	t.ParamType = 0
+	t.IntValue = 0
+	t.RealValue = 0
+}
+
+// CloneUavcanParameterValueSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUavcanParameterValueSlice(dst, src []UavcanParameterValue) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

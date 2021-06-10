@@ -54,13 +54,33 @@ func NewSelfTest_Response() *SelfTest_Response {
 	return &self
 }
 
-func (t *SelfTest_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SelfTest_Response) Clone() *SelfTest_Response {
+	c := &SelfTest_Response{}
+	c.Id = t.Id
+	c.Passed = t.Passed
+	if t.Status != nil {
+		c.Status = make([]diagnostic_msgs_msg.DiagnosticStatus, len(t.Status))
+		diagnostic_msgs_msg.CloneDiagnosticStatusSlice(c.Status, t.Status)
+	}
+	return c
+}
+
+func (t *SelfTest_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SelfTest_Response) SetDefaults() {
-	
+	t.Id = ""
+	t.Passed = 0
+	t.Status = nil
+}
+
+// CloneSelfTest_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSelfTest_ResponseSlice(dst, src []SelfTest_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

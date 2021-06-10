@@ -53,13 +53,34 @@ func NewSafety() *Safety {
 	return &self
 }
 
-func (t *Safety) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Safety) Clone() *Safety {
+	c := &Safety{}
+	c.Timestamp = t.Timestamp
+	c.SafetySwitchAvailable = t.SafetySwitchAvailable
+	c.SafetyOff = t.SafetyOff
+	c.OverrideAvailable = t.OverrideAvailable
+	c.OverrideEnabled = t.OverrideEnabled
+	return c
+}
+
+func (t *Safety) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Safety) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.SafetySwitchAvailable = false
+	t.SafetyOff = false
+	t.OverrideAvailable = false
+	t.OverrideEnabled = false
+}
+
+// CloneSafetySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSafetySlice(dst, src []Safety) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

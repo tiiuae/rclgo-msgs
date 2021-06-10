@@ -66,13 +66,48 @@ func NewFwVirtualAttitudeSetpoint() *FwVirtualAttitudeSetpoint {
 	return &self
 }
 
-func (t *FwVirtualAttitudeSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *FwVirtualAttitudeSetpoint) Clone() *FwVirtualAttitudeSetpoint {
+	c := &FwVirtualAttitudeSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.RollBody = t.RollBody
+	c.PitchBody = t.PitchBody
+	c.YawBody = t.YawBody
+	c.YawSpMoveRate = t.YawSpMoveRate
+	c.QD = t.QD
+	c.ThrustBody = t.ThrustBody
+	c.RollResetIntegral = t.RollResetIntegral
+	c.PitchResetIntegral = t.PitchResetIntegral
+	c.YawResetIntegral = t.YawResetIntegral
+	c.FwControlYaw = t.FwControlYaw
+	c.ApplyFlaps = t.ApplyFlaps
+	return c
+}
+
+func (t *FwVirtualAttitudeSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *FwVirtualAttitudeSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.RollBody = 0
+	t.PitchBody = 0
+	t.YawBody = 0
+	t.YawSpMoveRate = 0
+	t.QD = [4]float32{}
+	t.ThrustBody = [3]float32{}
+	t.RollResetIntegral = false
+	t.PitchResetIntegral = false
+	t.YawResetIntegral = false
+	t.FwControlYaw = false
+	t.ApplyFlaps = 0
+}
+
+// CloneFwVirtualAttitudeSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneFwVirtualAttitudeSetpointSlice(dst, src []FwVirtualAttitudeSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

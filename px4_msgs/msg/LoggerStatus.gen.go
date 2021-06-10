@@ -65,13 +65,44 @@ func NewLoggerStatus() *LoggerStatus {
 	return &self
 }
 
-func (t *LoggerStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LoggerStatus) Clone() *LoggerStatus {
+	c := &LoggerStatus{}
+	c.Timestamp = t.Timestamp
+	c.Type = t.Type
+	c.Backend = t.Backend
+	c.TotalWrittenKb = t.TotalWrittenKb
+	c.WriteRateKbS = t.WriteRateKbS
+	c.Dropouts = t.Dropouts
+	c.MessageGaps = t.MessageGaps
+	c.BufferUsedBytes = t.BufferUsedBytes
+	c.BufferSizeBytes = t.BufferSizeBytes
+	c.NumMessages = t.NumMessages
+	return c
+}
+
+func (t *LoggerStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LoggerStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Type = 0
+	t.Backend = 0
+	t.TotalWrittenKb = 0
+	t.WriteRateKbS = 0
+	t.Dropouts = 0
+	t.MessageGaps = 0
+	t.BufferUsedBytes = 0
+	t.BufferSizeBytes = 0
+	t.NumMessages = 0
+}
+
+// CloneLoggerStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLoggerStatusSlice(dst, src []LoggerStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

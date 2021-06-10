@@ -56,13 +56,32 @@ func NewGpsDump() *GpsDump {
 	return &self
 }
 
-func (t *GpsDump) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GpsDump) Clone() *GpsDump {
+	c := &GpsDump{}
+	c.Timestamp = t.Timestamp
+	c.Instance = t.Instance
+	c.Len = t.Len
+	c.Data = t.Data
+	return c
+}
+
+func (t *GpsDump) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GpsDump) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Instance = 0
+	t.Len = 0
+	t.Data = [79]uint8{}
+}
+
+// CloneGpsDumpSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGpsDumpSlice(dst, src []GpsDump) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -54,13 +54,34 @@ func NewVehicleRatesSetpoint() *VehicleRatesSetpoint {
 	return &self
 }
 
-func (t *VehicleRatesSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleRatesSetpoint) Clone() *VehicleRatesSetpoint {
+	c := &VehicleRatesSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.Roll = t.Roll
+	c.Pitch = t.Pitch
+	c.Yaw = t.Yaw
+	c.ThrustBody = t.ThrustBody
+	return c
+}
+
+func (t *VehicleRatesSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleRatesSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Roll = 0
+	t.Pitch = 0
+	t.Yaw = 0
+	t.ThrustBody = [3]float32{}
+}
+
+// CloneVehicleRatesSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleRatesSetpointSlice(dst, src []VehicleRatesSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

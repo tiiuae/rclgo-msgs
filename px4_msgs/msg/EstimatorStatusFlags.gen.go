@@ -111,13 +111,150 @@ func NewEstimatorStatusFlags() *EstimatorStatusFlags {
 	return &self
 }
 
-func (t *EstimatorStatusFlags) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorStatusFlags) Clone() *EstimatorStatusFlags {
+	c := &EstimatorStatusFlags{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.ControlStatusChanges = t.ControlStatusChanges
+	c.CsTiltAlign = t.CsTiltAlign
+	c.CsYawAlign = t.CsYawAlign
+	c.CsGps = t.CsGps
+	c.CsOptFlow = t.CsOptFlow
+	c.CsMagHdg = t.CsMagHdg
+	c.CsMag3d = t.CsMag3d
+	c.CsMagDec = t.CsMagDec
+	c.CsInAir = t.CsInAir
+	c.CsWind = t.CsWind
+	c.CsBaroHgt = t.CsBaroHgt
+	c.CsRngHgt = t.CsRngHgt
+	c.CsGpsHgt = t.CsGpsHgt
+	c.CsEvPos = t.CsEvPos
+	c.CsEvYaw = t.CsEvYaw
+	c.CsEvHgt = t.CsEvHgt
+	c.CsFuseBeta = t.CsFuseBeta
+	c.CsMagFieldDisturbed = t.CsMagFieldDisturbed
+	c.CsFixedWing = t.CsFixedWing
+	c.CsMagFault = t.CsMagFault
+	c.CsFuseAspd = t.CsFuseAspd
+	c.CsGndEffect = t.CsGndEffect
+	c.CsRngStuck = t.CsRngStuck
+	c.CsGpsYaw = t.CsGpsYaw
+	c.CsMagAlignedInFlight = t.CsMagAlignedInFlight
+	c.CsEvVel = t.CsEvVel
+	c.CsSyntheticMagZ = t.CsSyntheticMagZ
+	c.CsVehicleAtRest = t.CsVehicleAtRest
+	c.FaultStatusChanges = t.FaultStatusChanges
+	c.FsBadMagX = t.FsBadMagX
+	c.FsBadMagY = t.FsBadMagY
+	c.FsBadMagZ = t.FsBadMagZ
+	c.FsBadHdg = t.FsBadHdg
+	c.FsBadMagDecl = t.FsBadMagDecl
+	c.FsBadAirspeed = t.FsBadAirspeed
+	c.FsBadSideslip = t.FsBadSideslip
+	c.FsBadOptflowX = t.FsBadOptflowX
+	c.FsBadOptflowY = t.FsBadOptflowY
+	c.FsBadVelN = t.FsBadVelN
+	c.FsBadVelE = t.FsBadVelE
+	c.FsBadVelD = t.FsBadVelD
+	c.FsBadPosN = t.FsBadPosN
+	c.FsBadPosE = t.FsBadPosE
+	c.FsBadPosD = t.FsBadPosD
+	c.FsBadAccBias = t.FsBadAccBias
+	c.FsBadAccVertical = t.FsBadAccVertical
+	c.FsBadAccClipping = t.FsBadAccClipping
+	c.InnovationFaultStatusChanges = t.InnovationFaultStatusChanges
+	c.RejectHorVel = t.RejectHorVel
+	c.RejectVerVel = t.RejectVerVel
+	c.RejectHorPos = t.RejectHorPos
+	c.RejectVerPos = t.RejectVerPos
+	c.RejectMagX = t.RejectMagX
+	c.RejectMagY = t.RejectMagY
+	c.RejectMagZ = t.RejectMagZ
+	c.RejectYaw = t.RejectYaw
+	c.RejectAirspeed = t.RejectAirspeed
+	c.RejectSideslip = t.RejectSideslip
+	c.RejectHagl = t.RejectHagl
+	c.RejectOptflowX = t.RejectOptflowX
+	c.RejectOptflowY = t.RejectOptflowY
+	return c
+}
+
+func (t *EstimatorStatusFlags) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorStatusFlags) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.ControlStatusChanges = 0
+	t.CsTiltAlign = false
+	t.CsYawAlign = false
+	t.CsGps = false
+	t.CsOptFlow = false
+	t.CsMagHdg = false
+	t.CsMag3d = false
+	t.CsMagDec = false
+	t.CsInAir = false
+	t.CsWind = false
+	t.CsBaroHgt = false
+	t.CsRngHgt = false
+	t.CsGpsHgt = false
+	t.CsEvPos = false
+	t.CsEvYaw = false
+	t.CsEvHgt = false
+	t.CsFuseBeta = false
+	t.CsMagFieldDisturbed = false
+	t.CsFixedWing = false
+	t.CsMagFault = false
+	t.CsFuseAspd = false
+	t.CsGndEffect = false
+	t.CsRngStuck = false
+	t.CsGpsYaw = false
+	t.CsMagAlignedInFlight = false
+	t.CsEvVel = false
+	t.CsSyntheticMagZ = false
+	t.CsVehicleAtRest = false
+	t.FaultStatusChanges = 0
+	t.FsBadMagX = false
+	t.FsBadMagY = false
+	t.FsBadMagZ = false
+	t.FsBadHdg = false
+	t.FsBadMagDecl = false
+	t.FsBadAirspeed = false
+	t.FsBadSideslip = false
+	t.FsBadOptflowX = false
+	t.FsBadOptflowY = false
+	t.FsBadVelN = false
+	t.FsBadVelE = false
+	t.FsBadVelD = false
+	t.FsBadPosN = false
+	t.FsBadPosE = false
+	t.FsBadPosD = false
+	t.FsBadAccBias = false
+	t.FsBadAccVertical = false
+	t.FsBadAccClipping = false
+	t.InnovationFaultStatusChanges = 0
+	t.RejectHorVel = false
+	t.RejectVerVel = false
+	t.RejectHorPos = false
+	t.RejectVerPos = false
+	t.RejectMagX = false
+	t.RejectMagY = false
+	t.RejectMagZ = false
+	t.RejectYaw = false
+	t.RejectAirspeed = false
+	t.RejectSideslip = false
+	t.RejectHagl = false
+	t.RejectOptflowX = false
+	t.RejectOptflowY = false
+}
+
+// CloneEstimatorStatusFlagsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorStatusFlagsSlice(dst, src []EstimatorStatusFlags) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

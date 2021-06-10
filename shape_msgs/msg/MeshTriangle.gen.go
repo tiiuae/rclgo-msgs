@@ -50,13 +50,26 @@ func NewMeshTriangle() *MeshTriangle {
 	return &self
 }
 
-func (t *MeshTriangle) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MeshTriangle) Clone() *MeshTriangle {
+	c := &MeshTriangle{}
+	c.VertexIndices = t.VertexIndices
+	return c
+}
+
+func (t *MeshTriangle) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MeshTriangle) SetDefaults() {
-	
+	t.VertexIndices = [3]uint32{}
+}
+
+// CloneMeshTriangleSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMeshTriangleSlice(dst, src []MeshTriangle) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -59,18 +59,32 @@ func NewVehicleTrajectoryBezier() *VehicleTrajectoryBezier {
 	return &self
 }
 
-func (t *VehicleTrajectoryBezier) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleTrajectoryBezier) Clone() *VehicleTrajectoryBezier {
+	c := &VehicleTrajectoryBezier{}
+	c.Timestamp = t.Timestamp
+	CloneTrajectoryBezierSlice(c.ControlPoints[:], t.ControlPoints[:])
+	c.BezierOrder = t.BezierOrder
+	return c
+}
+
+func (t *VehicleTrajectoryBezier) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleTrajectoryBezier) SetDefaults() {
-	t.ControlPoints[0].SetDefaults()
-	t.ControlPoints[1].SetDefaults()
-	t.ControlPoints[2].SetDefaults()
-	t.ControlPoints[3].SetDefaults()
-	t.ControlPoints[4].SetDefaults()
-	
+	t.Timestamp = 0
+	for i := range t.ControlPoints {
+		t.ControlPoints[i].SetDefaults()
+	}
+	t.BezierOrder = 0
+}
+
+// CloneVehicleTrajectoryBezierSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleTrajectoryBezierSlice(dst, src []VehicleTrajectoryBezier) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

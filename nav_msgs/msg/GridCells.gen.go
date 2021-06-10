@@ -56,14 +56,35 @@ func NewGridCells() *GridCells {
 	return &self
 }
 
-func (t *GridCells) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GridCells) Clone() *GridCells {
+	c := &GridCells{}
+	c.Header = *t.Header.Clone()
+	c.CellWidth = t.CellWidth
+	c.CellHeight = t.CellHeight
+	if t.Cells != nil {
+		c.Cells = make([]geometry_msgs_msg.Point, len(t.Cells))
+		geometry_msgs_msg.ClonePointSlice(c.Cells, t.Cells)
+	}
+	return c
+}
+
+func (t *GridCells) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GridCells) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.CellWidth = 0
+	t.CellHeight = 0
+	t.Cells = nil
+}
+
+// CloneGridCellsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGridCellsSlice(dst, src []GridCells) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

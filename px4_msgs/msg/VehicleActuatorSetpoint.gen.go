@@ -55,13 +55,30 @@ func NewVehicleActuatorSetpoint() *VehicleActuatorSetpoint {
 	return &self
 }
 
-func (t *VehicleActuatorSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleActuatorSetpoint) Clone() *VehicleActuatorSetpoint {
+	c := &VehicleActuatorSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Actuator = t.Actuator
+	return c
+}
+
+func (t *VehicleActuatorSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleActuatorSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Actuator = [16]float32{}
+}
+
+// CloneVehicleActuatorSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleActuatorSetpointSlice(dst, src []VehicleActuatorSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

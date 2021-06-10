@@ -55,13 +55,38 @@ func NewVehicleLandDetected() *VehicleLandDetected {
 	return &self
 }
 
-func (t *VehicleLandDetected) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleLandDetected) Clone() *VehicleLandDetected {
+	c := &VehicleLandDetected{}
+	c.Timestamp = t.Timestamp
+	c.AltMax = t.AltMax
+	c.Freefall = t.Freefall
+	c.GroundContact = t.GroundContact
+	c.MaybeLanded = t.MaybeLanded
+	c.Landed = t.Landed
+	c.InGroundEffect = t.InGroundEffect
+	return c
+}
+
+func (t *VehicleLandDetected) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleLandDetected) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AltMax = 0
+	t.Freefall = false
+	t.GroundContact = false
+	t.MaybeLanded = false
+	t.Landed = false
+	t.InGroundEffect = false
+}
+
+// CloneVehicleLandDetectedSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleLandDetectedSlice(dst, src []VehicleLandDetected) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

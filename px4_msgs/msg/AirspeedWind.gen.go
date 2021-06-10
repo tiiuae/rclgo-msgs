@@ -66,13 +66,48 @@ func NewAirspeedWind() *AirspeedWind {
 	return &self
 }
 
-func (t *AirspeedWind) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *AirspeedWind) Clone() *AirspeedWind {
+	c := &AirspeedWind{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.WindspeedNorth = t.WindspeedNorth
+	c.WindspeedEast = t.WindspeedEast
+	c.VarianceNorth = t.VarianceNorth
+	c.VarianceEast = t.VarianceEast
+	c.TasInnov = t.TasInnov
+	c.TasInnovVar = t.TasInnovVar
+	c.TasScale = t.TasScale
+	c.BetaInnov = t.BetaInnov
+	c.BetaInnovVar = t.BetaInnovVar
+	c.Source = t.Source
+	return c
+}
+
+func (t *AirspeedWind) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *AirspeedWind) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.WindspeedNorth = 0
+	t.WindspeedEast = 0
+	t.VarianceNorth = 0
+	t.VarianceEast = 0
+	t.TasInnov = 0
+	t.TasInnovVar = 0
+	t.TasScale = 0
+	t.BetaInnov = 0
+	t.BetaInnovVar = 0
+	t.Source = 0
+}
+
+// CloneAirspeedWindSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneAirspeedWindSlice(dst, src []AirspeedWind) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

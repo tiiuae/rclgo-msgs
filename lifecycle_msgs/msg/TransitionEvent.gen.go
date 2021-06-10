@@ -52,16 +52,32 @@ func NewTransitionEvent() *TransitionEvent {
 	return &self
 }
 
-func (t *TransitionEvent) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TransitionEvent) Clone() *TransitionEvent {
+	c := &TransitionEvent{}
+	c.Timestamp = t.Timestamp
+	c.Transition = *t.Transition.Clone()
+	c.StartState = *t.StartState.Clone()
+	c.GoalState = *t.GoalState.Clone()
+	return c
+}
+
+func (t *TransitionEvent) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TransitionEvent) SetDefaults() {
+	t.Timestamp = 0
 	t.Transition.SetDefaults()
 	t.StartState.SetDefaults()
 	t.GoalState.SetDefaults()
-	
+}
+
+// CloneTransitionEventSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTransitionEventSlice(dst, src []TransitionEvent) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -62,15 +62,49 @@ func NewCameraInfo() *CameraInfo {
 	return &self
 }
 
-func (t *CameraInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CameraInfo) Clone() *CameraInfo {
+	c := &CameraInfo{}
+	c.Header = *t.Header.Clone()
+	c.Height = t.Height
+	c.Width = t.Width
+	c.DistortionModel = t.DistortionModel
+	if t.D != nil {
+		c.D = make([]float64, len(t.D))
+		copy(c.D, t.D)
+	}
+	c.K = t.K
+	c.R = t.R
+	c.P = t.P
+	c.BinningX = t.BinningX
+	c.BinningY = t.BinningY
+	c.Roi = *t.Roi.Clone()
+	return c
+}
+
+func (t *CameraInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CameraInfo) SetDefaults() {
 	t.Header.SetDefaults()
+	t.Height = 0
+	t.Width = 0
+	t.DistortionModel = ""
+	t.D = nil
+	t.K = [9]float64{}
+	t.R = [9]float64{}
+	t.P = [12]float64{}
+	t.BinningX = 0
+	t.BinningY = 0
 	t.Roi.SetDefaults()
-	
+}
+
+// CloneCameraInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCameraInfoSlice(dst, src []CameraInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -64,21 +64,40 @@ func NewEscStatus() *EscStatus {
 	return &self
 }
 
-func (t *EscStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EscStatus) Clone() *EscStatus {
+	c := &EscStatus{}
+	c.Timestamp = t.Timestamp
+	c.Counter = t.Counter
+	c.EscCount = t.EscCount
+	c.EscConnectiontype = t.EscConnectiontype
+	c.EscOnlineFlags = t.EscOnlineFlags
+	c.EscArmedFlags = t.EscArmedFlags
+	CloneEscReportSlice(c.Esc[:], t.Esc[:])
+	return c
+}
+
+func (t *EscStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EscStatus) SetDefaults() {
-	t.Esc[0].SetDefaults()
-	t.Esc[1].SetDefaults()
-	t.Esc[2].SetDefaults()
-	t.Esc[3].SetDefaults()
-	t.Esc[4].SetDefaults()
-	t.Esc[5].SetDefaults()
-	t.Esc[6].SetDefaults()
-	t.Esc[7].SetDefaults()
-	
+	t.Timestamp = 0
+	t.Counter = 0
+	t.EscCount = 0
+	t.EscConnectiontype = 0
+	t.EscOnlineFlags = 0
+	t.EscArmedFlags = 0
+	for i := range t.Esc {
+		t.Esc[i].SetDefaults()
+	}
+}
+
+// CloneEscStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEscStatusSlice(dst, src []EscStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

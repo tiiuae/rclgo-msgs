@@ -120,13 +120,94 @@ func NewEstimatorStatus() *EstimatorStatus {
 	return &self
 }
 
-func (t *EstimatorStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorStatus) Clone() *EstimatorStatus {
+	c := &EstimatorStatus{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Vibe = t.Vibe
+	c.OutputTrackingError = t.OutputTrackingError
+	c.GpsCheckFailFlags = t.GpsCheckFailFlags
+	c.ControlModeFlags = t.ControlModeFlags
+	c.FilterFaultFlags = t.FilterFaultFlags
+	c.PosHorizAccuracy = t.PosHorizAccuracy
+	c.PosVertAccuracy = t.PosVertAccuracy
+	c.InnovationCheckFlags = t.InnovationCheckFlags
+	c.MagTestRatio = t.MagTestRatio
+	c.VelTestRatio = t.VelTestRatio
+	c.PosTestRatio = t.PosTestRatio
+	c.HgtTestRatio = t.HgtTestRatio
+	c.TasTestRatio = t.TasTestRatio
+	c.HaglTestRatio = t.HaglTestRatio
+	c.BetaTestRatio = t.BetaTestRatio
+	c.SolutionStatusFlags = t.SolutionStatusFlags
+	c.ResetCountVelNe = t.ResetCountVelNe
+	c.ResetCountVelD = t.ResetCountVelD
+	c.ResetCountPosNe = t.ResetCountPosNe
+	c.ResetCountPodD = t.ResetCountPodD
+	c.ResetCountQuat = t.ResetCountQuat
+	c.TimeSlip = t.TimeSlip
+	c.PreFltFailInnovHeading = t.PreFltFailInnovHeading
+	c.PreFltFailInnovVelHoriz = t.PreFltFailInnovVelHoriz
+	c.PreFltFailInnovVelVert = t.PreFltFailInnovVelVert
+	c.PreFltFailInnovHeight = t.PreFltFailInnovHeight
+	c.PreFltFailMagFieldDisturbed = t.PreFltFailMagFieldDisturbed
+	c.AccelDeviceId = t.AccelDeviceId
+	c.GyroDeviceId = t.GyroDeviceId
+	c.BaroDeviceId = t.BaroDeviceId
+	c.MagDeviceId = t.MagDeviceId
+	c.HealthFlags = t.HealthFlags
+	c.TimeoutFlags = t.TimeoutFlags
+	return c
+}
+
+func (t *EstimatorStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Vibe = [3]float32{}
+	t.OutputTrackingError = [3]float32{}
+	t.GpsCheckFailFlags = 0
+	t.ControlModeFlags = 0
+	t.FilterFaultFlags = 0
+	t.PosHorizAccuracy = 0
+	t.PosVertAccuracy = 0
+	t.InnovationCheckFlags = 0
+	t.MagTestRatio = 0
+	t.VelTestRatio = 0
+	t.PosTestRatio = 0
+	t.HgtTestRatio = 0
+	t.TasTestRatio = 0
+	t.HaglTestRatio = 0
+	t.BetaTestRatio = 0
+	t.SolutionStatusFlags = 0
+	t.ResetCountVelNe = 0
+	t.ResetCountVelD = 0
+	t.ResetCountPosNe = 0
+	t.ResetCountPodD = 0
+	t.ResetCountQuat = 0
+	t.TimeSlip = 0
+	t.PreFltFailInnovHeading = false
+	t.PreFltFailInnovVelHoriz = false
+	t.PreFltFailInnovVelVert = false
+	t.PreFltFailInnovHeight = false
+	t.PreFltFailMagFieldDisturbed = false
+	t.AccelDeviceId = 0
+	t.GyroDeviceId = 0
+	t.BaroDeviceId = 0
+	t.MagDeviceId = 0
+	t.HealthFlags = 0
+	t.TimeoutFlags = 0
+}
+
+// CloneEstimatorStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorStatusSlice(dst, src []EstimatorStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

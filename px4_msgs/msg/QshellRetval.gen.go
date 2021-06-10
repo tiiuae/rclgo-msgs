@@ -51,13 +51,30 @@ func NewQshellRetval() *QshellRetval {
 	return &self
 }
 
-func (t *QshellRetval) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *QshellRetval) Clone() *QshellRetval {
+	c := &QshellRetval{}
+	c.Timestamp = t.Timestamp
+	c.ReturnValue = t.ReturnValue
+	c.ReturnSequence = t.ReturnSequence
+	return c
+}
+
+func (t *QshellRetval) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *QshellRetval) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.ReturnValue = 0
+	t.ReturnSequence = 0
+}
+
+// CloneQshellRetvalSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneQshellRetvalSlice(dst, src []QshellRetval) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

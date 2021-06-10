@@ -53,13 +53,34 @@ func NewTimesync() *Timesync {
 	return &self
 }
 
-func (t *Timesync) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Timesync) Clone() *Timesync {
+	c := &Timesync{}
+	c.Timestamp = t.Timestamp
+	c.SysId = t.SysId
+	c.Seq = t.Seq
+	c.Tc1 = t.Tc1
+	c.Ts1 = t.Ts1
+	return c
+}
+
+func (t *Timesync) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Timesync) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.SysId = 0
+	t.Seq = 0
+	t.Tc1 = 0
+	t.Ts1 = 0
+}
+
+// CloneTimesyncSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTimesyncSlice(dst, src []Timesync) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

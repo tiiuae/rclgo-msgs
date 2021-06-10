@@ -76,13 +76,80 @@ func NewEstimatorEventFlags() *EstimatorEventFlags {
 	return &self
 }
 
-func (t *EstimatorEventFlags) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorEventFlags) Clone() *EstimatorEventFlags {
+	c := &EstimatorEventFlags{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.InformationEventChanges = t.InformationEventChanges
+	c.GpsChecksPassed = t.GpsChecksPassed
+	c.ResetVelToGps = t.ResetVelToGps
+	c.ResetVelToFlow = t.ResetVelToFlow
+	c.ResetVelToVision = t.ResetVelToVision
+	c.ResetVelToZero = t.ResetVelToZero
+	c.ResetPosToLastKnown = t.ResetPosToLastKnown
+	c.ResetPosToGps = t.ResetPosToGps
+	c.ResetPosToVision = t.ResetPosToVision
+	c.StartingGpsFusion = t.StartingGpsFusion
+	c.StartingVisionPosFusion = t.StartingVisionPosFusion
+	c.StartingVisionVelFusion = t.StartingVisionVelFusion
+	c.StartingVisionYawFusion = t.StartingVisionYawFusion
+	c.YawAlignedToImuGps = t.YawAlignedToImuGps
+	c.WarningEventChanges = t.WarningEventChanges
+	c.GpsQualityPoor = t.GpsQualityPoor
+	c.GpsFusionTimout = t.GpsFusionTimout
+	c.GpsDataStopped = t.GpsDataStopped
+	c.GpsDataStoppedUsingAlternate = t.GpsDataStoppedUsingAlternate
+	c.HeightSensorTimeout = t.HeightSensorTimeout
+	c.StoppingNavigation = t.StoppingNavigation
+	c.InvalidAccelBiasCovReset = t.InvalidAccelBiasCovReset
+	c.BadYawUsingGpsCourse = t.BadYawUsingGpsCourse
+	c.StoppingMagUse = t.StoppingMagUse
+	c.VisionDataStopped = t.VisionDataStopped
+	c.EmergencyYawResetMagStopped = t.EmergencyYawResetMagStopped
+	return c
+}
+
+func (t *EstimatorEventFlags) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorEventFlags) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.InformationEventChanges = 0
+	t.GpsChecksPassed = false
+	t.ResetVelToGps = false
+	t.ResetVelToFlow = false
+	t.ResetVelToVision = false
+	t.ResetVelToZero = false
+	t.ResetPosToLastKnown = false
+	t.ResetPosToGps = false
+	t.ResetPosToVision = false
+	t.StartingGpsFusion = false
+	t.StartingVisionPosFusion = false
+	t.StartingVisionVelFusion = false
+	t.StartingVisionYawFusion = false
+	t.YawAlignedToImuGps = false
+	t.WarningEventChanges = 0
+	t.GpsQualityPoor = false
+	t.GpsFusionTimout = false
+	t.GpsDataStopped = false
+	t.GpsDataStoppedUsingAlternate = false
+	t.HeightSensorTimeout = false
+	t.StoppingNavigation = false
+	t.InvalidAccelBiasCovReset = false
+	t.BadYawUsingGpsCourse = false
+	t.StoppingMagUse = false
+	t.VisionDataStopped = false
+	t.EmergencyYawResetMagStopped = false
+}
+
+// CloneEstimatorEventFlagsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorEventFlagsSlice(dst, src []EstimatorEventFlags) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

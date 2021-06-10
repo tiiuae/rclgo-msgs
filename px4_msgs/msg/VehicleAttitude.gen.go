@@ -54,13 +54,34 @@ func NewVehicleAttitude() *VehicleAttitude {
 	return &self
 }
 
-func (t *VehicleAttitude) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleAttitude) Clone() *VehicleAttitude {
+	c := &VehicleAttitude{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Q = t.Q
+	c.DeltaQReset = t.DeltaQReset
+	c.QuatResetCounter = t.QuatResetCounter
+	return c
+}
+
+func (t *VehicleAttitude) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleAttitude) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Q = [4]float32{}
+	t.DeltaQReset = [4]float32{}
+	t.QuatResetCounter = 0
+}
+
+// CloneVehicleAttitudeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleAttitudeSlice(dst, src []VehicleAttitude) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

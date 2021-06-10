@@ -51,13 +51,29 @@ func NewProjectedMapsInfo_Request() *ProjectedMapsInfo_Request {
 	return &self
 }
 
-func (t *ProjectedMapsInfo_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ProjectedMapsInfo_Request) Clone() *ProjectedMapsInfo_Request {
+	c := &ProjectedMapsInfo_Request{}
+	if t.ProjectedMapsInfo != nil {
+		c.ProjectedMapsInfo = make([]map_msgs_msg.ProjectedMapInfo, len(t.ProjectedMapsInfo))
+		map_msgs_msg.CloneProjectedMapInfoSlice(c.ProjectedMapsInfo, t.ProjectedMapsInfo)
+	}
+	return c
+}
+
+func (t *ProjectedMapsInfo_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ProjectedMapsInfo_Request) SetDefaults() {
-	
+	t.ProjectedMapsInfo = nil
+}
+
+// CloneProjectedMapsInfo_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneProjectedMapsInfo_RequestSlice(dst, src []ProjectedMapsInfo_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

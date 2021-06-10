@@ -88,18 +88,60 @@ func NewMarker() *Marker {
 	return &self
 }
 
-func (t *Marker) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Marker) Clone() *Marker {
+	c := &Marker{}
+	c.Header = *t.Header.Clone()
+	c.Ns = t.Ns
+	c.Id = t.Id
+	c.Type = t.Type
+	c.Action = t.Action
+	c.Pose = *t.Pose.Clone()
+	c.Scale = *t.Scale.Clone()
+	c.Color = *t.Color.Clone()
+	c.Lifetime = *t.Lifetime.Clone()
+	c.FrameLocked = t.FrameLocked
+	if t.Points != nil {
+		c.Points = make([]geometry_msgs_msg.Point, len(t.Points))
+		geometry_msgs_msg.ClonePointSlice(c.Points, t.Points)
+	}
+	if t.Colors != nil {
+		c.Colors = make([]std_msgs_msg.ColorRGBA, len(t.Colors))
+		std_msgs_msg.CloneColorRGBASlice(c.Colors, t.Colors)
+	}
+	c.Text = t.Text
+	c.MeshResource = t.MeshResource
+	c.MeshUseEmbeddedMaterials = t.MeshUseEmbeddedMaterials
+	return c
+}
+
+func (t *Marker) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Marker) SetDefaults() {
 	t.Header.SetDefaults()
+	t.Ns = ""
+	t.Id = 0
+	t.Type = 0
+	t.Action = 0
 	t.Pose.SetDefaults()
 	t.Scale.SetDefaults()
 	t.Color.SetDefaults()
 	t.Lifetime.SetDefaults()
-	
+	t.FrameLocked = false
+	t.Points = nil
+	t.Colors = nil
+	t.Text = ""
+	t.MeshResource = ""
+	t.MeshUseEmbeddedMaterials = false
+}
+
+// CloneMarkerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMarkerSlice(dst, src []Marker) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

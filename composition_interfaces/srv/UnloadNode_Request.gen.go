@@ -49,13 +49,26 @@ func NewUnloadNode_Request() *UnloadNode_Request {
 	return &self
 }
 
-func (t *UnloadNode_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UnloadNode_Request) Clone() *UnloadNode_Request {
+	c := &UnloadNode_Request{}
+	c.UniqueId = t.UniqueId
+	return c
+}
+
+func (t *UnloadNode_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UnloadNode_Request) SetDefaults() {
-	
+	t.UniqueId = 0
+}
+
+// CloneUnloadNode_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUnloadNode_RequestSlice(dst, src []UnloadNode_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

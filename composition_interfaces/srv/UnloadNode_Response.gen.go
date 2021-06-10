@@ -51,13 +51,28 @@ func NewUnloadNode_Response() *UnloadNode_Response {
 	return &self
 }
 
-func (t *UnloadNode_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *UnloadNode_Response) Clone() *UnloadNode_Response {
+	c := &UnloadNode_Response{}
+	c.Success = t.Success
+	c.ErrorMessage = t.ErrorMessage
+	return c
+}
+
+func (t *UnloadNode_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *UnloadNode_Response) SetDefaults() {
-	
+	t.Success = false
+	t.ErrorMessage = ""
+}
+
+// CloneUnloadNode_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneUnloadNode_ResponseSlice(dst, src []UnloadNode_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -52,13 +52,30 @@ func NewOrbTestMediumWrapAround() *OrbTestMediumWrapAround {
 	return &self
 }
 
-func (t *OrbTestMediumWrapAround) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OrbTestMediumWrapAround) Clone() *OrbTestMediumWrapAround {
+	c := &OrbTestMediumWrapAround{}
+	c.Timestamp = t.Timestamp
+	c.Val = t.Val
+	c.Junk = t.Junk
+	return c
+}
+
+func (t *OrbTestMediumWrapAround) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OrbTestMediumWrapAround) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Val = 0
+	t.Junk = [64]uint8{}
+}
+
+// CloneOrbTestMediumWrapAroundSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOrbTestMediumWrapAroundSlice(dst, src []OrbTestMediumWrapAround) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -77,18 +77,56 @@ func NewImageMarker() *ImageMarker {
 	return &self
 }
 
-func (t *ImageMarker) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ImageMarker) Clone() *ImageMarker {
+	c := &ImageMarker{}
+	c.Header = *t.Header.Clone()
+	c.Ns = t.Ns
+	c.Id = t.Id
+	c.Type = t.Type
+	c.Action = t.Action
+	c.Position = *t.Position.Clone()
+	c.Scale = t.Scale
+	c.OutlineColor = *t.OutlineColor.Clone()
+	c.Filled = t.Filled
+	c.FillColor = *t.FillColor.Clone()
+	c.Lifetime = *t.Lifetime.Clone()
+	if t.Points != nil {
+		c.Points = make([]geometry_msgs_msg.Point, len(t.Points))
+		geometry_msgs_msg.ClonePointSlice(c.Points, t.Points)
+	}
+	if t.OutlineColors != nil {
+		c.OutlineColors = make([]std_msgs_msg.ColorRGBA, len(t.OutlineColors))
+		std_msgs_msg.CloneColorRGBASlice(c.OutlineColors, t.OutlineColors)
+	}
+	return c
+}
+
+func (t *ImageMarker) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ImageMarker) SetDefaults() {
 	t.Header.SetDefaults()
+	t.Ns = ""
+	t.Id = 0
+	t.Type = 0
+	t.Action = 0
 	t.Position.SetDefaults()
+	t.Scale = 0
 	t.OutlineColor.SetDefaults()
+	t.Filled = 0
 	t.FillColor.SetDefaults()
 	t.Lifetime.SetDefaults()
-	
+	t.Points = nil
+	t.OutlineColors = nil
+}
+
+// CloneImageMarkerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneImageMarkerSlice(dst, src []ImageMarker) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -63,13 +63,46 @@ func NewHeaterStatus() *HeaterStatus {
 	return &self
 }
 
-func (t *HeaterStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *HeaterStatus) Clone() *HeaterStatus {
+	c := &HeaterStatus{}
+	c.Timestamp = t.Timestamp
+	c.DeviceId = t.DeviceId
+	c.HeaterOn = t.HeaterOn
+	c.TemperatureSensor = t.TemperatureSensor
+	c.TemperatureTarget = t.TemperatureTarget
+	c.ControllerPeriodUsec = t.ControllerPeriodUsec
+	c.ControllerTimeOnUsec = t.ControllerTimeOnUsec
+	c.ProportionalValue = t.ProportionalValue
+	c.IntegratorValue = t.IntegratorValue
+	c.FeedForwardValue = t.FeedForwardValue
+	c.Mode = t.Mode
+	return c
+}
+
+func (t *HeaterStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *HeaterStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.DeviceId = 0
+	t.HeaterOn = false
+	t.TemperatureSensor = 0
+	t.TemperatureTarget = 0
+	t.ControllerPeriodUsec = 0
+	t.ControllerTimeOnUsec = 0
+	t.ProportionalValue = 0
+	t.IntegratorValue = 0
+	t.FeedForwardValue = 0
+	t.Mode = 0
+}
+
+// CloneHeaterStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneHeaterStatusSlice(dst, src []HeaterStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

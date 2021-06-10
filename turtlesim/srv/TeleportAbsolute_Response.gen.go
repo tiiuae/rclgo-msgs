@@ -48,13 +48,24 @@ func NewTeleportAbsolute_Response() *TeleportAbsolute_Response {
 	return &self
 }
 
-func (t *TeleportAbsolute_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TeleportAbsolute_Response) Clone() *TeleportAbsolute_Response {
+	c := &TeleportAbsolute_Response{}
+	return c
+}
+
+func (t *TeleportAbsolute_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TeleportAbsolute_Response) SetDefaults() {
-	
+}
+
+// CloneTeleportAbsolute_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTeleportAbsolute_ResponseSlice(dst, src []TeleportAbsolute_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -60,13 +60,32 @@ func NewGeofenceResult() *GeofenceResult {
 	return &self
 }
 
-func (t *GeofenceResult) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GeofenceResult) Clone() *GeofenceResult {
+	c := &GeofenceResult{}
+	c.Timestamp = t.Timestamp
+	c.GeofenceViolated = t.GeofenceViolated
+	c.GeofenceAction = t.GeofenceAction
+	c.HomeRequired = t.HomeRequired
+	return c
+}
+
+func (t *GeofenceResult) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GeofenceResult) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.GeofenceViolated = false
+	t.GeofenceAction = 0
+	t.HomeRequired = false
+}
+
+// CloneGeofenceResultSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGeofenceResultSlice(dst, src []GeofenceResult) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

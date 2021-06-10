@@ -98,13 +98,112 @@ func NewVehicleLocalPositionGroundtruth() *VehicleLocalPositionGroundtruth {
 	return &self
 }
 
-func (t *VehicleLocalPositionGroundtruth) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleLocalPositionGroundtruth) Clone() *VehicleLocalPositionGroundtruth {
+	c := &VehicleLocalPositionGroundtruth{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.XyValid = t.XyValid
+	c.ZValid = t.ZValid
+	c.VXyValid = t.VXyValid
+	c.VZValid = t.VZValid
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.DeltaXy = t.DeltaXy
+	c.XyResetCounter = t.XyResetCounter
+	c.DeltaZ = t.DeltaZ
+	c.ZResetCounter = t.ZResetCounter
+	c.Vx = t.Vx
+	c.Vy = t.Vy
+	c.Vz = t.Vz
+	c.ZDeriv = t.ZDeriv
+	c.DeltaVxy = t.DeltaVxy
+	c.VxyResetCounter = t.VxyResetCounter
+	c.DeltaVz = t.DeltaVz
+	c.VzResetCounter = t.VzResetCounter
+	c.Ax = t.Ax
+	c.Ay = t.Ay
+	c.Az = t.Az
+	c.Heading = t.Heading
+	c.DeltaHeading = t.DeltaHeading
+	c.HeadingResetCounter = t.HeadingResetCounter
+	c.XyGlobal = t.XyGlobal
+	c.ZGlobal = t.ZGlobal
+	c.RefTimestamp = t.RefTimestamp
+	c.RefLat = t.RefLat
+	c.RefLon = t.RefLon
+	c.RefAlt = t.RefAlt
+	c.DistBottom = t.DistBottom
+	c.DistBottomValid = t.DistBottomValid
+	c.DistBottomSensorBitfield = t.DistBottomSensorBitfield
+	c.Eph = t.Eph
+	c.Epv = t.Epv
+	c.Evh = t.Evh
+	c.Evv = t.Evv
+	c.VxyMax = t.VxyMax
+	c.VzMax = t.VzMax
+	c.HaglMin = t.HaglMin
+	c.HaglMax = t.HaglMax
+	return c
+}
+
+func (t *VehicleLocalPositionGroundtruth) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleLocalPositionGroundtruth) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.XyValid = false
+	t.ZValid = false
+	t.VXyValid = false
+	t.VZValid = false
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.DeltaXy = [2]float32{}
+	t.XyResetCounter = 0
+	t.DeltaZ = 0
+	t.ZResetCounter = 0
+	t.Vx = 0
+	t.Vy = 0
+	t.Vz = 0
+	t.ZDeriv = 0
+	t.DeltaVxy = [2]float32{}
+	t.VxyResetCounter = 0
+	t.DeltaVz = 0
+	t.VzResetCounter = 0
+	t.Ax = 0
+	t.Ay = 0
+	t.Az = 0
+	t.Heading = 0
+	t.DeltaHeading = 0
+	t.HeadingResetCounter = 0
+	t.XyGlobal = false
+	t.ZGlobal = false
+	t.RefTimestamp = 0
+	t.RefLat = 0
+	t.RefLon = 0
+	t.RefAlt = 0
+	t.DistBottom = 0
+	t.DistBottomValid = false
+	t.DistBottomSensorBitfield = 0
+	t.Eph = 0
+	t.Epv = 0
+	t.Evh = 0
+	t.Evv = 0
+	t.VxyMax = 0
+	t.VzMax = 0
+	t.HaglMin = 0
+	t.HaglMax = 0
+}
+
+// CloneVehicleLocalPositionGroundtruthSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleLocalPositionGroundtruthSlice(dst, src []VehicleLocalPositionGroundtruth) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

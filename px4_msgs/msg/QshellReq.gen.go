@@ -56,13 +56,32 @@ func NewQshellReq() *QshellReq {
 	return &self
 }
 
-func (t *QshellReq) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *QshellReq) Clone() *QshellReq {
+	c := &QshellReq{}
+	c.Timestamp = t.Timestamp
+	c.Cmd = t.Cmd
+	c.Strlen = t.Strlen
+	c.RequestSequence = t.RequestSequence
+	return c
+}
+
+func (t *QshellReq) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *QshellReq) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Cmd = [100]byte{}
+	t.Strlen = 0
+	t.RequestSequence = 0
+}
+
+// CloneQshellReqSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneQshellReqSlice(dst, src []QshellReq) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

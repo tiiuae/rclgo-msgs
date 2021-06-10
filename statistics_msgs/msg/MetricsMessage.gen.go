@@ -57,15 +57,39 @@ func NewMetricsMessage() *MetricsMessage {
 	return &self
 }
 
-func (t *MetricsMessage) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MetricsMessage) Clone() *MetricsMessage {
+	c := &MetricsMessage{}
+	c.MeasurementSourceName = t.MeasurementSourceName
+	c.MetricsSource = t.MetricsSource
+	c.Unit = t.Unit
+	c.WindowStart = *t.WindowStart.Clone()
+	c.WindowStop = *t.WindowStop.Clone()
+	if t.Statistics != nil {
+		c.Statistics = make([]StatisticDataPoint, len(t.Statistics))
+		CloneStatisticDataPointSlice(c.Statistics, t.Statistics)
+	}
+	return c
+}
+
+func (t *MetricsMessage) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MetricsMessage) SetDefaults() {
+	t.MeasurementSourceName = ""
+	t.MetricsSource = ""
+	t.Unit = ""
 	t.WindowStart.SetDefaults()
 	t.WindowStop.SetDefaults()
-	
+	t.Statistics = nil
+}
+
+// CloneMetricsMessageSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMetricsMessageSlice(dst, src []MetricsMessage) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

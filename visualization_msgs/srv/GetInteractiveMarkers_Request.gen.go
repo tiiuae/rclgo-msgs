@@ -48,13 +48,24 @@ func NewGetInteractiveMarkers_Request() *GetInteractiveMarkers_Request {
 	return &self
 }
 
-func (t *GetInteractiveMarkers_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetInteractiveMarkers_Request) Clone() *GetInteractiveMarkers_Request {
+	c := &GetInteractiveMarkers_Request{}
+	return c
+}
+
+func (t *GetInteractiveMarkers_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetInteractiveMarkers_Request) SetDefaults() {
-	
+}
+
+// CloneGetInteractiveMarkers_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetInteractiveMarkers_RequestSlice(dst, src []GetInteractiveMarkers_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

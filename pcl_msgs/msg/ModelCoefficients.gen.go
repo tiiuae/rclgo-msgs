@@ -53,14 +53,31 @@ func NewModelCoefficients() *ModelCoefficients {
 	return &self
 }
 
-func (t *ModelCoefficients) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ModelCoefficients) Clone() *ModelCoefficients {
+	c := &ModelCoefficients{}
+	c.Header = *t.Header.Clone()
+	if t.Values != nil {
+		c.Values = make([]float32, len(t.Values))
+		copy(c.Values, t.Values)
+	}
+	return c
+}
+
+func (t *ModelCoefficients) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ModelCoefficients) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.Values = nil
+}
+
+// CloneModelCoefficientsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneModelCoefficientsSlice(dst, src []ModelCoefficients) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

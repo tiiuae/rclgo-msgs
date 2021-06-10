@@ -51,13 +51,29 @@ func NewTFMessage() *TFMessage {
 	return &self
 }
 
-func (t *TFMessage) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TFMessage) Clone() *TFMessage {
+	c := &TFMessage{}
+	if t.Transforms != nil {
+		c.Transforms = make([]geometry_msgs_msg.TransformStamped, len(t.Transforms))
+		geometry_msgs_msg.CloneTransformStampedSlice(c.Transforms, t.Transforms)
+	}
+	return c
+}
+
+func (t *TFMessage) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TFMessage) SetDefaults() {
-	
+	t.Transforms = nil
+}
+
+// CloneTFMessageSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTFMessageSlice(dst, src []TFMessage) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

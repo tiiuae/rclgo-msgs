@@ -139,13 +139,86 @@ func NewVehicleStatus() *VehicleStatus {
 	return &self
 }
 
-func (t *VehicleStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleStatus) Clone() *VehicleStatus {
+	c := &VehicleStatus{}
+	c.Timestamp = t.Timestamp
+	c.NavState = t.NavState
+	c.NavStateTimestamp = t.NavStateTimestamp
+	c.ArmingState = t.ArmingState
+	c.HilState = t.HilState
+	c.Failsafe = t.Failsafe
+	c.FailsafeTimestamp = t.FailsafeTimestamp
+	c.SystemType = t.SystemType
+	c.SystemId = t.SystemId
+	c.ComponentId = t.ComponentId
+	c.VehicleType = t.VehicleType
+	c.IsVtol = t.IsVtol
+	c.IsVtolTailsitter = t.IsVtolTailsitter
+	c.VtolFwPermanentStab = t.VtolFwPermanentStab
+	c.InTransitionMode = t.InTransitionMode
+	c.InTransitionToFw = t.InTransitionToFw
+	c.RcSignalLost = t.RcSignalLost
+	c.RcInputMode = t.RcInputMode
+	c.DataLinkLost = t.DataLinkLost
+	c.DataLinkLostCounter = t.DataLinkLostCounter
+	c.HighLatencyDataLinkLost = t.HighLatencyDataLinkLost
+	c.EngineFailure = t.EngineFailure
+	c.MissionFailure = t.MissionFailure
+	c.FailureDetectorStatus = t.FailureDetectorStatus
+	c.OnboardControlSensorsPresent = t.OnboardControlSensorsPresent
+	c.OnboardControlSensorsEnabled = t.OnboardControlSensorsEnabled
+	c.OnboardControlSensorsHealth = t.OnboardControlSensorsHealth
+	c.LatestArmingReason = t.LatestArmingReason
+	c.LatestDisarmingReason = t.LatestDisarmingReason
+	c.ArmedTime = t.ArmedTime
+	c.TakeoffTime = t.TakeoffTime
+	return c
+}
+
+func (t *VehicleStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.NavState = 0
+	t.NavStateTimestamp = 0
+	t.ArmingState = 0
+	t.HilState = 0
+	t.Failsafe = false
+	t.FailsafeTimestamp = 0
+	t.SystemType = 0
+	t.SystemId = 0
+	t.ComponentId = 0
+	t.VehicleType = 0
+	t.IsVtol = false
+	t.IsVtolTailsitter = false
+	t.VtolFwPermanentStab = false
+	t.InTransitionMode = false
+	t.InTransitionToFw = false
+	t.RcSignalLost = false
+	t.RcInputMode = 0
+	t.DataLinkLost = false
+	t.DataLinkLostCounter = 0
+	t.HighLatencyDataLinkLost = false
+	t.EngineFailure = false
+	t.MissionFailure = false
+	t.FailureDetectorStatus = 0
+	t.OnboardControlSensorsPresent = 0
+	t.OnboardControlSensorsEnabled = 0
+	t.OnboardControlSensorsHealth = 0
+	t.LatestArmingReason = 0
+	t.LatestDisarmingReason = 0
+	t.ArmedTime = 0
+	t.TakeoffTime = 0
+}
+
+// CloneVehicleStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleStatusSlice(dst, src []VehicleStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

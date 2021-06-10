@@ -64,13 +64,44 @@ func NewVehicleImu() *VehicleImu {
 	return &self
 }
 
-func (t *VehicleImu) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleImu) Clone() *VehicleImu {
+	c := &VehicleImu{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.AccelDeviceId = t.AccelDeviceId
+	c.GyroDeviceId = t.GyroDeviceId
+	c.DeltaAngle = t.DeltaAngle
+	c.DeltaVelocity = t.DeltaVelocity
+	c.DeltaAngleDt = t.DeltaAngleDt
+	c.DeltaVelocityDt = t.DeltaVelocityDt
+	c.DeltaVelocityClipping = t.DeltaVelocityClipping
+	c.CalibrationCount = t.CalibrationCount
+	return c
+}
+
+func (t *VehicleImu) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleImu) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.AccelDeviceId = 0
+	t.GyroDeviceId = 0
+	t.DeltaAngle = [3]float32{}
+	t.DeltaVelocity = [3]float32{}
+	t.DeltaAngleDt = 0
+	t.DeltaVelocityDt = 0
+	t.DeltaVelocityClipping = 0
+	t.CalibrationCount = 0
+}
+
+// CloneVehicleImuSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleImuSlice(dst, src []VehicleImu) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

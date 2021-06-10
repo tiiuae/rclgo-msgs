@@ -55,15 +55,33 @@ func NewPolygonMesh() *PolygonMesh {
 	return &self
 }
 
-func (t *PolygonMesh) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PolygonMesh) Clone() *PolygonMesh {
+	c := &PolygonMesh{}
+	c.Header = *t.Header.Clone()
+	c.Cloud = *t.Cloud.Clone()
+	if t.Polygons != nil {
+		c.Polygons = make([]Vertices, len(t.Polygons))
+		CloneVerticesSlice(c.Polygons, t.Polygons)
+	}
+	return c
+}
+
+func (t *PolygonMesh) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PolygonMesh) SetDefaults() {
 	t.Header.SetDefaults()
 	t.Cloud.SetDefaults()
-	
+	t.Polygons = nil
+}
+
+// ClonePolygonMeshSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePolygonMeshSlice(dst, src []PolygonMesh) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

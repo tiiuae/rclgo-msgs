@@ -53,14 +53,30 @@ func NewProjectedMap() *ProjectedMap {
 	return &self
 }
 
-func (t *ProjectedMap) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ProjectedMap) Clone() *ProjectedMap {
+	c := &ProjectedMap{}
+	c.Map = *t.Map.Clone()
+	c.MinZ = t.MinZ
+	c.MaxZ = t.MaxZ
+	return c
+}
+
+func (t *ProjectedMap) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ProjectedMap) SetDefaults() {
 	t.Map.SetDefaults()
-	
+	t.MinZ = 0
+	t.MaxZ = 0
+}
+
+// CloneProjectedMapSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneProjectedMapSlice(dst, src []ProjectedMap) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

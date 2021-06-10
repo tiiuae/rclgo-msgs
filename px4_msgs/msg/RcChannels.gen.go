@@ -85,13 +85,40 @@ func NewRcChannels() *RcChannels {
 	return &self
 }
 
-func (t *RcChannels) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RcChannels) Clone() *RcChannels {
+	c := &RcChannels{}
+	c.Timestamp = t.Timestamp
+	c.TimestampLastValid = t.TimestampLastValid
+	c.Channels = t.Channels
+	c.ChannelCount = t.ChannelCount
+	c.Function = t.Function
+	c.Rssi = t.Rssi
+	c.SignalLost = t.SignalLost
+	c.FrameDropCount = t.FrameDropCount
+	return c
+}
+
+func (t *RcChannels) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RcChannels) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampLastValid = 0
+	t.Channels = [18]float32{}
+	t.ChannelCount = 0
+	t.Function = [26]int8{}
+	t.Rssi = 0
+	t.SignalLost = false
+	t.FrameDropCount = 0
+}
+
+// CloneRcChannelsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRcChannelsSlice(dst, src []RcChannels) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

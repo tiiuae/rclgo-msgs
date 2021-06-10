@@ -74,14 +74,43 @@ func NewInteractiveMarkerControl() *InteractiveMarkerControl {
 	return &self
 }
 
-func (t *InteractiveMarkerControl) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InteractiveMarkerControl) Clone() *InteractiveMarkerControl {
+	c := &InteractiveMarkerControl{}
+	c.Name = t.Name
+	c.Orientation = *t.Orientation.Clone()
+	c.OrientationMode = t.OrientationMode
+	c.InteractionMode = t.InteractionMode
+	c.AlwaysVisible = t.AlwaysVisible
+	if t.Markers != nil {
+		c.Markers = make([]Marker, len(t.Markers))
+		CloneMarkerSlice(c.Markers, t.Markers)
+	}
+	c.IndependentMarkerOrientation = t.IndependentMarkerOrientation
+	c.Description = t.Description
+	return c
+}
+
+func (t *InteractiveMarkerControl) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InteractiveMarkerControl) SetDefaults() {
+	t.Name = ""
 	t.Orientation.SetDefaults()
-	
+	t.OrientationMode = 0
+	t.InteractionMode = 0
+	t.AlwaysVisible = false
+	t.Markers = nil
+	t.IndependentMarkerOrientation = false
+	t.Description = ""
+}
+
+// CloneInteractiveMarkerControlSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInteractiveMarkerControlSlice(dst, src []InteractiveMarkerControl) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

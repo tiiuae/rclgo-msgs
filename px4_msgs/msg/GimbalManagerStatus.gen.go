@@ -55,13 +55,38 @@ func NewGimbalManagerStatus() *GimbalManagerStatus {
 	return &self
 }
 
-func (t *GimbalManagerStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GimbalManagerStatus) Clone() *GimbalManagerStatus {
+	c := &GimbalManagerStatus{}
+	c.Timestamp = t.Timestamp
+	c.Flags = t.Flags
+	c.GimbalDeviceId = t.GimbalDeviceId
+	c.PrimaryControlSysid = t.PrimaryControlSysid
+	c.PrimaryControlCompid = t.PrimaryControlCompid
+	c.SecondaryControlSysid = t.SecondaryControlSysid
+	c.SecondaryControlCompid = t.SecondaryControlCompid
+	return c
+}
+
+func (t *GimbalManagerStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GimbalManagerStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Flags = 0
+	t.GimbalDeviceId = 0
+	t.PrimaryControlSysid = 0
+	t.PrimaryControlCompid = 0
+	t.SecondaryControlSysid = 0
+	t.SecondaryControlCompid = 0
+}
+
+// CloneGimbalManagerStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGimbalManagerStatusSlice(dst, src []GimbalManagerStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

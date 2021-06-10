@@ -51,13 +51,29 @@ func NewSetMapProjections_Response() *SetMapProjections_Response {
 	return &self
 }
 
-func (t *SetMapProjections_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetMapProjections_Response) Clone() *SetMapProjections_Response {
+	c := &SetMapProjections_Response{}
+	if t.ProjectedMapsInfo != nil {
+		c.ProjectedMapsInfo = make([]map_msgs_msg.ProjectedMapInfo, len(t.ProjectedMapsInfo))
+		map_msgs_msg.CloneProjectedMapInfoSlice(c.ProjectedMapsInfo, t.ProjectedMapsInfo)
+	}
+	return c
+}
+
+func (t *SetMapProjections_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetMapProjections_Response) SetDefaults() {
-	
+	t.ProjectedMapsInfo = nil
+}
+
+// CloneSetMapProjections_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetMapProjections_ResponseSlice(dst, src []SetMapProjections_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

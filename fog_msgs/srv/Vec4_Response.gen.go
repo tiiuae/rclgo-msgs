@@ -51,13 +51,28 @@ func NewVec4_Response() *Vec4_Response {
 	return &self
 }
 
-func (t *Vec4_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Vec4_Response) Clone() *Vec4_Response {
+	c := &Vec4_Response{}
+	c.Success = t.Success
+	c.Message = t.Message
+	return c
+}
+
+func (t *Vec4_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Vec4_Response) SetDefaults() {
-	
+	t.Success = false
+	t.Message = ""
+}
+
+// CloneVec4_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVec4_ResponseSlice(dst, src []Vec4_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

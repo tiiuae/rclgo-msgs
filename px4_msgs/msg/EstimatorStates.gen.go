@@ -54,13 +54,34 @@ func NewEstimatorStates() *EstimatorStates {
 	return &self
 }
 
-func (t *EstimatorStates) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorStates) Clone() *EstimatorStates {
+	c := &EstimatorStates{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.States = t.States
+	c.NStates = t.NStates
+	c.Covariances = t.Covariances
+	return c
+}
+
+func (t *EstimatorStates) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorStates) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.States = [24]float32{}
+	t.NStates = 0
+	t.Covariances = [24]float32{}
+}
+
+// CloneEstimatorStatesSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorStatesSlice(dst, src []EstimatorStates) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

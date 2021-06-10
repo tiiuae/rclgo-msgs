@@ -79,13 +79,46 @@ func NewInputRc() *InputRc {
 	return &self
 }
 
-func (t *InputRc) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InputRc) Clone() *InputRc {
+	c := &InputRc{}
+	c.Timestamp = t.Timestamp
+	c.TimestampLastSignal = t.TimestampLastSignal
+	c.ChannelCount = t.ChannelCount
+	c.Rssi = t.Rssi
+	c.RcFailsafe = t.RcFailsafe
+	c.RcLost = t.RcLost
+	c.RcLostFrameCount = t.RcLostFrameCount
+	c.RcTotalFrameCount = t.RcTotalFrameCount
+	c.RcPpmFrameLength = t.RcPpmFrameLength
+	c.InputSource = t.InputSource
+	c.Values = t.Values
+	return c
+}
+
+func (t *InputRc) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InputRc) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampLastSignal = 0
+	t.ChannelCount = 0
+	t.Rssi = 0
+	t.RcFailsafe = false
+	t.RcLost = false
+	t.RcLostFrameCount = 0
+	t.RcTotalFrameCount = 0
+	t.RcPpmFrameLength = 0
+	t.InputSource = 0
+	t.Values = [18]uint16{}
+}
+
+// CloneInputRcSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInputRcSlice(dst, src []InputRc) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

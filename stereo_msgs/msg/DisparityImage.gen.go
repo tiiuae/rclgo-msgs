@@ -60,16 +60,40 @@ func NewDisparityImage() *DisparityImage {
 	return &self
 }
 
-func (t *DisparityImage) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DisparityImage) Clone() *DisparityImage {
+	c := &DisparityImage{}
+	c.Header = *t.Header.Clone()
+	c.Image = *t.Image.Clone()
+	c.F = t.F
+	c.T = t.T
+	c.ValidWindow = *t.ValidWindow.Clone()
+	c.MinDisparity = t.MinDisparity
+	c.MaxDisparity = t.MaxDisparity
+	c.DeltaD = t.DeltaD
+	return c
+}
+
+func (t *DisparityImage) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DisparityImage) SetDefaults() {
 	t.Header.SetDefaults()
 	t.Image.SetDefaults()
+	t.F = 0
+	t.T = 0
 	t.ValidWindow.SetDefaults()
-	
+	t.MinDisparity = 0
+	t.MaxDisparity = 0
+	t.DeltaD = 0
+}
+
+// CloneDisparityImageSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDisparityImageSlice(dst, src []DisparityImage) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

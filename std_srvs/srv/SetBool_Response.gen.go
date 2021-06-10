@@ -51,13 +51,28 @@ func NewSetBool_Response() *SetBool_Response {
 	return &self
 }
 
-func (t *SetBool_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetBool_Response) Clone() *SetBool_Response {
+	c := &SetBool_Response{}
+	c.Success = t.Success
+	c.Message = t.Message
+	return c
+}
+
+func (t *SetBool_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetBool_Response) SetDefaults() {
-	
+	t.Success = false
+	t.Message = ""
+}
+
+// CloneSetBool_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetBool_ResponseSlice(dst, src []SetBool_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

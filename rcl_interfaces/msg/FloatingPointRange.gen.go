@@ -51,13 +51,30 @@ func NewFloatingPointRange() *FloatingPointRange {
 	return &self
 }
 
-func (t *FloatingPointRange) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *FloatingPointRange) Clone() *FloatingPointRange {
+	c := &FloatingPointRange{}
+	c.FromValue = t.FromValue
+	c.ToValue = t.ToValue
+	c.Step = t.Step
+	return c
+}
+
+func (t *FloatingPointRange) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *FloatingPointRange) SetDefaults() {
-	
+	t.FromValue = 0
+	t.ToValue = 0
+	t.Step = 0
+}
+
+// CloneFloatingPointRangeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneFloatingPointRangeSlice(dst, src []FloatingPointRange) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -73,13 +73,30 @@ func NewActuatorControlsVirtualFw() *ActuatorControlsVirtualFw {
 	return &self
 }
 
-func (t *ActuatorControlsVirtualFw) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ActuatorControlsVirtualFw) Clone() *ActuatorControlsVirtualFw {
+	c := &ActuatorControlsVirtualFw{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.Control = t.Control
+	return c
+}
+
+func (t *ActuatorControlsVirtualFw) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ActuatorControlsVirtualFw) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.Control = [8]float32{}
+}
+
+// CloneActuatorControlsVirtualFwSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneActuatorControlsVirtualFwSlice(dst, src []ActuatorControlsVirtualFw) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

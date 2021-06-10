@@ -52,13 +52,30 @@ func NewOrbTestMediumMulti() *OrbTestMediumMulti {
 	return &self
 }
 
-func (t *OrbTestMediumMulti) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OrbTestMediumMulti) Clone() *OrbTestMediumMulti {
+	c := &OrbTestMediumMulti{}
+	c.Timestamp = t.Timestamp
+	c.Val = t.Val
+	c.Junk = t.Junk
+	return c
+}
+
+func (t *OrbTestMediumMulti) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OrbTestMediumMulti) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Val = 0
+	t.Junk = [64]uint8{}
+}
+
+// CloneOrbTestMediumMultiSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOrbTestMediumMultiSlice(dst, src []OrbTestMediumMulti) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

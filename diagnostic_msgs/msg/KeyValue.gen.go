@@ -51,13 +51,28 @@ func NewKeyValue() *KeyValue {
 	return &self
 }
 
-func (t *KeyValue) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *KeyValue) Clone() *KeyValue {
+	c := &KeyValue{}
+	c.Key = t.Key
+	c.Value = t.Value
+	return c
+}
+
+func (t *KeyValue) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *KeyValue) SetDefaults() {
-	
+	t.Key = ""
+	t.Value = ""
+}
+
+// CloneKeyValueSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneKeyValueSlice(dst, src []KeyValue) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

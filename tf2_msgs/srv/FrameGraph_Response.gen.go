@@ -50,13 +50,26 @@ func NewFrameGraph_Response() *FrameGraph_Response {
 	return &self
 }
 
-func (t *FrameGraph_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *FrameGraph_Response) Clone() *FrameGraph_Response {
+	c := &FrameGraph_Response{}
+	c.FrameYaml = t.FrameYaml
+	return c
+}
+
+func (t *FrameGraph_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *FrameGraph_Response) SetDefaults() {
-	
+	t.FrameYaml = ""
+}
+
+// CloneFrameGraph_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneFrameGraph_ResponseSlice(dst, src []FrameGraph_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

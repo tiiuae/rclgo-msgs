@@ -60,13 +60,46 @@ func NewSensorGyroFft() *SensorGyroFft {
 	return &self
 }
 
-func (t *SensorGyroFft) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorGyroFft) Clone() *SensorGyroFft {
+	c := &SensorGyroFft{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DeviceId = t.DeviceId
+	c.SensorSampleRateHz = t.SensorSampleRateHz
+	c.ResolutionHz = t.ResolutionHz
+	c.PeakFrequenciesX = t.PeakFrequenciesX
+	c.PeakFrequenciesY = t.PeakFrequenciesY
+	c.PeakFrequenciesZ = t.PeakFrequenciesZ
+	c.PeakMagnitudeX = t.PeakMagnitudeX
+	c.PeakMagnitudeY = t.PeakMagnitudeY
+	c.PeakMagnitudeZ = t.PeakMagnitudeZ
+	return c
+}
+
+func (t *SensorGyroFft) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorGyroFft) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DeviceId = 0
+	t.SensorSampleRateHz = 0
+	t.ResolutionHz = 0
+	t.PeakFrequenciesX = [6]float32{}
+	t.PeakFrequenciesY = [6]float32{}
+	t.PeakFrequenciesZ = [6]float32{}
+	t.PeakMagnitudeX = [6]uint32{}
+	t.PeakMagnitudeY = [6]uint32{}
+	t.PeakMagnitudeZ = [6]uint32{}
+}
+
+// CloneSensorGyroFftSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorGyroFftSlice(dst, src []SensorGyroFft) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

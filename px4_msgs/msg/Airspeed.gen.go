@@ -53,13 +53,34 @@ func NewAirspeed() *Airspeed {
 	return &self
 }
 
-func (t *Airspeed) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Airspeed) Clone() *Airspeed {
+	c := &Airspeed{}
+	c.Timestamp = t.Timestamp
+	c.IndicatedAirspeedMS = t.IndicatedAirspeedMS
+	c.TrueAirspeedMS = t.TrueAirspeedMS
+	c.AirTemperatureCelsius = t.AirTemperatureCelsius
+	c.Confidence = t.Confidence
+	return c
+}
+
+func (t *Airspeed) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Airspeed) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.IndicatedAirspeedMS = 0
+	t.TrueAirspeedMS = 0
+	t.AirTemperatureCelsius = 0
+	t.Confidence = 0
+}
+
+// CloneAirspeedSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneAirspeedSlice(dst, src []Airspeed) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

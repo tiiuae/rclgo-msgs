@@ -56,15 +56,30 @@ func NewInteractiveMarkerPose() *InteractiveMarkerPose {
 	return &self
 }
 
-func (t *InteractiveMarkerPose) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *InteractiveMarkerPose) Clone() *InteractiveMarkerPose {
+	c := &InteractiveMarkerPose{}
+	c.Header = *t.Header.Clone()
+	c.Pose = *t.Pose.Clone()
+	c.Name = t.Name
+	return c
+}
+
+func (t *InteractiveMarkerPose) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *InteractiveMarkerPose) SetDefaults() {
 	t.Header.SetDefaults()
 	t.Pose.SetDefaults()
-	
+	t.Name = ""
+}
+
+// CloneInteractiveMarkerPoseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneInteractiveMarkerPoseSlice(dst, src []InteractiveMarkerPose) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

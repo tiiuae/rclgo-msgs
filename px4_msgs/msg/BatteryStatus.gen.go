@@ -88,13 +88,80 @@ func NewBatteryStatus() *BatteryStatus {
 	return &self
 }
 
-func (t *BatteryStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *BatteryStatus) Clone() *BatteryStatus {
+	c := &BatteryStatus{}
+	c.Timestamp = t.Timestamp
+	c.VoltageV = t.VoltageV
+	c.VoltageFilteredV = t.VoltageFilteredV
+	c.CurrentA = t.CurrentA
+	c.CurrentFilteredA = t.CurrentFilteredA
+	c.AverageCurrentA = t.AverageCurrentA
+	c.DischargedMah = t.DischargedMah
+	c.Remaining = t.Remaining
+	c.Scale = t.Scale
+	c.Temperature = t.Temperature
+	c.CellCount = t.CellCount
+	c.Connected = t.Connected
+	c.Source = t.Source
+	c.Priority = t.Priority
+	c.Capacity = t.Capacity
+	c.CycleCount = t.CycleCount
+	c.RunTimeToEmpty = t.RunTimeToEmpty
+	c.AverageTimeToEmpty = t.AverageTimeToEmpty
+	c.SerialNumber = t.SerialNumber
+	c.ManufactureDate = t.ManufactureDate
+	c.StateOfHealth = t.StateOfHealth
+	c.MaxError = t.MaxError
+	c.Id = t.Id
+	c.InterfaceError = t.InterfaceError
+	c.VoltageCellV = t.VoltageCellV
+	c.MaxCellVoltageDelta = t.MaxCellVoltageDelta
+	c.IsPoweringOff = t.IsPoweringOff
+	c.Warning = t.Warning
+	return c
+}
+
+func (t *BatteryStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *BatteryStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.VoltageV = 0
+	t.VoltageFilteredV = 0
+	t.CurrentA = 0
+	t.CurrentFilteredA = 0
+	t.AverageCurrentA = 0
+	t.DischargedMah = 0
+	t.Remaining = 0
+	t.Scale = 0
+	t.Temperature = 0
+	t.CellCount = 0
+	t.Connected = false
+	t.Source = 0
+	t.Priority = 0
+	t.Capacity = 0
+	t.CycleCount = 0
+	t.RunTimeToEmpty = 0
+	t.AverageTimeToEmpty = 0
+	t.SerialNumber = 0
+	t.ManufactureDate = 0
+	t.StateOfHealth = 0
+	t.MaxError = 0
+	t.Id = 0
+	t.InterfaceError = 0
+	t.VoltageCellV = [10]float32{}
+	t.MaxCellVoltageDelta = 0
+	t.IsPoweringOff = false
+	t.Warning = 0
+}
+
+// CloneBatteryStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneBatteryStatusSlice(dst, src []BatteryStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

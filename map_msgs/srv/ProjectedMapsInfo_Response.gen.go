@@ -48,13 +48,24 @@ func NewProjectedMapsInfo_Response() *ProjectedMapsInfo_Response {
 	return &self
 }
 
-func (t *ProjectedMapsInfo_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ProjectedMapsInfo_Response) Clone() *ProjectedMapsInfo_Response {
+	c := &ProjectedMapsInfo_Response{}
+	return c
+}
+
+func (t *ProjectedMapsInfo_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ProjectedMapsInfo_Response) SetDefaults() {
-	
+}
+
+// CloneProjectedMapsInfo_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneProjectedMapsInfo_ResponseSlice(dst, src []ProjectedMapsInfo_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

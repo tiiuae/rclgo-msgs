@@ -51,14 +51,26 @@ func NewClock() *Clock {
 	return &self
 }
 
-func (t *Clock) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Clock) Clone() *Clock {
+	c := &Clock{}
+	c.Clock = *t.Clock.Clone()
+	return c
+}
+
+func (t *Clock) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Clock) SetDefaults() {
 	t.Clock.SetDefaults()
-	
+}
+
+// CloneClockSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneClockSlice(dst, src []Clock) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -50,13 +50,28 @@ func NewDuration() *Duration {
 	return &self
 }
 
-func (t *Duration) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Duration) Clone() *Duration {
+	c := &Duration{}
+	c.Sec = t.Sec
+	c.Nanosec = t.Nanosec
+	return c
+}
+
+func (t *Duration) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Duration) SetDefaults() {
-	
+	t.Sec = 0
+	t.Nanosec = 0
+}
+
+// CloneDurationSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDurationSlice(dst, src []Duration) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

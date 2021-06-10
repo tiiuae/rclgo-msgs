@@ -60,18 +60,32 @@ func NewVehicleTrajectoryWaypoint() *VehicleTrajectoryWaypoint {
 	return &self
 }
 
-func (t *VehicleTrajectoryWaypoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleTrajectoryWaypoint) Clone() *VehicleTrajectoryWaypoint {
+	c := &VehicleTrajectoryWaypoint{}
+	c.Timestamp = t.Timestamp
+	c.Type = t.Type
+	CloneTrajectoryWaypointSlice(c.Waypoints[:], t.Waypoints[:])
+	return c
+}
+
+func (t *VehicleTrajectoryWaypoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleTrajectoryWaypoint) SetDefaults() {
-	t.Waypoints[0].SetDefaults()
-	t.Waypoints[1].SetDefaults()
-	t.Waypoints[2].SetDefaults()
-	t.Waypoints[3].SetDefaults()
-	t.Waypoints[4].SetDefaults()
-	
+	t.Timestamp = 0
+	t.Type = 0
+	for i := range t.Waypoints {
+		t.Waypoints[i].SetDefaults()
+	}
+}
+
+// CloneVehicleTrajectoryWaypointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleTrajectoryWaypointSlice(dst, src []VehicleTrajectoryWaypoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

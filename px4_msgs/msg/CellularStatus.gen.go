@@ -75,13 +75,40 @@ func NewCellularStatus() *CellularStatus {
 	return &self
 }
 
-func (t *CellularStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CellularStatus) Clone() *CellularStatus {
+	c := &CellularStatus{}
+	c.Timestamp = t.Timestamp
+	c.Status = t.Status
+	c.FailureReason = t.FailureReason
+	c.Type = t.Type
+	c.Quality = t.Quality
+	c.Mcc = t.Mcc
+	c.Mnc = t.Mnc
+	c.Lac = t.Lac
+	return c
+}
+
+func (t *CellularStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CellularStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Status = 0
+	t.FailureReason = 0
+	t.Type = 0
+	t.Quality = 0
+	t.Mcc = 0
+	t.Mnc = 0
+	t.Lac = 0
+}
+
+// CloneCellularStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCellularStatusSlice(dst, src []CellularStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

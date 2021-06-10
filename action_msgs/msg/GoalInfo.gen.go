@@ -54,15 +54,28 @@ func NewGoalInfo() *GoalInfo {
 	return &self
 }
 
-func (t *GoalInfo) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GoalInfo) Clone() *GoalInfo {
+	c := &GoalInfo{}
+	c.GoalId = *t.GoalId.Clone()
+	c.Stamp = *t.Stamp.Clone()
+	return c
+}
+
+func (t *GoalInfo) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GoalInfo) SetDefaults() {
 	t.GoalId.SetDefaults()
 	t.Stamp.SetDefaults()
-	
+}
+
+// CloneGoalInfoSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGoalInfoSlice(dst, src []GoalInfo) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

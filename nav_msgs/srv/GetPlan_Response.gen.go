@@ -51,14 +51,26 @@ func NewGetPlan_Response() *GetPlan_Response {
 	return &self
 }
 
-func (t *GetPlan_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetPlan_Response) Clone() *GetPlan_Response {
+	c := &GetPlan_Response{}
+	c.Plan = *t.Plan.Clone()
+	return c
+}
+
+func (t *GetPlan_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetPlan_Response) SetDefaults() {
 	t.Plan.SetDefaults()
-	
+}
+
+// CloneGetPlan_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetPlan_ResponseSlice(dst, src []GetPlan_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -54,13 +54,36 @@ func NewSensorBaro() *SensorBaro {
 	return &self
 }
 
-func (t *SensorBaro) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorBaro) Clone() *SensorBaro {
+	c := &SensorBaro{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DeviceId = t.DeviceId
+	c.ErrorCount = t.ErrorCount
+	c.Pressure = t.Pressure
+	c.Temperature = t.Temperature
+	return c
+}
+
+func (t *SensorBaro) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorBaro) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DeviceId = 0
+	t.ErrorCount = 0
+	t.Pressure = 0
+	t.Temperature = 0
+}
+
+// CloneSensorBaroSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorBaroSlice(dst, src []SensorBaro) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

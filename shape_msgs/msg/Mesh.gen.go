@@ -52,13 +52,34 @@ func NewMesh() *Mesh {
 	return &self
 }
 
-func (t *Mesh) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Mesh) Clone() *Mesh {
+	c := &Mesh{}
+	if t.Triangles != nil {
+		c.Triangles = make([]MeshTriangle, len(t.Triangles))
+		CloneMeshTriangleSlice(c.Triangles, t.Triangles)
+	}
+	if t.Vertices != nil {
+		c.Vertices = make([]geometry_msgs_msg.Point, len(t.Vertices))
+		geometry_msgs_msg.ClonePointSlice(c.Vertices, t.Vertices)
+	}
+	return c
+}
+
+func (t *Mesh) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Mesh) SetDefaults() {
-	
+	t.Triangles = nil
+	t.Vertices = nil
+}
+
+// CloneMeshSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMeshSlice(dst, src []Mesh) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

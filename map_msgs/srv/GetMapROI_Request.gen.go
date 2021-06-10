@@ -52,13 +52,32 @@ func NewGetMapROI_Request() *GetMapROI_Request {
 	return &self
 }
 
-func (t *GetMapROI_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetMapROI_Request) Clone() *GetMapROI_Request {
+	c := &GetMapROI_Request{}
+	c.X = t.X
+	c.Y = t.Y
+	c.LX = t.LX
+	c.LY = t.LY
+	return c
+}
+
+func (t *GetMapROI_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetMapROI_Request) SetDefaults() {
-	
+	t.X = 0
+	t.Y = 0
+	t.LX = 0
+	t.LY = 0
+}
+
+// CloneGetMapROI_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetMapROI_RequestSlice(dst, src []GetMapROI_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

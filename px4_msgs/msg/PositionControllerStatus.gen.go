@@ -59,13 +59,46 @@ func NewPositionControllerStatus() *PositionControllerStatus {
 	return &self
 }
 
-func (t *PositionControllerStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PositionControllerStatus) Clone() *PositionControllerStatus {
+	c := &PositionControllerStatus{}
+	c.Timestamp = t.Timestamp
+	c.NavRoll = t.NavRoll
+	c.NavPitch = t.NavPitch
+	c.NavBearing = t.NavBearing
+	c.TargetBearing = t.TargetBearing
+	c.XtrackError = t.XtrackError
+	c.WpDist = t.WpDist
+	c.AcceptanceRadius = t.AcceptanceRadius
+	c.YawAcceptance = t.YawAcceptance
+	c.AltitudeAcceptance = t.AltitudeAcceptance
+	c.Type = t.Type
+	return c
+}
+
+func (t *PositionControllerStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PositionControllerStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.NavRoll = 0
+	t.NavPitch = 0
+	t.NavBearing = 0
+	t.TargetBearing = 0
+	t.XtrackError = 0
+	t.WpDist = 0
+	t.AcceptanceRadius = 0
+	t.YawAcceptance = 0
+	t.AltitudeAcceptance = 0
+	t.Type = 0
+}
+
+// ClonePositionControllerStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePositionControllerStatusSlice(dst, src []PositionControllerStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

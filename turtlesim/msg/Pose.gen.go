@@ -53,13 +53,34 @@ func NewPose() *Pose {
 	return &self
 }
 
-func (t *Pose) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Pose) Clone() *Pose {
+	c := &Pose{}
+	c.X = t.X
+	c.Y = t.Y
+	c.Theta = t.Theta
+	c.LinearVelocity = t.LinearVelocity
+	c.AngularVelocity = t.AngularVelocity
+	return c
+}
+
+func (t *Pose) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Pose) SetDefaults() {
-	
+	t.X = 0
+	t.Y = 0
+	t.Theta = 0
+	t.LinearVelocity = 0
+	t.AngularVelocity = 0
+}
+
+// ClonePoseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePoseSlice(dst, src []Pose) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

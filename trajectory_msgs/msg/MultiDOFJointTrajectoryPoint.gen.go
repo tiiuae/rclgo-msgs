@@ -56,14 +56,41 @@ func NewMultiDOFJointTrajectoryPoint() *MultiDOFJointTrajectoryPoint {
 	return &self
 }
 
-func (t *MultiDOFJointTrajectoryPoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MultiDOFJointTrajectoryPoint) Clone() *MultiDOFJointTrajectoryPoint {
+	c := &MultiDOFJointTrajectoryPoint{}
+	if t.Transforms != nil {
+		c.Transforms = make([]geometry_msgs_msg.Transform, len(t.Transforms))
+		geometry_msgs_msg.CloneTransformSlice(c.Transforms, t.Transforms)
+	}
+	if t.Velocities != nil {
+		c.Velocities = make([]geometry_msgs_msg.Twist, len(t.Velocities))
+		geometry_msgs_msg.CloneTwistSlice(c.Velocities, t.Velocities)
+	}
+	if t.Accelerations != nil {
+		c.Accelerations = make([]geometry_msgs_msg.Twist, len(t.Accelerations))
+		geometry_msgs_msg.CloneTwistSlice(c.Accelerations, t.Accelerations)
+	}
+	c.TimeFromStart = *t.TimeFromStart.Clone()
+	return c
+}
+
+func (t *MultiDOFJointTrajectoryPoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MultiDOFJointTrajectoryPoint) SetDefaults() {
+	t.Transforms = nil
+	t.Velocities = nil
+	t.Accelerations = nil
 	t.TimeFromStart.SetDefaults()
-	
+}
+
+// CloneMultiDOFJointTrajectoryPointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMultiDOFJointTrajectoryPointSlice(dst, src []MultiDOFJointTrajectoryPoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

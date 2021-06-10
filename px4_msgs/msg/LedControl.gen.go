@@ -75,13 +75,36 @@ func NewLedControl() *LedControl {
 	return &self
 }
 
-func (t *LedControl) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LedControl) Clone() *LedControl {
+	c := &LedControl{}
+	c.Timestamp = t.Timestamp
+	c.LedMask = t.LedMask
+	c.Color = t.Color
+	c.Mode = t.Mode
+	c.NumBlinks = t.NumBlinks
+	c.Priority = t.Priority
+	return c
+}
+
+func (t *LedControl) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LedControl) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.LedMask = 0
+	t.Color = 0
+	t.Mode = 0
+	t.NumBlinks = 0
+	t.Priority = 0
+}
+
+// CloneLedControlSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLedControlSlice(dst, src []LedControl) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -48,13 +48,24 @@ func NewGetAvailableStates_Request() *GetAvailableStates_Request {
 	return &self
 }
 
-func (t *GetAvailableStates_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetAvailableStates_Request) Clone() *GetAvailableStates_Request {
+	c := &GetAvailableStates_Request{}
+	return c
+}
+
+func (t *GetAvailableStates_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetAvailableStates_Request) SetDefaults() {
-	
+}
+
+// CloneGetAvailableStates_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetAvailableStates_RequestSlice(dst, src []GetAvailableStates_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

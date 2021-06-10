@@ -71,13 +71,48 @@ func NewSystemPower() *SystemPower {
 	return &self
 }
 
-func (t *SystemPower) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SystemPower) Clone() *SystemPower {
+	c := &SystemPower{}
+	c.Timestamp = t.Timestamp
+	c.Voltage5vV = t.Voltage5vV
+	c.Sensors3v3 = t.Sensors3v3
+	c.Sensors3v3Valid = t.Sensors3v3Valid
+	c.UsbConnected = t.UsbConnected
+	c.BrickValid = t.BrickValid
+	c.UsbValid = t.UsbValid
+	c.ServoValid = t.ServoValid
+	c.Periph5vOc = t.Periph5vOc
+	c.Hipower5vOc = t.Hipower5vOc
+	c.Comp5vValid = t.Comp5vValid
+	c.Can1Gps15vValid = t.Can1Gps15vValid
+	return c
+}
+
+func (t *SystemPower) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SystemPower) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Voltage5vV = 0
+	t.Sensors3v3 = [4]float32{}
+	t.Sensors3v3Valid = 0
+	t.UsbConnected = 0
+	t.BrickValid = 0
+	t.UsbValid = 0
+	t.ServoValid = 0
+	t.Periph5vOc = 0
+	t.Hipower5vOc = 0
+	t.Comp5vValid = 0
+	t.Can1Gps15vValid = 0
+}
+
+// CloneSystemPowerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSystemPowerSlice(dst, src []SystemPower) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -57,13 +57,42 @@ func NewHoverThrustEstimate() *HoverThrustEstimate {
 	return &self
 }
 
-func (t *HoverThrustEstimate) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *HoverThrustEstimate) Clone() *HoverThrustEstimate {
+	c := &HoverThrustEstimate{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.HoverThrust = t.HoverThrust
+	c.HoverThrustVar = t.HoverThrustVar
+	c.AccelInnov = t.AccelInnov
+	c.AccelInnovVar = t.AccelInnovVar
+	c.AccelInnovTestRatio = t.AccelInnovTestRatio
+	c.AccelNoiseVar = t.AccelNoiseVar
+	c.Valid = t.Valid
+	return c
+}
+
+func (t *HoverThrustEstimate) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *HoverThrustEstimate) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.HoverThrust = 0
+	t.HoverThrustVar = 0
+	t.AccelInnov = 0
+	t.AccelInnovVar = 0
+	t.AccelInnovTestRatio = 0
+	t.AccelNoiseVar = 0
+	t.Valid = false
+}
+
+// CloneHoverThrustEstimateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneHoverThrustEstimateSlice(dst, src []HoverThrustEstimate) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

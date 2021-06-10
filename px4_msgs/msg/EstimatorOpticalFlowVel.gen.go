@@ -56,13 +56,38 @@ func NewEstimatorOpticalFlowVel() *EstimatorOpticalFlowVel {
 	return &self
 }
 
-func (t *EstimatorOpticalFlowVel) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorOpticalFlowVel) Clone() *EstimatorOpticalFlowVel {
+	c := &EstimatorOpticalFlowVel{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.VelBody = t.VelBody
+	c.VelNe = t.VelNe
+	c.FlowUncompensatedIntegral = t.FlowUncompensatedIntegral
+	c.FlowCompensatedIntegral = t.FlowCompensatedIntegral
+	c.GyroRateIntegral = t.GyroRateIntegral
+	return c
+}
+
+func (t *EstimatorOpticalFlowVel) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorOpticalFlowVel) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.VelBody = [2]float32{}
+	t.VelNe = [2]float32{}
+	t.FlowUncompensatedIntegral = [2]float32{}
+	t.FlowCompensatedIntegral = [2]float32{}
+	t.GyroRateIntegral = [3]float32{}
+}
+
+// CloneEstimatorOpticalFlowVelSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorOpticalFlowVelSlice(dst, src []EstimatorOpticalFlowVel) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

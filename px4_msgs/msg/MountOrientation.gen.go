@@ -51,13 +51,28 @@ func NewMountOrientation() *MountOrientation {
 	return &self
 }
 
-func (t *MountOrientation) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MountOrientation) Clone() *MountOrientation {
+	c := &MountOrientation{}
+	c.Timestamp = t.Timestamp
+	c.AttitudeEulerAngle = t.AttitudeEulerAngle
+	return c
+}
+
+func (t *MountOrientation) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MountOrientation) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AttitudeEulerAngle = [3]float32{}
+}
+
+// CloneMountOrientationSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMountOrientationSlice(dst, src []MountOrientation) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

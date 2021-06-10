@@ -51,13 +51,29 @@ func NewGetParameters_Response() *GetParameters_Response {
 	return &self
 }
 
-func (t *GetParameters_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetParameters_Response) Clone() *GetParameters_Response {
+	c := &GetParameters_Response{}
+	if t.Values != nil {
+		c.Values = make([]rcl_interfaces_msg.ParameterValue, len(t.Values))
+		rcl_interfaces_msg.CloneParameterValueSlice(c.Values, t.Values)
+	}
+	return c
+}
+
+func (t *GetParameters_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetParameters_Response) SetDefaults() {
-	
+	t.Values = nil
+}
+
+// CloneGetParameters_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetParameters_ResponseSlice(dst, src []GetParameters_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

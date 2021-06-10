@@ -53,14 +53,30 @@ func NewRelativeHumidity() *RelativeHumidity {
 	return &self
 }
 
-func (t *RelativeHumidity) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RelativeHumidity) Clone() *RelativeHumidity {
+	c := &RelativeHumidity{}
+	c.Header = *t.Header.Clone()
+	c.RelativeHumidity = t.RelativeHumidity
+	c.Variance = t.Variance
+	return c
+}
+
+func (t *RelativeHumidity) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RelativeHumidity) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.RelativeHumidity = 0
+	t.Variance = 0
+}
+
+// CloneRelativeHumiditySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRelativeHumiditySlice(dst, src []RelativeHumidity) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

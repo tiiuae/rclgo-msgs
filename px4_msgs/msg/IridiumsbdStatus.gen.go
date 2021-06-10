@@ -63,13 +63,54 @@ func NewIridiumsbdStatus() *IridiumsbdStatus {
 	return &self
 }
 
-func (t *IridiumsbdStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *IridiumsbdStatus) Clone() *IridiumsbdStatus {
+	c := &IridiumsbdStatus{}
+	c.Timestamp = t.Timestamp
+	c.LastHeartbeat = t.LastHeartbeat
+	c.TxBufWriteIndex = t.TxBufWriteIndex
+	c.RxBufReadIndex = t.RxBufReadIndex
+	c.RxBufEndIndex = t.RxBufEndIndex
+	c.FailedSbdSessions = t.FailedSbdSessions
+	c.SuccessfulSbdSessions = t.SuccessfulSbdSessions
+	c.NumTxBufReset = t.NumTxBufReset
+	c.SignalQuality = t.SignalQuality
+	c.State = t.State
+	c.RingPending = t.RingPending
+	c.TxBufWritePending = t.TxBufWritePending
+	c.TxSessionPending = t.TxSessionPending
+	c.RxReadPending = t.RxReadPending
+	c.RxSessionPending = t.RxSessionPending
+	return c
+}
+
+func (t *IridiumsbdStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *IridiumsbdStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.LastHeartbeat = 0
+	t.TxBufWriteIndex = 0
+	t.RxBufReadIndex = 0
+	t.RxBufEndIndex = 0
+	t.FailedSbdSessions = 0
+	t.SuccessfulSbdSessions = 0
+	t.NumTxBufReset = 0
+	t.SignalQuality = 0
+	t.State = 0
+	t.RingPending = false
+	t.TxBufWritePending = false
+	t.TxSessionPending = false
+	t.RxReadPending = false
+	t.RxSessionPending = false
+}
+
+// CloneIridiumsbdStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneIridiumsbdStatusSlice(dst, src []IridiumsbdStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

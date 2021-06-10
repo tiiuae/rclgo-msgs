@@ -59,13 +59,59 @@ func NewParameterValue() *ParameterValue {
 	return &self
 }
 
-func (t *ParameterValue) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParameterValue) Clone() *ParameterValue {
+	c := &ParameterValue{}
+	c.Type = t.Type
+	c.BoolValue = t.BoolValue
+	c.IntegerValue = t.IntegerValue
+	c.DoubleValue = t.DoubleValue
+	c.StringValue = t.StringValue
+	if t.ByteArrayValue != nil {
+		c.ByteArrayValue = make([]byte, len(t.ByteArrayValue))
+		copy(c.ByteArrayValue, t.ByteArrayValue)
+	}
+	if t.BoolArrayValue != nil {
+		c.BoolArrayValue = make([]bool, len(t.BoolArrayValue))
+		copy(c.BoolArrayValue, t.BoolArrayValue)
+	}
+	if t.IntegerArrayValue != nil {
+		c.IntegerArrayValue = make([]int64, len(t.IntegerArrayValue))
+		copy(c.IntegerArrayValue, t.IntegerArrayValue)
+	}
+	if t.DoubleArrayValue != nil {
+		c.DoubleArrayValue = make([]float64, len(t.DoubleArrayValue))
+		copy(c.DoubleArrayValue, t.DoubleArrayValue)
+	}
+	if t.StringArrayValue != nil {
+		c.StringArrayValue = make([]string, len(t.StringArrayValue))
+		copy(c.StringArrayValue, t.StringArrayValue)
+	}
+	return c
+}
+
+func (t *ParameterValue) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParameterValue) SetDefaults() {
-	
+	t.Type = 0
+	t.BoolValue = false
+	t.IntegerValue = 0
+	t.DoubleValue = 0
+	t.StringValue = ""
+	t.ByteArrayValue = nil
+	t.BoolArrayValue = nil
+	t.IntegerArrayValue = nil
+	t.DoubleArrayValue = nil
+	t.StringArrayValue = nil
+}
+
+// CloneParameterValueSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterValueSlice(dst, src []ParameterValue) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

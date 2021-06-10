@@ -51,13 +51,29 @@ func NewGetAvailableStates_Response() *GetAvailableStates_Response {
 	return &self
 }
 
-func (t *GetAvailableStates_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GetAvailableStates_Response) Clone() *GetAvailableStates_Response {
+	c := &GetAvailableStates_Response{}
+	if t.AvailableStates != nil {
+		c.AvailableStates = make([]lifecycle_msgs_msg.State, len(t.AvailableStates))
+		lifecycle_msgs_msg.CloneStateSlice(c.AvailableStates, t.AvailableStates)
+	}
+	return c
+}
+
+func (t *GetAvailableStates_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GetAvailableStates_Response) SetDefaults() {
-	
+	t.AvailableStates = nil
+}
+
+// CloneGetAvailableStates_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGetAvailableStates_ResponseSlice(dst, src []GetAvailableStates_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

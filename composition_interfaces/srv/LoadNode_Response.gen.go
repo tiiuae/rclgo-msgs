@@ -53,13 +53,32 @@ func NewLoadNode_Response() *LoadNode_Response {
 	return &self
 }
 
-func (t *LoadNode_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LoadNode_Response) Clone() *LoadNode_Response {
+	c := &LoadNode_Response{}
+	c.Success = t.Success
+	c.ErrorMessage = t.ErrorMessage
+	c.FullNodeName = t.FullNodeName
+	c.UniqueId = t.UniqueId
+	return c
+}
+
+func (t *LoadNode_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LoadNode_Response) SetDefaults() {
-	
+	t.Success = false
+	t.ErrorMessage = ""
+	t.FullNodeName = ""
+	t.UniqueId = 0
+}
+
+// CloneLoadNode_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLoadNode_ResponseSlice(dst, src []LoadNode_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

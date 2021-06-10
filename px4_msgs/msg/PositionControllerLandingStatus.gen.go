@@ -53,13 +53,34 @@ func NewPositionControllerLandingStatus() *PositionControllerLandingStatus {
 	return &self
 }
 
-func (t *PositionControllerLandingStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PositionControllerLandingStatus) Clone() *PositionControllerLandingStatus {
+	c := &PositionControllerLandingStatus{}
+	c.Timestamp = t.Timestamp
+	c.HorizontalSlopeDisplacement = t.HorizontalSlopeDisplacement
+	c.SlopeAngleRad = t.SlopeAngleRad
+	c.FlareLength = t.FlareLength
+	c.AbortLanding = t.AbortLanding
+	return c
+}
+
+func (t *PositionControllerLandingStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PositionControllerLandingStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.HorizontalSlopeDisplacement = 0
+	t.SlopeAngleRad = 0
+	t.FlareLength = 0
+	t.AbortLanding = false
+}
+
+// ClonePositionControllerLandingStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePositionControllerLandingStatusSlice(dst, src []PositionControllerLandingStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

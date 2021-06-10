@@ -52,16 +52,32 @@ func NewPositionSetpointTriplet() *PositionSetpointTriplet {
 	return &self
 }
 
-func (t *PositionSetpointTriplet) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PositionSetpointTriplet) Clone() *PositionSetpointTriplet {
+	c := &PositionSetpointTriplet{}
+	c.Timestamp = t.Timestamp
+	c.Previous = *t.Previous.Clone()
+	c.Current = *t.Current.Clone()
+	c.Next = *t.Next.Clone()
+	return c
+}
+
+func (t *PositionSetpointTriplet) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PositionSetpointTriplet) SetDefaults() {
+	t.Timestamp = 0
 	t.Previous.SetDefaults()
 	t.Current.SetDefaults()
 	t.Next.SetDefaults()
-	
+}
+
+// ClonePositionSetpointTripletSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePositionSetpointTripletSlice(dst, src []PositionSetpointTriplet) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

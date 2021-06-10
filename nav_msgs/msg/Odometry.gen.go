@@ -57,16 +57,32 @@ func NewOdometry() *Odometry {
 	return &self
 }
 
-func (t *Odometry) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Odometry) Clone() *Odometry {
+	c := &Odometry{}
+	c.Header = *t.Header.Clone()
+	c.ChildFrameId = t.ChildFrameId
+	c.Pose = *t.Pose.Clone()
+	c.Twist = *t.Twist.Clone()
+	return c
+}
+
+func (t *Odometry) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Odometry) SetDefaults() {
 	t.Header.SetDefaults()
+	t.ChildFrameId = ""
 	t.Pose.SetDefaults()
 	t.Twist.SetDefaults()
-	
+}
+
+// CloneOdometrySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOdometrySlice(dst, src []Odometry) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

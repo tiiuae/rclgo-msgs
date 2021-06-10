@@ -54,14 +54,36 @@ func NewJointTrajectory() *JointTrajectory {
 	return &self
 }
 
-func (t *JointTrajectory) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *JointTrajectory) Clone() *JointTrajectory {
+	c := &JointTrajectory{}
+	c.Header = *t.Header.Clone()
+	if t.JointNames != nil {
+		c.JointNames = make([]string, len(t.JointNames))
+		copy(c.JointNames, t.JointNames)
+	}
+	if t.Points != nil {
+		c.Points = make([]JointTrajectoryPoint, len(t.Points))
+		CloneJointTrajectoryPointSlice(c.Points, t.Points)
+	}
+	return c
+}
+
+func (t *JointTrajectory) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *JointTrajectory) SetDefaults() {
 	t.Header.SetDefaults()
-	
+	t.JointNames = nil
+	t.Points = nil
+}
+
+// CloneJointTrajectorySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneJointTrajectorySlice(dst, src []JointTrajectory) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

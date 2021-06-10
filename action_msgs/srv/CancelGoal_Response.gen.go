@@ -58,13 +58,31 @@ func NewCancelGoal_Response() *CancelGoal_Response {
 	return &self
 }
 
-func (t *CancelGoal_Response) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CancelGoal_Response) Clone() *CancelGoal_Response {
+	c := &CancelGoal_Response{}
+	c.ReturnCode = t.ReturnCode
+	if t.GoalsCanceling != nil {
+		c.GoalsCanceling = make([]action_msgs_msg.GoalInfo, len(t.GoalsCanceling))
+		action_msgs_msg.CloneGoalInfoSlice(c.GoalsCanceling, t.GoalsCanceling)
+	}
+	return c
+}
+
+func (t *CancelGoal_Response) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CancelGoal_Response) SetDefaults() {
-	
+	t.ReturnCode = 0
+	t.GoalsCanceling = nil
+}
+
+// CloneCancelGoal_ResponseSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCancelGoal_ResponseSlice(dst, src []CancelGoal_Response) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

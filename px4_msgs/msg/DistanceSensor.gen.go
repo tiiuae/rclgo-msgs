@@ -82,13 +82,48 @@ func NewDistanceSensor() *DistanceSensor {
 	return &self
 }
 
-func (t *DistanceSensor) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DistanceSensor) Clone() *DistanceSensor {
+	c := &DistanceSensor{}
+	c.Timestamp = t.Timestamp
+	c.DeviceId = t.DeviceId
+	c.MinDistance = t.MinDistance
+	c.MaxDistance = t.MaxDistance
+	c.CurrentDistance = t.CurrentDistance
+	c.Variance = t.Variance
+	c.SignalQuality = t.SignalQuality
+	c.Type = t.Type
+	c.HFov = t.HFov
+	c.VFov = t.VFov
+	c.Q = t.Q
+	c.Orientation = t.Orientation
+	return c
+}
+
+func (t *DistanceSensor) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DistanceSensor) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.DeviceId = 0
+	t.MinDistance = 0
+	t.MaxDistance = 0
+	t.CurrentDistance = 0
+	t.Variance = 0
+	t.SignalQuality = 0
+	t.Type = 0
+	t.HFov = 0
+	t.VFov = 0
+	t.Q = [4]float32{}
+	t.Orientation = 0
+}
+
+// CloneDistanceSensorSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDistanceSensorSlice(dst, src []DistanceSensor) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

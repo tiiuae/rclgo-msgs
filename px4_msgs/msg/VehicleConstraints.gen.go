@@ -53,13 +53,34 @@ func NewVehicleConstraints() *VehicleConstraints {
 	return &self
 }
 
-func (t *VehicleConstraints) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleConstraints) Clone() *VehicleConstraints {
+	c := &VehicleConstraints{}
+	c.Timestamp = t.Timestamp
+	c.SpeedXy = t.SpeedXy
+	c.SpeedUp = t.SpeedUp
+	c.SpeedDown = t.SpeedDown
+	c.WantTakeoff = t.WantTakeoff
+	return c
+}
+
+func (t *VehicleConstraints) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleConstraints) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.SpeedXy = 0
+	t.SpeedUp = 0
+	t.SpeedDown = 0
+	t.WantTakeoff = false
+}
+
+// CloneVehicleConstraintsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleConstraintsSlice(dst, src []VehicleConstraints) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

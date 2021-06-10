@@ -60,13 +60,37 @@ func NewDiagnosticStatus() *DiagnosticStatus {
 	return &self
 }
 
-func (t *DiagnosticStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DiagnosticStatus) Clone() *DiagnosticStatus {
+	c := &DiagnosticStatus{}
+	c.Level = t.Level
+	c.Name = t.Name
+	c.Message = t.Message
+	c.HardwareId = t.HardwareId
+	if t.Values != nil {
+		c.Values = make([]KeyValue, len(t.Values))
+		CloneKeyValueSlice(c.Values, t.Values)
+	}
+	return c
+}
+
+func (t *DiagnosticStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DiagnosticStatus) SetDefaults() {
-	
+	t.Level = 0
+	t.Name = ""
+	t.Message = ""
+	t.HardwareId = ""
+	t.Values = nil
+}
+
+// CloneDiagnosticStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDiagnosticStatusSlice(dst, src []DiagnosticStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

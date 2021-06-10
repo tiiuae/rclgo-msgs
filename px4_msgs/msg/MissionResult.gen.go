@@ -68,13 +68,54 @@ func NewMissionResult() *MissionResult {
 	return &self
 }
 
-func (t *MissionResult) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MissionResult) Clone() *MissionResult {
+	c := &MissionResult{}
+	c.Timestamp = t.Timestamp
+	c.InstanceCount = t.InstanceCount
+	c.SeqReached = t.SeqReached
+	c.SeqCurrent = t.SeqCurrent
+	c.SeqTotal = t.SeqTotal
+	c.Valid = t.Valid
+	c.Warning = t.Warning
+	c.Finished = t.Finished
+	c.Failure = t.Failure
+	c.StayInFailsafe = t.StayInFailsafe
+	c.FlightTermination = t.FlightTermination
+	c.ItemDoJumpChanged = t.ItemDoJumpChanged
+	c.ItemChangedIndex = t.ItemChangedIndex
+	c.ItemDoJumpRemaining = t.ItemDoJumpRemaining
+	c.ExecutionMode = t.ExecutionMode
+	return c
+}
+
+func (t *MissionResult) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MissionResult) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.InstanceCount = 0
+	t.SeqReached = 0
+	t.SeqCurrent = 0
+	t.SeqTotal = 0
+	t.Valid = false
+	t.Warning = false
+	t.Finished = false
+	t.Failure = false
+	t.StayInFailsafe = false
+	t.FlightTermination = false
+	t.ItemDoJumpChanged = false
+	t.ItemChangedIndex = 0
+	t.ItemDoJumpRemaining = 0
+	t.ExecutionMode = 0
+}
+
+// CloneMissionResultSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMissionResultSlice(dst, src []MissionResult) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

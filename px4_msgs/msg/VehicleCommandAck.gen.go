@@ -71,13 +71,40 @@ func NewVehicleCommandAck() *VehicleCommandAck {
 	return &self
 }
 
-func (t *VehicleCommandAck) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleCommandAck) Clone() *VehicleCommandAck {
+	c := &VehicleCommandAck{}
+	c.Timestamp = t.Timestamp
+	c.Command = t.Command
+	c.Result = t.Result
+	c.FromExternal = t.FromExternal
+	c.ResultParam1 = t.ResultParam1
+	c.ResultParam2 = t.ResultParam2
+	c.TargetSystem = t.TargetSystem
+	c.TargetComponent = t.TargetComponent
+	return c
+}
+
+func (t *VehicleCommandAck) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleCommandAck) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Command = 0
+	t.Result = 0
+	t.FromExternal = false
+	t.ResultParam1 = 0
+	t.ResultParam2 = 0
+	t.TargetSystem = 0
+	t.TargetComponent = 0
+}
+
+// CloneVehicleCommandAckSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleCommandAckSlice(dst, src []VehicleCommandAck) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

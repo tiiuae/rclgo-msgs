@@ -59,15 +59,30 @@ func NewPointCloud2Update() *PointCloud2Update {
 	return &self
 }
 
-func (t *PointCloud2Update) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PointCloud2Update) Clone() *PointCloud2Update {
+	c := &PointCloud2Update{}
+	c.Header = *t.Header.Clone()
+	c.Type = t.Type
+	c.Points = *t.Points.Clone()
+	return c
+}
+
+func (t *PointCloud2Update) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PointCloud2Update) SetDefaults() {
 	t.Header.SetDefaults()
+	t.Type = 0
 	t.Points.SetDefaults()
-	
+}
+
+// ClonePointCloud2UpdateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePointCloud2UpdateSlice(dst, src []PointCloud2Update) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

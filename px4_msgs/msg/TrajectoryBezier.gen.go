@@ -53,13 +53,32 @@ func NewTrajectoryBezier() *TrajectoryBezier {
 	return &self
 }
 
-func (t *TrajectoryBezier) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TrajectoryBezier) Clone() *TrajectoryBezier {
+	c := &TrajectoryBezier{}
+	c.Timestamp = t.Timestamp
+	c.Position = t.Position
+	c.Yaw = t.Yaw
+	c.Delta = t.Delta
+	return c
+}
+
+func (t *TrajectoryBezier) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TrajectoryBezier) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Position = [3]float32{}
+	t.Yaw = 0
+	t.Delta = 0
+}
+
+// CloneTrajectoryBezierSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTrajectoryBezierSlice(dst, src []TrajectoryBezier) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

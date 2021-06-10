@@ -54,13 +54,34 @@ func NewVehicleMagnetometer() *VehicleMagnetometer {
 	return &self
 }
 
-func (t *VehicleMagnetometer) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleMagnetometer) Clone() *VehicleMagnetometer {
+	c := &VehicleMagnetometer{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DeviceId = t.DeviceId
+	c.MagnetometerGa = t.MagnetometerGa
+	c.CalibrationCount = t.CalibrationCount
+	return c
+}
+
+func (t *VehicleMagnetometer) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleMagnetometer) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DeviceId = 0
+	t.MagnetometerGa = [3]float32{}
+	t.CalibrationCount = 0
+}
+
+// CloneVehicleMagnetometerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleMagnetometerSlice(dst, src []VehicleMagnetometer) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

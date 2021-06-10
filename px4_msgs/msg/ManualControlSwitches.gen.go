@@ -78,13 +78,56 @@ func NewManualControlSwitches() *ManualControlSwitches {
 	return &self
 }
 
-func (t *ManualControlSwitches) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ManualControlSwitches) Clone() *ManualControlSwitches {
+	c := &ManualControlSwitches{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.ModeSlot = t.ModeSlot
+	c.ArmSwitch = t.ArmSwitch
+	c.ReturnSwitch = t.ReturnSwitch
+	c.LoiterSwitch = t.LoiterSwitch
+	c.OffboardSwitch = t.OffboardSwitch
+	c.KillSwitch = t.KillSwitch
+	c.GearSwitch = t.GearSwitch
+	c.TransitionSwitch = t.TransitionSwitch
+	c.ModeSwitch = t.ModeSwitch
+	c.ManSwitch = t.ManSwitch
+	c.AcroSwitch = t.AcroSwitch
+	c.StabSwitch = t.StabSwitch
+	c.PosctlSwitch = t.PosctlSwitch
+	c.SwitchChanges = t.SwitchChanges
+	return c
+}
+
+func (t *ManualControlSwitches) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ManualControlSwitches) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.ModeSlot = 0
+	t.ArmSwitch = 0
+	t.ReturnSwitch = 0
+	t.LoiterSwitch = 0
+	t.OffboardSwitch = 0
+	t.KillSwitch = 0
+	t.GearSwitch = 0
+	t.TransitionSwitch = 0
+	t.ModeSwitch = 0
+	t.ManSwitch = 0
+	t.AcroSwitch = 0
+	t.StabSwitch = 0
+	t.PosctlSwitch = 0
+	t.SwitchChanges = 0
+}
+
+// CloneManualControlSwitchesSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneManualControlSwitchesSlice(dst, src []ManualControlSwitches) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

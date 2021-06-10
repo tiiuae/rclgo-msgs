@@ -54,13 +54,36 @@ func NewIrlockReport() *IrlockReport {
 	return &self
 }
 
-func (t *IrlockReport) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *IrlockReport) Clone() *IrlockReport {
+	c := &IrlockReport{}
+	c.Timestamp = t.Timestamp
+	c.Signature = t.Signature
+	c.PosX = t.PosX
+	c.PosY = t.PosY
+	c.SizeX = t.SizeX
+	c.SizeY = t.SizeY
+	return c
+}
+
+func (t *IrlockReport) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *IrlockReport) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Signature = 0
+	t.PosX = 0
+	t.PosY = 0
+	t.SizeX = 0
+	t.SizeY = 0
+}
+
+// CloneIrlockReportSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneIrlockReportSlice(dst, src []IrlockReport) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

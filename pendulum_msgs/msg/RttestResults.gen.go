@@ -59,16 +59,42 @@ func NewRttestResults() *RttestResults {
 	return &self
 }
 
-func (t *RttestResults) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RttestResults) Clone() *RttestResults {
+	c := &RttestResults{}
+	c.Stamp = *t.Stamp.Clone()
+	c.Command = *t.Command.Clone()
+	c.State = *t.State.Clone()
+	c.CurLatency = t.CurLatency
+	c.MeanLatency = t.MeanLatency
+	c.MinLatency = t.MinLatency
+	c.MaxLatency = t.MaxLatency
+	c.MinorPagefaults = t.MinorPagefaults
+	c.MajorPagefaults = t.MajorPagefaults
+	return c
+}
+
+func (t *RttestResults) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RttestResults) SetDefaults() {
 	t.Stamp.SetDefaults()
 	t.Command.SetDefaults()
 	t.State.SetDefaults()
-	
+	t.CurLatency = 0
+	t.MeanLatency = 0
+	t.MinLatency = 0
+	t.MaxLatency = 0
+	t.MinorPagefaults = 0
+	t.MajorPagefaults = 0
+}
+
+// CloneRttestResultsSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRttestResultsSlice(dst, src []RttestResults) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

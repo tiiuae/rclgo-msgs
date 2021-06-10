@@ -51,14 +51,26 @@ func NewSaveMap_Request() *SaveMap_Request {
 	return &self
 }
 
-func (t *SaveMap_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SaveMap_Request) Clone() *SaveMap_Request {
+	c := &SaveMap_Request{}
+	c.Filename = *t.Filename.Clone()
+	return c
+}
+
+func (t *SaveMap_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SaveMap_Request) SetDefaults() {
 	t.Filename.SetDefaults()
-	
+}
+
+// CloneSaveMap_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSaveMap_RequestSlice(dst, src []SaveMap_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

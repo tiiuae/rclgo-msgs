@@ -66,13 +66,58 @@ func NewVehicleImuStatus() *VehicleImuStatus {
 	return &self
 }
 
-func (t *VehicleImuStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleImuStatus) Clone() *VehicleImuStatus {
+	c := &VehicleImuStatus{}
+	c.Timestamp = t.Timestamp
+	c.AccelDeviceId = t.AccelDeviceId
+	c.GyroDeviceId = t.GyroDeviceId
+	c.AccelClipping = t.AccelClipping
+	c.AccelErrorCount = t.AccelErrorCount
+	c.GyroErrorCount = t.GyroErrorCount
+	c.AccelRateHz = t.AccelRateHz
+	c.GyroRateHz = t.GyroRateHz
+	c.AccelRawRateHz = t.AccelRawRateHz
+	c.GyroRawRateHz = t.GyroRawRateHz
+	c.AccelVibrationMetric = t.AccelVibrationMetric
+	c.GyroVibrationMetric = t.GyroVibrationMetric
+	c.GyroConingVibration = t.GyroConingVibration
+	c.MeanAccel = t.MeanAccel
+	c.MeanGyro = t.MeanGyro
+	c.TemperatureAccel = t.TemperatureAccel
+	c.TemperatureGyro = t.TemperatureGyro
+	return c
+}
+
+func (t *VehicleImuStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleImuStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AccelDeviceId = 0
+	t.GyroDeviceId = 0
+	t.AccelClipping = [3]uint32{}
+	t.AccelErrorCount = 0
+	t.GyroErrorCount = 0
+	t.AccelRateHz = 0
+	t.GyroRateHz = 0
+	t.AccelRawRateHz = 0
+	t.GyroRawRateHz = 0
+	t.AccelVibrationMetric = 0
+	t.GyroVibrationMetric = 0
+	t.GyroConingVibration = 0
+	t.MeanAccel = [3]float32{}
+	t.MeanGyro = [3]float32{}
+	t.TemperatureAccel = 0
+	t.TemperatureGyro = 0
+}
+
+// CloneVehicleImuStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleImuStatusSlice(dst, src []VehicleImuStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

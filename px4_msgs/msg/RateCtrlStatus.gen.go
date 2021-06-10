@@ -53,13 +53,34 @@ func NewRateCtrlStatus() *RateCtrlStatus {
 	return &self
 }
 
-func (t *RateCtrlStatus) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *RateCtrlStatus) Clone() *RateCtrlStatus {
+	c := &RateCtrlStatus{}
+	c.Timestamp = t.Timestamp
+	c.RollspeedInteg = t.RollspeedInteg
+	c.PitchspeedInteg = t.PitchspeedInteg
+	c.YawspeedInteg = t.YawspeedInteg
+	c.AdditionalInteg1 = t.AdditionalInteg1
+	return c
+}
+
+func (t *RateCtrlStatus) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *RateCtrlStatus) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.RollspeedInteg = 0
+	t.PitchspeedInteg = 0
+	t.YawspeedInteg = 0
+	t.AdditionalInteg1 = 0
+}
+
+// CloneRateCtrlStatusSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneRateCtrlStatusSlice(dst, src []RateCtrlStatus) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

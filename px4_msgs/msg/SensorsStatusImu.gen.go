@@ -58,13 +58,42 @@ func NewSensorsStatusImu() *SensorsStatusImu {
 	return &self
 }
 
-func (t *SensorsStatusImu) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SensorsStatusImu) Clone() *SensorsStatusImu {
+	c := &SensorsStatusImu{}
+	c.Timestamp = t.Timestamp
+	c.AccelDeviceIdPrimary = t.AccelDeviceIdPrimary
+	c.AccelDeviceIds = t.AccelDeviceIds
+	c.AccelInconsistencyMSS = t.AccelInconsistencyMSS
+	c.AccelHealthy = t.AccelHealthy
+	c.GyroDeviceIdPrimary = t.GyroDeviceIdPrimary
+	c.GyroDeviceIds = t.GyroDeviceIds
+	c.GyroInconsistencyRadS = t.GyroInconsistencyRadS
+	c.GyroHealthy = t.GyroHealthy
+	return c
+}
+
+func (t *SensorsStatusImu) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SensorsStatusImu) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.AccelDeviceIdPrimary = 0
+	t.AccelDeviceIds = [4]uint32{}
+	t.AccelInconsistencyMSS = [4]float32{}
+	t.AccelHealthy = [4]bool{}
+	t.GyroDeviceIdPrimary = 0
+	t.GyroDeviceIds = [4]uint32{}
+	t.GyroInconsistencyRadS = [4]float32{}
+	t.GyroHealthy = [4]bool{}
+}
+
+// CloneSensorsStatusImuSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSensorsStatusImuSlice(dst, src []SensorsStatusImu) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

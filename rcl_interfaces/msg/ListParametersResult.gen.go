@@ -51,13 +51,34 @@ func NewListParametersResult() *ListParametersResult {
 	return &self
 }
 
-func (t *ListParametersResult) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ListParametersResult) Clone() *ListParametersResult {
+	c := &ListParametersResult{}
+	if t.Names != nil {
+		c.Names = make([]string, len(t.Names))
+		copy(c.Names, t.Names)
+	}
+	if t.Prefixes != nil {
+		c.Prefixes = make([]string, len(t.Prefixes))
+		copy(c.Prefixes, t.Prefixes)
+	}
+	return c
+}
+
+func (t *ListParametersResult) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ListParametersResult) SetDefaults() {
-	
+	t.Names = nil
+	t.Prefixes = nil
+}
+
+// CloneListParametersResultSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneListParametersResultSlice(dst, src []ListParametersResult) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -54,13 +54,31 @@ func NewListParameters_Request() *ListParameters_Request {
 	return &self
 }
 
-func (t *ListParameters_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ListParameters_Request) Clone() *ListParameters_Request {
+	c := &ListParameters_Request{}
+	if t.Prefixes != nil {
+		c.Prefixes = make([]string, len(t.Prefixes))
+		copy(c.Prefixes, t.Prefixes)
+	}
+	c.Depth = t.Depth
+	return c
+}
+
+func (t *ListParameters_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ListParameters_Request) SetDefaults() {
-	
+	t.Prefixes = nil
+	t.Depth = 0
+}
+
+// CloneListParameters_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneListParameters_RequestSlice(dst, src []ListParameters_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

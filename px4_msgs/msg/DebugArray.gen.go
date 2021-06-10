@@ -56,13 +56,32 @@ func NewDebugArray() *DebugArray {
 	return &self
 }
 
-func (t *DebugArray) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *DebugArray) Clone() *DebugArray {
+	c := &DebugArray{}
+	c.Timestamp = t.Timestamp
+	c.Id = t.Id
+	c.Name = t.Name
+	c.Data = t.Data
+	return c
+}
+
+func (t *DebugArray) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *DebugArray) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Id = 0
+	t.Name = [10]byte{}
+	t.Data = [58]float32{}
+}
+
+// CloneDebugArraySlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneDebugArraySlice(dst, src []DebugArray) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -65,14 +65,38 @@ func NewLog() *Log {
 	return &self
 }
 
-func (t *Log) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *Log) Clone() *Log {
+	c := &Log{}
+	c.Stamp = *t.Stamp.Clone()
+	c.Level = t.Level
+	c.Name = t.Name
+	c.Msg = t.Msg
+	c.File = t.File
+	c.Function = t.Function
+	c.Line = t.Line
+	return c
+}
+
+func (t *Log) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *Log) SetDefaults() {
 	t.Stamp.SetDefaults()
-	
+	t.Level = 0
+	t.Name = ""
+	t.Msg = ""
+	t.File = ""
+	t.Function = ""
+	t.Line = 0
+}
+
+// CloneLogSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLogSlice(dst, src []Log) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -66,13 +66,48 @@ func NewVehicleAttitudeSetpoint() *VehicleAttitudeSetpoint {
 	return &self
 }
 
-func (t *VehicleAttitudeSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *VehicleAttitudeSetpoint) Clone() *VehicleAttitudeSetpoint {
+	c := &VehicleAttitudeSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.RollBody = t.RollBody
+	c.PitchBody = t.PitchBody
+	c.YawBody = t.YawBody
+	c.YawSpMoveRate = t.YawSpMoveRate
+	c.QD = t.QD
+	c.ThrustBody = t.ThrustBody
+	c.RollResetIntegral = t.RollResetIntegral
+	c.PitchResetIntegral = t.PitchResetIntegral
+	c.YawResetIntegral = t.YawResetIntegral
+	c.FwControlYaw = t.FwControlYaw
+	c.ApplyFlaps = t.ApplyFlaps
+	return c
+}
+
+func (t *VehicleAttitudeSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *VehicleAttitudeSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.RollBody = 0
+	t.PitchBody = 0
+	t.YawBody = 0
+	t.YawSpMoveRate = 0
+	t.QD = [4]float32{}
+	t.ThrustBody = [3]float32{}
+	t.RollResetIntegral = false
+	t.PitchResetIntegral = false
+	t.YawResetIntegral = false
+	t.FwControlYaw = false
+	t.ApplyFlaps = 0
+}
+
+// CloneVehicleAttitudeSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneVehicleAttitudeSetpointSlice(dst, src []VehicleAttitudeSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

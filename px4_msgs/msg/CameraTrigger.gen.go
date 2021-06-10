@@ -52,13 +52,32 @@ func NewCameraTrigger() *CameraTrigger {
 	return &self
 }
 
-func (t *CameraTrigger) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CameraTrigger) Clone() *CameraTrigger {
+	c := &CameraTrigger{}
+	c.Timestamp = t.Timestamp
+	c.TimestampUtc = t.TimestampUtc
+	c.Seq = t.Seq
+	c.Feedback = t.Feedback
+	return c
+}
+
+func (t *CameraTrigger) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CameraTrigger) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampUtc = 0
+	t.Seq = 0
+	t.Feedback = false
+}
+
+// CloneCameraTriggerSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCameraTriggerSlice(dst, src []CameraTrigger) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

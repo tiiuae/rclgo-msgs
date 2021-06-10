@@ -56,13 +56,32 @@ func NewGpsInjectData() *GpsInjectData {
 	return &self
 }
 
-func (t *GpsInjectData) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GpsInjectData) Clone() *GpsInjectData {
+	c := &GpsInjectData{}
+	c.Timestamp = t.Timestamp
+	c.Len = t.Len
+	c.Flags = t.Flags
+	c.Data = t.Data
+	return c
+}
+
+func (t *GpsInjectData) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GpsInjectData) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Len = 0
+	t.Flags = 0
+	t.Data = [182]uint8{}
+}
+
+// CloneGpsInjectDataSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGpsInjectDataSlice(dst, src []GpsInjectData) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

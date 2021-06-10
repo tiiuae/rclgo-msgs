@@ -57,13 +57,42 @@ func NewParameterUpdate() *ParameterUpdate {
 	return &self
 }
 
-func (t *ParameterUpdate) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ParameterUpdate) Clone() *ParameterUpdate {
+	c := &ParameterUpdate{}
+	c.Timestamp = t.Timestamp
+	c.Instance = t.Instance
+	c.GetCount = t.GetCount
+	c.SetCount = t.SetCount
+	c.FindCount = t.FindCount
+	c.ExportCount = t.ExportCount
+	c.Active = t.Active
+	c.Changed = t.Changed
+	c.CustomDefault = t.CustomDefault
+	return c
+}
+
+func (t *ParameterUpdate) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ParameterUpdate) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Instance = 0
+	t.GetCount = 0
+	t.SetCount = 0
+	t.FindCount = 0
+	t.ExportCount = 0
+	t.Active = 0
+	t.Changed = 0
+	t.CustomDefault = 0
+}
+
+// CloneParameterUpdateSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneParameterUpdateSlice(dst, src []ParameterUpdate) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

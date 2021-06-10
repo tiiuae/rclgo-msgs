@@ -66,13 +66,46 @@ func NewGimbalManagerSetManualControl() *GimbalManagerSetManualControl {
 	return &self
 }
 
-func (t *GimbalManagerSetManualControl) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GimbalManagerSetManualControl) Clone() *GimbalManagerSetManualControl {
+	c := &GimbalManagerSetManualControl{}
+	c.Timestamp = t.Timestamp
+	c.OriginSysid = t.OriginSysid
+	c.OriginCompid = t.OriginCompid
+	c.TargetSystem = t.TargetSystem
+	c.TargetComponent = t.TargetComponent
+	c.Flags = t.Flags
+	c.GimbalDeviceId = t.GimbalDeviceId
+	c.Pitch = t.Pitch
+	c.Yaw = t.Yaw
+	c.PitchRate = t.PitchRate
+	c.YawRate = t.YawRate
+	return c
+}
+
+func (t *GimbalManagerSetManualControl) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GimbalManagerSetManualControl) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.OriginSysid = 0
+	t.OriginCompid = 0
+	t.TargetSystem = 0
+	t.TargetComponent = 0
+	t.Flags = 0
+	t.GimbalDeviceId = 0
+	t.Pitch = 0
+	t.Yaw = 0
+	t.PitchRate = 0
+	t.YawRate = 0
+}
+
+// CloneGimbalManagerSetManualControlSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGimbalManagerSetManualControlSlice(dst, src []GimbalManagerSetManualControl) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

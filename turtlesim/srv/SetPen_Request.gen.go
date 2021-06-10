@@ -53,13 +53,34 @@ func NewSetPen_Request() *SetPen_Request {
 	return &self
 }
 
-func (t *SetPen_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *SetPen_Request) Clone() *SetPen_Request {
+	c := &SetPen_Request{}
+	c.R = t.R
+	c.G = t.G
+	c.B = t.B
+	c.Width = t.Width
+	c.Off = t.Off
+	return c
+}
+
+func (t *SetPen_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *SetPen_Request) SetDefaults() {
-	
+	t.R = 0
+	t.G = 0
+	t.B = 0
+	t.Width = 0
+	t.Off = 0
+}
+
+// CloneSetPen_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneSetPen_RequestSlice(dst, src []SetPen_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

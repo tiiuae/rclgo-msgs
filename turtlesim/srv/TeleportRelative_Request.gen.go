@@ -50,13 +50,28 @@ func NewTeleportRelative_Request() *TeleportRelative_Request {
 	return &self
 }
 
-func (t *TeleportRelative_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *TeleportRelative_Request) Clone() *TeleportRelative_Request {
+	c := &TeleportRelative_Request{}
+	c.Linear = t.Linear
+	c.Angular = t.Angular
+	return c
+}
+
+func (t *TeleportRelative_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *TeleportRelative_Request) SetDefaults() {
-	
+	t.Linear = 0
+	t.Angular = 0
+}
+
+// CloneTeleportRelative_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneTeleportRelative_RequestSlice(dst, src []TeleportRelative_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

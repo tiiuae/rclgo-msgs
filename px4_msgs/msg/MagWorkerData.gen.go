@@ -62,13 +62,44 @@ func NewMagWorkerData() *MagWorkerData {
 	return &self
 }
 
-func (t *MagWorkerData) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *MagWorkerData) Clone() *MagWorkerData {
+	c := &MagWorkerData{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DoneCount = t.DoneCount
+	c.CalibrationPointsPerside = t.CalibrationPointsPerside
+	c.CalibrationIntervalPersideUs = t.CalibrationIntervalPersideUs
+	c.CalibrationCounterTotal = t.CalibrationCounterTotal
+	c.SideDataCollected = t.SideDataCollected
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	return c
+}
+
+func (t *MagWorkerData) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *MagWorkerData) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DoneCount = 0
+	t.CalibrationPointsPerside = 0
+	t.CalibrationIntervalPersideUs = 0
+	t.CalibrationCounterTotal = [4]uint32{}
+	t.SideDataCollected = [4]bool{}
+	t.X = [4]float32{}
+	t.Y = [4]float32{}
+	t.Z = [4]float32{}
+}
+
+// CloneMagWorkerDataSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneMagWorkerDataSlice(dst, src []MagWorkerData) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

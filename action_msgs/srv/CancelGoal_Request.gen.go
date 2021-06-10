@@ -51,14 +51,26 @@ func NewCancelGoal_Request() *CancelGoal_Request {
 	return &self
 }
 
-func (t *CancelGoal_Request) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *CancelGoal_Request) Clone() *CancelGoal_Request {
+	c := &CancelGoal_Request{}
+	c.GoalInfo = *t.GoalInfo.Clone()
+	return c
+}
+
+func (t *CancelGoal_Request) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *CancelGoal_Request) SetDefaults() {
 	t.GoalInfo.SetDefaults()
-	
+}
+
+// CloneCancelGoal_RequestSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneCancelGoal_RequestSlice(dst, src []CancelGoal_Request) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -82,13 +82,70 @@ func NewPositionSetpoint() *PositionSetpoint {
 	return &self
 }
 
-func (t *PositionSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *PositionSetpoint) Clone() *PositionSetpoint {
+	c := &PositionSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.Valid = t.Valid
+	c.Type = t.Type
+	c.Vx = t.Vx
+	c.Vy = t.Vy
+	c.Vz = t.Vz
+	c.VelocityValid = t.VelocityValid
+	c.VelocityFrame = t.VelocityFrame
+	c.AltValid = t.AltValid
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.Yaw = t.Yaw
+	c.YawValid = t.YawValid
+	c.Yawspeed = t.Yawspeed
+	c.YawspeedValid = t.YawspeedValid
+	c.LandingGear = t.LandingGear
+	c.LoiterRadius = t.LoiterRadius
+	c.LoiterDirection = t.LoiterDirection
+	c.AcceptanceRadius = t.AcceptanceRadius
+	c.CruisingSpeed = t.CruisingSpeed
+	c.CruisingThrottle = t.CruisingThrottle
+	c.DisableWeatherVane = t.DisableWeatherVane
+	return c
+}
+
+func (t *PositionSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *PositionSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Valid = false
+	t.Type = 0
+	t.Vx = 0
+	t.Vy = 0
+	t.Vz = 0
+	t.VelocityValid = false
+	t.VelocityFrame = 0
+	t.AltValid = false
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.Yaw = 0
+	t.YawValid = false
+	t.Yawspeed = 0
+	t.YawspeedValid = false
+	t.LandingGear = 0
+	t.LoiterRadius = 0
+	t.LoiterDirection = 0
+	t.AcceptanceRadius = 0
+	t.CruisingSpeed = 0
+	t.CruisingThrottle = 0
+	t.DisableWeatherVane = false
+}
+
+// ClonePositionSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func ClonePositionSetpointSlice(dst, src []PositionSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -69,13 +69,52 @@ func NewManualControlSetpoint() *ManualControlSetpoint {
 	return &self
 }
 
-func (t *ManualControlSetpoint) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *ManualControlSetpoint) Clone() *ManualControlSetpoint {
+	c := &ManualControlSetpoint{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.DataSource = t.DataSource
+	c.X = t.X
+	c.Y = t.Y
+	c.Z = t.Z
+	c.R = t.R
+	c.Flaps = t.Flaps
+	c.Aux1 = t.Aux1
+	c.Aux2 = t.Aux2
+	c.Aux3 = t.Aux3
+	c.Aux4 = t.Aux4
+	c.Aux5 = t.Aux5
+	c.Aux6 = t.Aux6
+	return c
+}
+
+func (t *ManualControlSetpoint) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *ManualControlSetpoint) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.DataSource = 0
+	t.X = 0
+	t.Y = 0
+	t.Z = 0
+	t.R = 0
+	t.Flaps = 0
+	t.Aux1 = 0
+	t.Aux2 = 0
+	t.Aux3 = 0
+	t.Aux4 = 0
+	t.Aux5 = 0
+	t.Aux6 = 0
+}
+
+// CloneManualControlSetpointSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneManualControlSetpointSlice(dst, src []ManualControlSetpoint) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

@@ -56,13 +56,40 @@ func NewFollowTarget() *FollowTarget {
 	return &self
 }
 
-func (t *FollowTarget) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *FollowTarget) Clone() *FollowTarget {
+	c := &FollowTarget{}
+	c.Timestamp = t.Timestamp
+	c.Lat = t.Lat
+	c.Lon = t.Lon
+	c.Alt = t.Alt
+	c.Vy = t.Vy
+	c.Vx = t.Vx
+	c.Vz = t.Vz
+	c.EstCap = t.EstCap
+	return c
+}
+
+func (t *FollowTarget) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *FollowTarget) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Lat = 0
+	t.Lon = 0
+	t.Alt = 0
+	t.Vy = 0
+	t.Vx = 0
+	t.Vz = 0
+	t.EstCap = 0
+}
+
+// CloneFollowTargetSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneFollowTargetSlice(dst, src []FollowTarget) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

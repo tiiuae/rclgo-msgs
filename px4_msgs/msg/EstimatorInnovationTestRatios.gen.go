@@ -70,13 +70,66 @@ func NewEstimatorInnovationTestRatios() *EstimatorInnovationTestRatios {
 	return &self
 }
 
-func (t *EstimatorInnovationTestRatios) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *EstimatorInnovationTestRatios) Clone() *EstimatorInnovationTestRatios {
+	c := &EstimatorInnovationTestRatios{}
+	c.Timestamp = t.Timestamp
+	c.TimestampSample = t.TimestampSample
+	c.GpsHvel = t.GpsHvel
+	c.GpsVvel = t.GpsVvel
+	c.GpsHpos = t.GpsHpos
+	c.GpsVpos = t.GpsVpos
+	c.EvHvel = t.EvHvel
+	c.EvVvel = t.EvVvel
+	c.EvHpos = t.EvHpos
+	c.EvVpos = t.EvVpos
+	c.RngVpos = t.RngVpos
+	c.BaroVpos = t.BaroVpos
+	c.AuxHvel = t.AuxHvel
+	c.AuxVvel = t.AuxVvel
+	c.Flow = t.Flow
+	c.Heading = t.Heading
+	c.MagField = t.MagField
+	c.Drag = t.Drag
+	c.Airspeed = t.Airspeed
+	c.Beta = t.Beta
+	c.Hagl = t.Hagl
+	return c
+}
+
+func (t *EstimatorInnovationTestRatios) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *EstimatorInnovationTestRatios) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.TimestampSample = 0
+	t.GpsHvel = [2]float32{}
+	t.GpsVvel = 0
+	t.GpsHpos = [2]float32{}
+	t.GpsVpos = 0
+	t.EvHvel = [2]float32{}
+	t.EvVvel = 0
+	t.EvHpos = [2]float32{}
+	t.EvVpos = 0
+	t.RngVpos = 0
+	t.BaroVpos = 0
+	t.AuxHvel = [2]float32{}
+	t.AuxVvel = 0
+	t.Flow = [2]float32{}
+	t.Heading = 0
+	t.MagField = [3]float32{}
+	t.Drag = [2]float32{}
+	t.Airspeed = 0
+	t.Beta = 0
+	t.Hagl = 0
+}
+
+// CloneEstimatorInnovationTestRatiosSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneEstimatorInnovationTestRatiosSlice(dst, src []EstimatorInnovationTestRatios) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

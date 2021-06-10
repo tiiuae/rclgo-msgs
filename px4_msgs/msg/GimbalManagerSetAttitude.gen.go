@@ -67,13 +67,46 @@ func NewGimbalManagerSetAttitude() *GimbalManagerSetAttitude {
 	return &self
 }
 
-func (t *GimbalManagerSetAttitude) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *GimbalManagerSetAttitude) Clone() *GimbalManagerSetAttitude {
+	c := &GimbalManagerSetAttitude{}
+	c.Timestamp = t.Timestamp
+	c.OriginSysid = t.OriginSysid
+	c.OriginCompid = t.OriginCompid
+	c.TargetSystem = t.TargetSystem
+	c.TargetComponent = t.TargetComponent
+	c.Flags = t.Flags
+	c.GimbalDeviceId = t.GimbalDeviceId
+	c.Q = t.Q
+	c.AngularVelocityX = t.AngularVelocityX
+	c.AngularVelocityY = t.AngularVelocityY
+	c.AngularVelocityZ = t.AngularVelocityZ
+	return c
+}
+
+func (t *GimbalManagerSetAttitude) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *GimbalManagerSetAttitude) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.OriginSysid = 0
+	t.OriginCompid = 0
+	t.TargetSystem = 0
+	t.TargetComponent = 0
+	t.Flags = 0
+	t.GimbalDeviceId = 0
+	t.Q = [4]float32{}
+	t.AngularVelocityX = 0
+	t.AngularVelocityY = 0
+	t.AngularVelocityZ = 0
+}
+
+// CloneGimbalManagerSetAttitudeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneGimbalManagerSetAttitudeSlice(dst, src []GimbalManagerSetAttitude) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

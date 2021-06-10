@@ -55,13 +55,30 @@ func NewLogMessage() *LogMessage {
 	return &self
 }
 
-func (t *LogMessage) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *LogMessage) Clone() *LogMessage {
+	c := &LogMessage{}
+	c.Timestamp = t.Timestamp
+	c.Severity = t.Severity
+	c.Text = t.Text
+	return c
+}
+
+func (t *LogMessage) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *LogMessage) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Severity = 0
+	t.Text = [127]byte{}
+}
+
+// CloneLogMessageSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneLogMessageSlice(dst, src []LogMessage) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.

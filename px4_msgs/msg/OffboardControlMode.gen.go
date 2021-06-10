@@ -54,13 +54,36 @@ func NewOffboardControlMode() *OffboardControlMode {
 	return &self
 }
 
-func (t *OffboardControlMode) Clone() types.Message {
-	clone := *t
-	return &clone
+func (t *OffboardControlMode) Clone() *OffboardControlMode {
+	c := &OffboardControlMode{}
+	c.Timestamp = t.Timestamp
+	c.Position = t.Position
+	c.Velocity = t.Velocity
+	c.Acceleration = t.Acceleration
+	c.Attitude = t.Attitude
+	c.BodyRate = t.BodyRate
+	return c
+}
+
+func (t *OffboardControlMode) CloneMsg() types.Message {
+	return t.Clone()
 }
 
 func (t *OffboardControlMode) SetDefaults() {
-	
+	t.Timestamp = 0
+	t.Position = false
+	t.Velocity = false
+	t.Acceleration = false
+	t.Attitude = false
+	t.BodyRate = false
+}
+
+// CloneOffboardControlModeSlice clones src to dst by calling Clone for each element in
+// src. Panics if len(dst) < len(src).
+func CloneOffboardControlModeSlice(dst, src []OffboardControlMode) {
+	for i := range src {
+		dst[i] = *src[i].Clone()
+	}
 }
 
 // Modifying this variable is undefined behavior.
