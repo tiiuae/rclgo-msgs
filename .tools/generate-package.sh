@@ -8,19 +8,26 @@ fi
 ros_package_path="$(realpath "$1")"
 dest_dir="$(realpath "$2")"
 
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
-
 ros_package="$(basename "$ros_package_path")"
+tools_dir="$(dirname "$(realpath "$BASH_SOURCE")")"
 
-go install github.com/tiiuae/rclgo/cmd/rclgo-gen@latest || exit 1
+if [ -z "$GOPATH" ]; then
+    export GOPATH="$HOME/go"
+fi
+export PATH="$PATH:$GOPATH/bin"
 
 cd "$ros_package_path"
 
-git config --global user.name "$(git log --format='%an' HEAD^! || exit 1)" || exit 1
-git config --global user.email "$(git log --format='%ae' HEAD^! || exit 1)" || exit 1
+author_name="$(git log --format='%an' HEAD^!)" || exit 1
+author_email="$(git log --format='%ae' HEAD^!)" || exit 1
+
+cd "$tools_dir"
+
+rclgo_version="$(go run getrclgoversion.go -mod-file "$dest_dir/go.mod")" || exit 1
 
 cd "$dest_dir"
+
+go install "github.com/tiiuae/rclgo/cmd/rclgo-gen@$rclgo_version" || exit 1
 
 retry_delay=3s
 for i in {1..5}; do
@@ -34,7 +41,7 @@ for i in {1..5}; do
     rm -rf "$ros_package"
     rclgo-gen generate --root-path "$ros_package_path" || continue
     git add -A || continue
-    commit_output="$(git commit -m "Update bindings for $ros_package")"
+    commit_output="$(git -c "user.name=$author_name" -c "user.email=$author_email" commit -m "Update bindings for $ros_package")"
     ret_code=$?
     echo "$commit_output"
     if [[ $ret_code != 0 ]]; then
