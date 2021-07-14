@@ -2,4 +2,4 @@ module github.com/tiiuae/rclgo-msgs
 
 go 1.16
 
-require github.com/tiiuae/rclgo v0.0.0-20210610134811-3e6a00b423fa
+require github.com/tiiuae/rclgo v0.0.0-20210714082909-df8f75e57842
