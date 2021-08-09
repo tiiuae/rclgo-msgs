@@ -23,6 +23,7 @@ import (
 	_ "github.com/tiiuae/rclgo-msgs/diagnostic_msgs/srv" //
 	_ "github.com/tiiuae/rclgo-msgs/example_interfaces/msg" //
 	_ "github.com/tiiuae/rclgo-msgs/example_interfaces/srv" //
+	_ "github.com/tiiuae/rclgo-msgs/fog_msgs/msg" //
 	_ "github.com/tiiuae/rclgo-msgs/fog_msgs/srv" //
 	_ "github.com/tiiuae/rclgo-msgs/geometry_msgs/msg" //
 	_ "github.com/tiiuae/rclgo-msgs/lifecycle_msgs/msg" //
