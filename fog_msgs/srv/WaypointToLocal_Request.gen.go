@@ -42,6 +42,7 @@ type WaypointToLocal_Request struct {
 	LatitudeDeg float64 `yaml:"latitude_deg"`
 	LongitudeDeg float64 `yaml:"longitude_deg"`
 	RelativeAltitudeM float64 `yaml:"relative_altitude_m"`
+	Yaw float64 `yaml:"yaw"`
 }
 
 // NewWaypointToLocal_Request creates a new WaypointToLocal_Request with default values.
@@ -56,6 +57,7 @@ func (t *WaypointToLocal_Request) Clone() *WaypointToLocal_Request {
 	c.LatitudeDeg = t.LatitudeDeg
 	c.LongitudeDeg = t.LongitudeDeg
 	c.RelativeAltitudeM = t.RelativeAltitudeM
+	c.Yaw = t.Yaw
 	return c
 }
 
@@ -67,6 +69,7 @@ func (t *WaypointToLocal_Request) SetDefaults() {
 	t.LatitudeDeg = 0
 	t.LongitudeDeg = 0
 	t.RelativeAltitudeM = 0
+	t.Yaw = 0
 }
 
 // CloneWaypointToLocal_RequestSlice clones src to dst by calling Clone for each element in
@@ -100,6 +103,7 @@ func (t _WaypointToLocal_RequestTypeSupport) AsCStruct(dst unsafe.Pointer, msg t
 	mem.latitude_deg = C.double(m.LatitudeDeg)
 	mem.longitude_deg = C.double(m.LongitudeDeg)
 	mem.relative_altitude_m = C.double(m.RelativeAltitudeM)
+	mem.yaw = C.double(m.Yaw)
 }
 
 func (t _WaypointToLocal_RequestTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -108,6 +112,7 @@ func (t _WaypointToLocal_RequestTypeSupport) AsGoStruct(msg types.Message, ros2_
 	m.LatitudeDeg = float64(mem.latitude_deg)
 	m.LongitudeDeg = float64(mem.longitude_deg)
 	m.RelativeAltitudeM = float64(mem.relative_altitude_m)
+	m.Yaw = float64(mem.yaw)
 }
 
 func (t _WaypointToLocal_RequestTypeSupport) TypeSupport() unsafe.Pointer {

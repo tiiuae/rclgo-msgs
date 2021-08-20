@@ -43,6 +43,7 @@ type WaypointToLocal_Response struct {
 	LocalX float64 `yaml:"local_x"`
 	LocalY float64 `yaml:"local_y"`
 	LocalZ float64 `yaml:"local_z"`
+	Yaw float64 `yaml:"yaw"`
 	Success bool `yaml:"success"`
 	Message string `yaml:"message"`
 }
@@ -59,6 +60,7 @@ func (t *WaypointToLocal_Response) Clone() *WaypointToLocal_Response {
 	c.LocalX = t.LocalX
 	c.LocalY = t.LocalY
 	c.LocalZ = t.LocalZ
+	c.Yaw = t.Yaw
 	c.Success = t.Success
 	c.Message = t.Message
 	return c
@@ -72,6 +74,7 @@ func (t *WaypointToLocal_Response) SetDefaults() {
 	t.LocalX = 0
 	t.LocalY = 0
 	t.LocalZ = 0
+	t.Yaw = 0
 	t.Success = false
 	t.Message = ""
 }
@@ -107,6 +110,7 @@ func (t _WaypointToLocal_ResponseTypeSupport) AsCStruct(dst unsafe.Pointer, msg 
 	mem.local_x = C.double(m.LocalX)
 	mem.local_y = C.double(m.LocalY)
 	mem.local_z = C.double(m.LocalZ)
+	mem.yaw = C.double(m.Yaw)
 	mem.success = C.bool(m.Success)
 	primitives.StringAsCStruct(unsafe.Pointer(&mem.message), m.Message)
 }
@@ -117,6 +121,7 @@ func (t _WaypointToLocal_ResponseTypeSupport) AsGoStruct(msg types.Message, ros2
 	m.LocalX = float64(mem.local_x)
 	m.LocalY = float64(mem.local_y)
 	m.LocalZ = float64(mem.local_z)
+	m.Yaw = float64(mem.yaw)
 	m.Success = bool(mem.success)
 	primitives.StringAsGoStruct(&m.Message, unsafe.Pointer(&mem.message))
 }

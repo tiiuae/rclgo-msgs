@@ -17,11 +17,13 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
+	std_msgs_msg "github.com/tiiuae/rclgo-msgs/std_msgs/msg"
 	
 )
 /*
 #cgo LDFLAGS: -L/opt/ros/foxy/lib -Wl,-rpath=/opt/ros/foxy/lib -lrcl -lrosidl_runtime_c -lrosidl_typesupport_c -lrcutils -lrmw_implementation
 #cgo LDFLAGS: -lfog_msgs__rosidl_typesupport_c -lfog_msgs__rosidl_generator_c
+#cgo LDFLAGS: -lstd_msgs__rosidl_typesupport_c -lstd_msgs__rosidl_generator_c
 
 #cgo CFLAGS: -I/opt/ros/foxy/include
 
@@ -39,12 +41,12 @@ func init() {
 // Do not create instances of this type directly. Always use NewControlInterfaceDiagnostics
 // function instead.
 type ControlInterfaceDiagnostics struct {
+	Header std_msgs_msg.Header `yaml:"header"`
 	Armed bool `yaml:"armed"`
 	Airborne bool `yaml:"airborne"`
 	Moving bool `yaml:"moving"`
 	MissionFinished bool `yaml:"mission_finished"`
-	WaypointsToGo uint8 `yaml:"waypoints_to_go"`
-	GettingTimesync bool `yaml:"getting_timesync"`
+	BufferedMissionItems uint8 `yaml:"buffered_mission_items"`
 	GettingGps bool `yaml:"getting_gps"`
 	GettingOdom bool `yaml:"getting_odom"`
 	GettingControlMode bool `yaml:"getting_control_mode"`
@@ -60,12 +62,12 @@ func NewControlInterfaceDiagnostics() *ControlInterfaceDiagnostics {
 
 func (t *ControlInterfaceDiagnostics) Clone() *ControlInterfaceDiagnostics {
 	c := &ControlInterfaceDiagnostics{}
+	c.Header = *t.Header.Clone()
 	c.Armed = t.Armed
 	c.Airborne = t.Airborne
 	c.Moving = t.Moving
 	c.MissionFinished = t.MissionFinished
-	c.WaypointsToGo = t.WaypointsToGo
-	c.GettingTimesync = t.GettingTimesync
+	c.BufferedMissionItems = t.BufferedMissionItems
 	c.GettingGps = t.GettingGps
 	c.GettingOdom = t.GettingOdom
 	c.GettingControlMode = t.GettingControlMode
@@ -78,12 +80,12 @@ func (t *ControlInterfaceDiagnostics) CloneMsg() types.Message {
 }
 
 func (t *ControlInterfaceDiagnostics) SetDefaults() {
+	t.Header.SetDefaults()
 	t.Armed = false
 	t.Airborne = false
 	t.Moving = false
 	t.MissionFinished = false
-	t.WaypointsToGo = 0
-	t.GettingTimesync = false
+	t.BufferedMissionItems = 0
 	t.GettingGps = false
 	t.GettingOdom = false
 	t.GettingControlMode = false
@@ -118,12 +120,12 @@ func (t _ControlInterfaceDiagnosticsTypeSupport) ReleaseMemory(pointer_to_free u
 func (t _ControlInterfaceDiagnosticsTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Message) {
 	m := msg.(*ControlInterfaceDiagnostics)
 	mem := (*C.fog_msgs__msg__ControlInterfaceDiagnostics)(dst)
+	std_msgs_msg.HeaderTypeSupport.AsCStruct(unsafe.Pointer(&mem.header), &m.Header)
 	mem.armed = C.bool(m.Armed)
 	mem.airborne = C.bool(m.Airborne)
 	mem.moving = C.bool(m.Moving)
 	mem.mission_finished = C.bool(m.MissionFinished)
-	mem.waypoints_to_go = C.uint8_t(m.WaypointsToGo)
-	mem.getting_timesync = C.bool(m.GettingTimesync)
+	mem.buffered_mission_items = C.uint8_t(m.BufferedMissionItems)
 	mem.getting_gps = C.bool(m.GettingGps)
 	mem.getting_odom = C.bool(m.GettingOdom)
 	mem.getting_control_mode = C.bool(m.GettingControlMode)
@@ -133,12 +135,12 @@ func (t _ControlInterfaceDiagnosticsTypeSupport) AsCStruct(dst unsafe.Pointer, m
 func (t _ControlInterfaceDiagnosticsTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
 	m := msg.(*ControlInterfaceDiagnostics)
 	mem := (*C.fog_msgs__msg__ControlInterfaceDiagnostics)(ros2_message_buffer)
+	std_msgs_msg.HeaderTypeSupport.AsGoStruct(&m.Header, unsafe.Pointer(&mem.header))
 	m.Armed = bool(mem.armed)
 	m.Airborne = bool(mem.airborne)
 	m.Moving = bool(mem.moving)
 	m.MissionFinished = bool(mem.mission_finished)
-	m.WaypointsToGo = uint8(mem.waypoints_to_go)
-	m.GettingTimesync = bool(mem.getting_timesync)
+	m.BufferedMissionItems = uint8(mem.buffered_mission_items)
 	m.GettingGps = bool(mem.getting_gps)
 	m.GettingOdom = bool(mem.getting_odom)
 	m.GettingControlMode = bool(mem.getting_control_mode)
