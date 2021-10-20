@@ -55,6 +55,7 @@ type VehicleStatusFlags struct {
 	ConditionPowerInputValid bool `yaml:"condition_power_input_valid"`// set if input power is valid
 	ConditionBatteryHealthy bool `yaml:"condition_battery_healthy"`// set if battery is available and not low
 	ConditionEscsError bool `yaml:"condition_escs_error"`// set to true if one or more ESCs reporting esc_status are offline
+	ConditionEscsFailure bool `yaml:"condition_escs_failure"`// set to true if one or more ESCs reporting esc_status has a failure
 	CircuitBreakerEngagedPowerCheck bool `yaml:"circuit_breaker_engaged_power_check"`
 	CircuitBreakerEngagedAirspdCheck bool `yaml:"circuit_breaker_engaged_airspd_check"`
 	CircuitBreakerEngagedEnginefailureCheck bool `yaml:"circuit_breaker_engaged_enginefailure_check"`
@@ -62,13 +63,13 @@ type VehicleStatusFlags struct {
 	CircuitBreakerEngagedUsbCheck bool `yaml:"circuit_breaker_engaged_usb_check"`
 	CircuitBreakerEngagedPosfailureCheck bool `yaml:"circuit_breaker_engaged_posfailure_check"`// set to true when the position valid checks have been disabled
 	CircuitBreakerVtolFwArmingCheck bool `yaml:"circuit_breaker_vtol_fw_arming_check"`// set to true if for VTOLs arming in fixed-wing mode should be allowed
-	OffboardControlSignalFoundOnce bool `yaml:"offboard_control_signal_found_once"`
 	OffboardControlSignalLost bool `yaml:"offboard_control_signal_lost"`
 	RcSignalFoundOnce bool `yaml:"rc_signal_found_once"`
 	RcInputBlocked bool `yaml:"rc_input_blocked"`// set if RC input should be ignored temporarily
 	RcCalibrationValid bool `yaml:"rc_calibration_valid"`// set if RC calibration is valid
 	VtolTransitionFailure bool `yaml:"vtol_transition_failure"`// Set to true if vtol transition failed
 	UsbConnected bool `yaml:"usb_connected"`// status of the USB power supply
+	SdCardDetectedOnce bool `yaml:"sd_card_detected_once"`// set to true if the SD card was detected
 	AvoidanceSystemRequired bool `yaml:"avoidance_system_required"`// Set to true if avoidance system is enabled via COM_OBS_AVOID parameter
 	AvoidanceSystemValid bool `yaml:"avoidance_system_valid"`// Status of the obstacle avoidance system
 }
@@ -98,6 +99,7 @@ func (t *VehicleStatusFlags) Clone() *VehicleStatusFlags {
 	c.ConditionPowerInputValid = t.ConditionPowerInputValid
 	c.ConditionBatteryHealthy = t.ConditionBatteryHealthy
 	c.ConditionEscsError = t.ConditionEscsError
+	c.ConditionEscsFailure = t.ConditionEscsFailure
 	c.CircuitBreakerEngagedPowerCheck = t.CircuitBreakerEngagedPowerCheck
 	c.CircuitBreakerEngagedAirspdCheck = t.CircuitBreakerEngagedAirspdCheck
 	c.CircuitBreakerEngagedEnginefailureCheck = t.CircuitBreakerEngagedEnginefailureCheck
@@ -105,13 +107,13 @@ func (t *VehicleStatusFlags) Clone() *VehicleStatusFlags {
 	c.CircuitBreakerEngagedUsbCheck = t.CircuitBreakerEngagedUsbCheck
 	c.CircuitBreakerEngagedPosfailureCheck = t.CircuitBreakerEngagedPosfailureCheck
 	c.CircuitBreakerVtolFwArmingCheck = t.CircuitBreakerVtolFwArmingCheck
-	c.OffboardControlSignalFoundOnce = t.OffboardControlSignalFoundOnce
 	c.OffboardControlSignalLost = t.OffboardControlSignalLost
 	c.RcSignalFoundOnce = t.RcSignalFoundOnce
 	c.RcInputBlocked = t.RcInputBlocked
 	c.RcCalibrationValid = t.RcCalibrationValid
 	c.VtolTransitionFailure = t.VtolTransitionFailure
 	c.UsbConnected = t.UsbConnected
+	c.SdCardDetectedOnce = t.SdCardDetectedOnce
 	c.AvoidanceSystemRequired = t.AvoidanceSystemRequired
 	c.AvoidanceSystemValid = t.AvoidanceSystemValid
 	return c
@@ -138,6 +140,7 @@ func (t *VehicleStatusFlags) SetDefaults() {
 	t.ConditionPowerInputValid = false
 	t.ConditionBatteryHealthy = false
 	t.ConditionEscsError = false
+	t.ConditionEscsFailure = false
 	t.CircuitBreakerEngagedPowerCheck = false
 	t.CircuitBreakerEngagedAirspdCheck = false
 	t.CircuitBreakerEngagedEnginefailureCheck = false
@@ -145,13 +148,13 @@ func (t *VehicleStatusFlags) SetDefaults() {
 	t.CircuitBreakerEngagedUsbCheck = false
 	t.CircuitBreakerEngagedPosfailureCheck = false
 	t.CircuitBreakerVtolFwArmingCheck = false
-	t.OffboardControlSignalFoundOnce = false
 	t.OffboardControlSignalLost = false
 	t.RcSignalFoundOnce = false
 	t.RcInputBlocked = false
 	t.RcCalibrationValid = false
 	t.VtolTransitionFailure = false
 	t.UsbConnected = false
+	t.SdCardDetectedOnce = false
 	t.AvoidanceSystemRequired = false
 	t.AvoidanceSystemValid = false
 }
@@ -200,6 +203,7 @@ func (t _VehicleStatusFlagsTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.
 	mem.condition_power_input_valid = C.bool(m.ConditionPowerInputValid)
 	mem.condition_battery_healthy = C.bool(m.ConditionBatteryHealthy)
 	mem.condition_escs_error = C.bool(m.ConditionEscsError)
+	mem.condition_escs_failure = C.bool(m.ConditionEscsFailure)
 	mem.circuit_breaker_engaged_power_check = C.bool(m.CircuitBreakerEngagedPowerCheck)
 	mem.circuit_breaker_engaged_airspd_check = C.bool(m.CircuitBreakerEngagedAirspdCheck)
 	mem.circuit_breaker_engaged_enginefailure_check = C.bool(m.CircuitBreakerEngagedEnginefailureCheck)
@@ -207,13 +211,13 @@ func (t _VehicleStatusFlagsTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.
 	mem.circuit_breaker_engaged_usb_check = C.bool(m.CircuitBreakerEngagedUsbCheck)
 	mem.circuit_breaker_engaged_posfailure_check = C.bool(m.CircuitBreakerEngagedPosfailureCheck)
 	mem.circuit_breaker_vtol_fw_arming_check = C.bool(m.CircuitBreakerVtolFwArmingCheck)
-	mem.offboard_control_signal_found_once = C.bool(m.OffboardControlSignalFoundOnce)
 	mem.offboard_control_signal_lost = C.bool(m.OffboardControlSignalLost)
 	mem.rc_signal_found_once = C.bool(m.RcSignalFoundOnce)
 	mem.rc_input_blocked = C.bool(m.RcInputBlocked)
 	mem.rc_calibration_valid = C.bool(m.RcCalibrationValid)
 	mem.vtol_transition_failure = C.bool(m.VtolTransitionFailure)
 	mem.usb_connected = C.bool(m.UsbConnected)
+	mem.sd_card_detected_once = C.bool(m.SdCardDetectedOnce)
 	mem.avoidance_system_required = C.bool(m.AvoidanceSystemRequired)
 	mem.avoidance_system_valid = C.bool(m.AvoidanceSystemValid)
 }
@@ -237,6 +241,7 @@ func (t _VehicleStatusFlagsTypeSupport) AsGoStruct(msg types.Message, ros2_messa
 	m.ConditionPowerInputValid = bool(mem.condition_power_input_valid)
 	m.ConditionBatteryHealthy = bool(mem.condition_battery_healthy)
 	m.ConditionEscsError = bool(mem.condition_escs_error)
+	m.ConditionEscsFailure = bool(mem.condition_escs_failure)
 	m.CircuitBreakerEngagedPowerCheck = bool(mem.circuit_breaker_engaged_power_check)
 	m.CircuitBreakerEngagedAirspdCheck = bool(mem.circuit_breaker_engaged_airspd_check)
 	m.CircuitBreakerEngagedEnginefailureCheck = bool(mem.circuit_breaker_engaged_enginefailure_check)
@@ -244,13 +249,13 @@ func (t _VehicleStatusFlagsTypeSupport) AsGoStruct(msg types.Message, ros2_messa
 	m.CircuitBreakerEngagedUsbCheck = bool(mem.circuit_breaker_engaged_usb_check)
 	m.CircuitBreakerEngagedPosfailureCheck = bool(mem.circuit_breaker_engaged_posfailure_check)
 	m.CircuitBreakerVtolFwArmingCheck = bool(mem.circuit_breaker_vtol_fw_arming_check)
-	m.OffboardControlSignalFoundOnce = bool(mem.offboard_control_signal_found_once)
 	m.OffboardControlSignalLost = bool(mem.offboard_control_signal_lost)
 	m.RcSignalFoundOnce = bool(mem.rc_signal_found_once)
 	m.RcInputBlocked = bool(mem.rc_input_blocked)
 	m.RcCalibrationValid = bool(mem.rc_calibration_valid)
 	m.VtolTransitionFailure = bool(mem.vtol_transition_failure)
 	m.UsbConnected = bool(mem.usb_connected)
+	m.SdCardDetectedOnce = bool(mem.sd_card_detected_once)
 	m.AvoidanceSystemRequired = bool(mem.avoidance_system_required)
 	m.AvoidanceSystemValid = bool(mem.avoidance_system_valid)
 }

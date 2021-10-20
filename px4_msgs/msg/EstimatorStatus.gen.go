@@ -71,6 +71,10 @@ const (
 	EstimatorStatus_CS_RNG_STUCK uint8 = 21// 21 - true when a stuck range finder sensor has been detected
 	EstimatorStatus_CS_GPS_YAW uint8 = 22// 22 - true when yaw (not ground course) data from a GPS receiver is being fused
 	EstimatorStatus_CS_MAG_ALIGNED uint8 = 23// 23 - true when the in-flight mag field alignment has been completed
+	EstimatorStatus_CS_EV_VEL uint8 = 24// 24 - true when local frame velocity data fusion from external vision measurements is intended
+	EstimatorStatus_CS_SYNTHETIC_MAG_Z uint8 = 25// 25 - true when we are using a synthesized measurement for the magnetometer Z component
+	EstimatorStatus_CS_VEHICLE_AT_REST uint8 = 26// 26 - true when the vehicle is at rest
+	EstimatorStatus_CS_GPS_YAW_FAULT uint8 = 27// 27 - true when the GNSS heading has been declared faulty and is no longer being used
 )
 
 // Do not create instances of this type directly. Always use NewEstimatorStatus

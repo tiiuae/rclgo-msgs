@@ -54,7 +54,7 @@ type EscReport struct {
 	EscRpm int32 `yaml:"esc_rpm"`// Motor RPM, negative for reverse rotation [RPM] - if supported
 	EscVoltage float32 `yaml:"esc_voltage"`// Voltage measured from current ESC [V] - if supported
 	EscCurrent float32 `yaml:"esc_current"`// Current measured from current ESC [A] - if supported
-	EscTemperature uint8 `yaml:"esc_temperature"`// Temperature measured from current ESC [degC] - if supported
+	EscTemperature float32 `yaml:"esc_temperature"`// Temperature measured from current ESC [degC] - if supported
 	EscAddress uint8 `yaml:"esc_address"`// Address of current ESC (in most cases 1-8 / must be set by driver)
 	EscState uint8 `yaml:"esc_state"`// State of ESC - depend on Vendor
 	Failures uint8 `yaml:"failures"`// Bitmask to indicate the internal ESC faults
@@ -130,7 +130,7 @@ func (t _EscReportTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Message) 
 	mem.esc_rpm = C.int32_t(m.EscRpm)
 	mem.esc_voltage = C.float(m.EscVoltage)
 	mem.esc_current = C.float(m.EscCurrent)
-	mem.esc_temperature = C.uint8_t(m.EscTemperature)
+	mem.esc_temperature = C.float(m.EscTemperature)
 	mem.esc_address = C.uint8_t(m.EscAddress)
 	mem.esc_state = C.uint8_t(m.EscState)
 	mem.failures = C.uint8_t(m.Failures)
@@ -144,7 +144,7 @@ func (t _EscReportTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer
 	m.EscRpm = int32(mem.esc_rpm)
 	m.EscVoltage = float32(mem.esc_voltage)
 	m.EscCurrent = float32(mem.esc_current)
-	m.EscTemperature = uint8(mem.esc_temperature)
+	m.EscTemperature = float32(mem.esc_temperature)
 	m.EscAddress = uint8(mem.esc_address)
 	m.EscState = uint8(mem.esc_state)
 	m.Failures = uint8(mem.failures)

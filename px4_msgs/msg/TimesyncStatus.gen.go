@@ -35,11 +35,16 @@ import "C"
 func init() {
 	typemap.RegisterMessage("px4_msgs/TimesyncStatus", TimesyncStatusTypeSupport)
 }
+const (
+	TimesyncStatus_SOURCE_PROTOCOL_MAVLINK uint8 = 0
+	TimesyncStatus_SOURCE_PROTOCOL_RTPS uint8 = 1
+)
 
 // Do not create instances of this type directly. Always use NewTimesyncStatus
 // function instead.
 type TimesyncStatus struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
+	SourceProtocol uint8 `yaml:"source_protocol"`// timesync source. Source can be MAVLink or the microRTPS bridge
 	RemoteTimestamp uint64 `yaml:"remote_timestamp"`// remote system timestamp (microseconds)
 	ObservedOffset int64 `yaml:"observed_offset"`// raw time offset directly observed from this timesync packet (microseconds)
 	EstimatedOffset int64 `yaml:"estimated_offset"`// smoothed time offset between companion system and PX4 (microseconds)
@@ -56,6 +61,7 @@ func NewTimesyncStatus() *TimesyncStatus {
 func (t *TimesyncStatus) Clone() *TimesyncStatus {
 	c := &TimesyncStatus{}
 	c.Timestamp = t.Timestamp
+	c.SourceProtocol = t.SourceProtocol
 	c.RemoteTimestamp = t.RemoteTimestamp
 	c.ObservedOffset = t.ObservedOffset
 	c.EstimatedOffset = t.EstimatedOffset
@@ -69,6 +75,7 @@ func (t *TimesyncStatus) CloneMsg() types.Message {
 
 func (t *TimesyncStatus) SetDefaults() {
 	t.Timestamp = 0
+	t.SourceProtocol = 0
 	t.RemoteTimestamp = 0
 	t.ObservedOffset = 0
 	t.EstimatedOffset = 0
@@ -104,6 +111,7 @@ func (t _TimesyncStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Mess
 	m := msg.(*TimesyncStatus)
 	mem := (*C.px4_msgs__msg__TimesyncStatus)(dst)
 	mem.timestamp = C.uint64_t(m.Timestamp)
+	mem.source_protocol = C.uint8_t(m.SourceProtocol)
 	mem.remote_timestamp = C.uint64_t(m.RemoteTimestamp)
 	mem.observed_offset = C.int64_t(m.ObservedOffset)
 	mem.estimated_offset = C.int64_t(m.EstimatedOffset)
@@ -114,6 +122,7 @@ func (t _TimesyncStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_b
 	m := msg.(*TimesyncStatus)
 	mem := (*C.px4_msgs__msg__TimesyncStatus)(ros2_message_buffer)
 	m.Timestamp = uint64(mem.timestamp)
+	m.SourceProtocol = uint8(mem.source_protocol)
 	m.RemoteTimestamp = uint64(mem.remote_timestamp)
 	m.ObservedOffset = int64(mem.observed_offset)
 	m.EstimatedOffset = int64(mem.estimated_offset)

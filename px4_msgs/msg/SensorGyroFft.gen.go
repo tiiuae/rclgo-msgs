@@ -45,12 +45,12 @@ type SensorGyroFft struct {
 	DeviceId uint32 `yaml:"device_id"`// unique device ID for the sensor that does not change between power cycles
 	SensorSampleRateHz float32 `yaml:"sensor_sample_rate_hz"`
 	ResolutionHz float32 `yaml:"resolution_hz"`
-	PeakFrequenciesX [6]float32 `yaml:"peak_frequencies_x"`// x axis peak frequencies
-	PeakFrequenciesY [6]float32 `yaml:"peak_frequencies_y"`// y axis peak frequencies
-	PeakFrequenciesZ [6]float32 `yaml:"peak_frequencies_z"`// z axis peak frequencies
-	PeakMagnitudeX [6]uint32 `yaml:"peak_magnitude_x"`// x axis peak frequencies magnitude
-	PeakMagnitudeY [6]uint32 `yaml:"peak_magnitude_y"`// y axis peak frequencies magnitude
-	PeakMagnitudeZ [6]uint32 `yaml:"peak_magnitude_z"`// z axis peak frequencies magnitude
+	PeakFrequenciesX [3]float32 `yaml:"peak_frequencies_x"`// x axis peak frequencies
+	PeakFrequenciesY [3]float32 `yaml:"peak_frequencies_y"`// y axis peak frequencies
+	PeakFrequenciesZ [3]float32 `yaml:"peak_frequencies_z"`// z axis peak frequencies
+	PeakSnrX [3]float32 `yaml:"peak_snr_x"`// x axis peak SNR
+	PeakSnrY [3]float32 `yaml:"peak_snr_y"`// y axis peak SNR
+	PeakSnrZ [3]float32 `yaml:"peak_snr_z"`// z axis peak SNR
 }
 
 // NewSensorGyroFft creates a new SensorGyroFft with default values.
@@ -70,9 +70,9 @@ func (t *SensorGyroFft) Clone() *SensorGyroFft {
 	c.PeakFrequenciesX = t.PeakFrequenciesX
 	c.PeakFrequenciesY = t.PeakFrequenciesY
 	c.PeakFrequenciesZ = t.PeakFrequenciesZ
-	c.PeakMagnitudeX = t.PeakMagnitudeX
-	c.PeakMagnitudeY = t.PeakMagnitudeY
-	c.PeakMagnitudeZ = t.PeakMagnitudeZ
+	c.PeakSnrX = t.PeakSnrX
+	c.PeakSnrY = t.PeakSnrY
+	c.PeakSnrZ = t.PeakSnrZ
 	return c
 }
 
@@ -86,12 +86,12 @@ func (t *SensorGyroFft) SetDefaults() {
 	t.DeviceId = 0
 	t.SensorSampleRateHz = 0
 	t.ResolutionHz = 0
-	t.PeakFrequenciesX = [6]float32{}
-	t.PeakFrequenciesY = [6]float32{}
-	t.PeakFrequenciesZ = [6]float32{}
-	t.PeakMagnitudeX = [6]uint32{}
-	t.PeakMagnitudeY = [6]uint32{}
-	t.PeakMagnitudeZ = [6]uint32{}
+	t.PeakFrequenciesX = [3]float32{}
+	t.PeakFrequenciesY = [3]float32{}
+	t.PeakFrequenciesZ = [3]float32{}
+	t.PeakSnrX = [3]float32{}
+	t.PeakSnrY = [3]float32{}
+	t.PeakSnrZ = [3]float32{}
 }
 
 // CloneSensorGyroFftSlice clones src to dst by calling Clone for each element in
@@ -133,12 +133,12 @@ func (t _SensorGyroFftTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Messa
 	primitives.Float32__Array_to_C(*(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_frequencies_y)), m.PeakFrequenciesY[:])
 	cSlice_peak_frequencies_z := mem.peak_frequencies_z[:]
 	primitives.Float32__Array_to_C(*(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_frequencies_z)), m.PeakFrequenciesZ[:])
-	cSlice_peak_magnitude_x := mem.peak_magnitude_x[:]
-	primitives.Uint32__Array_to_C(*(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_x)), m.PeakMagnitudeX[:])
-	cSlice_peak_magnitude_y := mem.peak_magnitude_y[:]
-	primitives.Uint32__Array_to_C(*(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_y)), m.PeakMagnitudeY[:])
-	cSlice_peak_magnitude_z := mem.peak_magnitude_z[:]
-	primitives.Uint32__Array_to_C(*(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_z)), m.PeakMagnitudeZ[:])
+	cSlice_peak_snr_x := mem.peak_snr_x[:]
+	primitives.Float32__Array_to_C(*(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_x)), m.PeakSnrX[:])
+	cSlice_peak_snr_y := mem.peak_snr_y[:]
+	primitives.Float32__Array_to_C(*(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_y)), m.PeakSnrY[:])
+	cSlice_peak_snr_z := mem.peak_snr_z[:]
+	primitives.Float32__Array_to_C(*(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_z)), m.PeakSnrZ[:])
 }
 
 func (t _SensorGyroFftTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -155,12 +155,12 @@ func (t _SensorGyroFftTypeSupport) AsGoStruct(msg types.Message, ros2_message_bu
 	primitives.Float32__Array_to_Go(m.PeakFrequenciesY[:], *(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_frequencies_y)))
 	cSlice_peak_frequencies_z := mem.peak_frequencies_z[:]
 	primitives.Float32__Array_to_Go(m.PeakFrequenciesZ[:], *(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_frequencies_z)))
-	cSlice_peak_magnitude_x := mem.peak_magnitude_x[:]
-	primitives.Uint32__Array_to_Go(m.PeakMagnitudeX[:], *(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_x)))
-	cSlice_peak_magnitude_y := mem.peak_magnitude_y[:]
-	primitives.Uint32__Array_to_Go(m.PeakMagnitudeY[:], *(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_y)))
-	cSlice_peak_magnitude_z := mem.peak_magnitude_z[:]
-	primitives.Uint32__Array_to_Go(m.PeakMagnitudeZ[:], *(*[]primitives.CUint32)(unsafe.Pointer(&cSlice_peak_magnitude_z)))
+	cSlice_peak_snr_x := mem.peak_snr_x[:]
+	primitives.Float32__Array_to_Go(m.PeakSnrX[:], *(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_x)))
+	cSlice_peak_snr_y := mem.peak_snr_y[:]
+	primitives.Float32__Array_to_Go(m.PeakSnrY[:], *(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_y)))
+	cSlice_peak_snr_z := mem.peak_snr_z[:]
+	primitives.Float32__Array_to_Go(m.PeakSnrZ[:], *(*[]primitives.CFloat32)(unsafe.Pointer(&cSlice_peak_snr_z)))
 }
 
 func (t _SensorGyroFftTypeSupport) TypeSupport() unsafe.Pointer {

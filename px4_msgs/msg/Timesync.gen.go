@@ -40,7 +40,6 @@ func init() {
 // function instead.
 type Timesync struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
-	SysId uint8 `yaml:"sys_id"`// id of the origin system
 	Seq uint8 `yaml:"seq"`// timesync msg sequence
 	Tc1 int64 `yaml:"tc1"`// time sync timestamp 1
 	Ts1 int64 `yaml:"ts1"`// time sync timestamp 2
@@ -56,7 +55,6 @@ func NewTimesync() *Timesync {
 func (t *Timesync) Clone() *Timesync {
 	c := &Timesync{}
 	c.Timestamp = t.Timestamp
-	c.SysId = t.SysId
 	c.Seq = t.Seq
 	c.Tc1 = t.Tc1
 	c.Ts1 = t.Ts1
@@ -69,7 +67,6 @@ func (t *Timesync) CloneMsg() types.Message {
 
 func (t *Timesync) SetDefaults() {
 	t.Timestamp = 0
-	t.SysId = 0
 	t.Seq = 0
 	t.Tc1 = 0
 	t.Ts1 = 0
@@ -104,7 +101,6 @@ func (t _TimesyncTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Message) {
 	m := msg.(*Timesync)
 	mem := (*C.px4_msgs__msg__Timesync)(dst)
 	mem.timestamp = C.uint64_t(m.Timestamp)
-	mem.sys_id = C.uint8_t(m.SysId)
 	mem.seq = C.uint8_t(m.Seq)
 	mem.tc1 = C.int64_t(m.Tc1)
 	mem.ts1 = C.int64_t(m.Ts1)
@@ -114,7 +110,6 @@ func (t _TimesyncTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer 
 	m := msg.(*Timesync)
 	mem := (*C.px4_msgs__msg__Timesync)(ros2_message_buffer)
 	m.Timestamp = uint64(mem.timestamp)
-	m.SysId = uint8(mem.sys_id)
 	m.Seq = uint8(mem.seq)
 	m.Tc1 = int64(mem.tc1)
 	m.Ts1 = int64(mem.ts1)

@@ -52,17 +52,17 @@ const (
 // function instead.
 type BatteryStatus struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
+	Connected bool `yaml:"connected"`// Whether or not a battery is connected, based on a voltage threshold
 	VoltageV float32 `yaml:"voltage_v"`// Battery voltage in volts, 0 if unknown
 	VoltageFilteredV float32 `yaml:"voltage_filtered_v"`// Battery voltage in volts, filtered, 0 if unknown
 	CurrentA float32 `yaml:"current_a"`// Battery current in amperes, -1 if unknown
 	CurrentFilteredA float32 `yaml:"current_filtered_a"`// Battery current in amperes, filtered, 0 if unknown
-	AverageCurrentA float32 `yaml:"average_current_a"`// Battery current average in amperes, -1 if unknown
+	CurrentAverageA float32 `yaml:"current_average_a"`// Battery current average in amperes, -1 if unknown
 	DischargedMah float32 `yaml:"discharged_mah"`// Discharged amount in mAh, -1 if unknown
 	Remaining float32 `yaml:"remaining"`// From 1 to 0, -1 if unknown
 	Scale float32 `yaml:"scale"`// Power scaling factor, >= 1, or -1 if unknown
 	Temperature float32 `yaml:"temperature"`// temperature of the battery. NaN if unknown
 	CellCount int32 `yaml:"cell_count"`// Number of cells
-	Connected bool `yaml:"connected"`// Whether or not a battery is connected, based on a voltage threshold
 	Source uint8 `yaml:"source"`// Battery source
 	Priority uint8 `yaml:"priority"`// Zero based priority is the connection on the Power Controller V1..Vn AKA BrickN-1
 	Capacity uint16 `yaml:"capacity"`// actual capacity of the battery
@@ -74,11 +74,18 @@ type BatteryStatus struct {
 	StateOfHealth uint16 `yaml:"state_of_health"`// state of health. FullChargeCapacity/DesignCapacity.
 	MaxError uint16 `yaml:"max_error"`// max error, expected margin of error in % in the state-of-charge calculation with a range of 1 to 100%
 	Id uint8 `yaml:"id"`// ID number of a battery. Should be unique and consistent for the lifetime of a vehicle. 1-indexed.
-	InterfaceError uint16 `yaml:"interface_error"`// SMBUS interface error counter
-	VoltageCellV [10]float32 `yaml:"voltage_cell_v"`// Battery individual cell voltages
+	InterfaceError uint16 `yaml:"interface_error"`// interface error counter
+	VoltageCellV [14]float32 `yaml:"voltage_cell_v"`// Battery individual cell voltages
 	MaxCellVoltageDelta float32 `yaml:"max_cell_voltage_delta"`// Max difference between individual cell voltages
 	IsPoweringOff bool `yaml:"is_powering_off"`// Power off event imminent indication, false if unknown
 	Warning uint8 `yaml:"warning"`// current battery warning
+	AveragePower float32 `yaml:"average_power"`// The average power of the current discharge
+	AvailableEnergy float32 `yaml:"available_energy"`// The predicted charge or energy remaining in the battery
+	RemainingCapacity float32 `yaml:"remaining_capacity"`// The compensated battery capacity remaining
+	DesignCapacity float32 `yaml:"design_capacity"`// The design capacity of the battery
+	AverageTimeToFull uint16 `yaml:"average_time_to_full"`// The predicted remaining time until the battery reaches full charge, in minutes
+	OverDischargeCount uint16 `yaml:"over_discharge_count"`// Number of battery overdischarge
+	NominalVoltage float32 `yaml:"nominal_voltage"`// Nominal voltage of the battery pack
 }
 
 // NewBatteryStatus creates a new BatteryStatus with default values.
@@ -91,17 +98,17 @@ func NewBatteryStatus() *BatteryStatus {
 func (t *BatteryStatus) Clone() *BatteryStatus {
 	c := &BatteryStatus{}
 	c.Timestamp = t.Timestamp
+	c.Connected = t.Connected
 	c.VoltageV = t.VoltageV
 	c.VoltageFilteredV = t.VoltageFilteredV
 	c.CurrentA = t.CurrentA
 	c.CurrentFilteredA = t.CurrentFilteredA
-	c.AverageCurrentA = t.AverageCurrentA
+	c.CurrentAverageA = t.CurrentAverageA
 	c.DischargedMah = t.DischargedMah
 	c.Remaining = t.Remaining
 	c.Scale = t.Scale
 	c.Temperature = t.Temperature
 	c.CellCount = t.CellCount
-	c.Connected = t.Connected
 	c.Source = t.Source
 	c.Priority = t.Priority
 	c.Capacity = t.Capacity
@@ -118,6 +125,13 @@ func (t *BatteryStatus) Clone() *BatteryStatus {
 	c.MaxCellVoltageDelta = t.MaxCellVoltageDelta
 	c.IsPoweringOff = t.IsPoweringOff
 	c.Warning = t.Warning
+	c.AveragePower = t.AveragePower
+	c.AvailableEnergy = t.AvailableEnergy
+	c.RemainingCapacity = t.RemainingCapacity
+	c.DesignCapacity = t.DesignCapacity
+	c.AverageTimeToFull = t.AverageTimeToFull
+	c.OverDischargeCount = t.OverDischargeCount
+	c.NominalVoltage = t.NominalVoltage
 	return c
 }
 
@@ -127,17 +141,17 @@ func (t *BatteryStatus) CloneMsg() types.Message {
 
 func (t *BatteryStatus) SetDefaults() {
 	t.Timestamp = 0
+	t.Connected = false
 	t.VoltageV = 0
 	t.VoltageFilteredV = 0
 	t.CurrentA = 0
 	t.CurrentFilteredA = 0
-	t.AverageCurrentA = 0
+	t.CurrentAverageA = 0
 	t.DischargedMah = 0
 	t.Remaining = 0
 	t.Scale = 0
 	t.Temperature = 0
 	t.CellCount = 0
-	t.Connected = false
 	t.Source = 0
 	t.Priority = 0
 	t.Capacity = 0
@@ -150,10 +164,17 @@ func (t *BatteryStatus) SetDefaults() {
 	t.MaxError = 0
 	t.Id = 0
 	t.InterfaceError = 0
-	t.VoltageCellV = [10]float32{}
+	t.VoltageCellV = [14]float32{}
 	t.MaxCellVoltageDelta = 0
 	t.IsPoweringOff = false
 	t.Warning = 0
+	t.AveragePower = 0
+	t.AvailableEnergy = 0
+	t.RemainingCapacity = 0
+	t.DesignCapacity = 0
+	t.AverageTimeToFull = 0
+	t.OverDischargeCount = 0
+	t.NominalVoltage = 0
 }
 
 // CloneBatteryStatusSlice clones src to dst by calling Clone for each element in
@@ -185,17 +206,17 @@ func (t _BatteryStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Messa
 	m := msg.(*BatteryStatus)
 	mem := (*C.px4_msgs__msg__BatteryStatus)(dst)
 	mem.timestamp = C.uint64_t(m.Timestamp)
+	mem.connected = C.bool(m.Connected)
 	mem.voltage_v = C.float(m.VoltageV)
 	mem.voltage_filtered_v = C.float(m.VoltageFilteredV)
 	mem.current_a = C.float(m.CurrentA)
 	mem.current_filtered_a = C.float(m.CurrentFilteredA)
-	mem.average_current_a = C.float(m.AverageCurrentA)
+	mem.current_average_a = C.float(m.CurrentAverageA)
 	mem.discharged_mah = C.float(m.DischargedMah)
 	mem.remaining = C.float(m.Remaining)
 	mem.scale = C.float(m.Scale)
 	mem.temperature = C.float(m.Temperature)
 	mem.cell_count = C.int32_t(m.CellCount)
-	mem.connected = C.bool(m.Connected)
 	mem.source = C.uint8_t(m.Source)
 	mem.priority = C.uint8_t(m.Priority)
 	mem.capacity = C.uint16_t(m.Capacity)
@@ -213,23 +234,30 @@ func (t _BatteryStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Messa
 	mem.max_cell_voltage_delta = C.float(m.MaxCellVoltageDelta)
 	mem.is_powering_off = C.bool(m.IsPoweringOff)
 	mem.warning = C.uint8_t(m.Warning)
+	mem.average_power = C.float(m.AveragePower)
+	mem.available_energy = C.float(m.AvailableEnergy)
+	mem.remaining_capacity = C.float(m.RemainingCapacity)
+	mem.design_capacity = C.float(m.DesignCapacity)
+	mem.average_time_to_full = C.uint16_t(m.AverageTimeToFull)
+	mem.over_discharge_count = C.uint16_t(m.OverDischargeCount)
+	mem.nominal_voltage = C.float(m.NominalVoltage)
 }
 
 func (t _BatteryStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
 	m := msg.(*BatteryStatus)
 	mem := (*C.px4_msgs__msg__BatteryStatus)(ros2_message_buffer)
 	m.Timestamp = uint64(mem.timestamp)
+	m.Connected = bool(mem.connected)
 	m.VoltageV = float32(mem.voltage_v)
 	m.VoltageFilteredV = float32(mem.voltage_filtered_v)
 	m.CurrentA = float32(mem.current_a)
 	m.CurrentFilteredA = float32(mem.current_filtered_a)
-	m.AverageCurrentA = float32(mem.average_current_a)
+	m.CurrentAverageA = float32(mem.current_average_a)
 	m.DischargedMah = float32(mem.discharged_mah)
 	m.Remaining = float32(mem.remaining)
 	m.Scale = float32(mem.scale)
 	m.Temperature = float32(mem.temperature)
 	m.CellCount = int32(mem.cell_count)
-	m.Connected = bool(mem.connected)
 	m.Source = uint8(mem.source)
 	m.Priority = uint8(mem.priority)
 	m.Capacity = uint16(mem.capacity)
@@ -247,6 +275,13 @@ func (t _BatteryStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_bu
 	m.MaxCellVoltageDelta = float32(mem.max_cell_voltage_delta)
 	m.IsPoweringOff = bool(mem.is_powering_off)
 	m.Warning = uint8(mem.warning)
+	m.AveragePower = float32(mem.average_power)
+	m.AvailableEnergy = float32(mem.available_energy)
+	m.RemainingCapacity = float32(mem.remaining_capacity)
+	m.DesignCapacity = float32(mem.design_capacity)
+	m.AverageTimeToFull = uint16(mem.average_time_to_full)
+	m.OverDischargeCount = uint16(mem.over_discharge_count)
+	m.NominalVoltage = float32(mem.nominal_voltage)
 }
 
 func (t _BatteryStatusTypeSupport) TypeSupport() unsafe.Pointer {

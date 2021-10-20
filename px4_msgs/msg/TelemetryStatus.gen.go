@@ -63,7 +63,6 @@ type TelemetryStatus struct {
 	TxBufferOverruns uint32 `yaml:"tx_buffer_overruns"`// number of TX buffer overruns
 	RxRateAvg float32 `yaml:"rx_rate_avg"`// transmit rate average (Bytes/s)
 	RxMessageCount uint32 `yaml:"rx_message_count"`// count of total messages received
-	RxMessageCountSupported uint32 `yaml:"rx_message_count_supported"`// count of total messages received from supported systems and components (for loss statistics)
 	RxMessageLostCount uint32 `yaml:"rx_message_lost_count"`
 	RxBufferOverruns uint32 `yaml:"rx_buffer_overruns"`// number of RX buffer overruns
 	RxParseErrors uint32 `yaml:"rx_parse_errors"`// number of parse errors
@@ -111,7 +110,6 @@ func (t *TelemetryStatus) Clone() *TelemetryStatus {
 	c.TxBufferOverruns = t.TxBufferOverruns
 	c.RxRateAvg = t.RxRateAvg
 	c.RxMessageCount = t.RxMessageCount
-	c.RxMessageCountSupported = t.RxMessageCountSupported
 	c.RxMessageLostCount = t.RxMessageLostCount
 	c.RxBufferOverruns = t.RxBufferOverruns
 	c.RxParseErrors = t.RxParseErrors
@@ -156,7 +154,6 @@ func (t *TelemetryStatus) SetDefaults() {
 	t.TxBufferOverruns = 0
 	t.RxRateAvg = 0
 	t.RxMessageCount = 0
-	t.RxMessageCountSupported = 0
 	t.RxMessageLostCount = 0
 	t.RxBufferOverruns = 0
 	t.RxParseErrors = 0
@@ -223,7 +220,6 @@ func (t _TelemetryStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Mes
 	mem.tx_buffer_overruns = C.uint32_t(m.TxBufferOverruns)
 	mem.rx_rate_avg = C.float(m.RxRateAvg)
 	mem.rx_message_count = C.uint32_t(m.RxMessageCount)
-	mem.rx_message_count_supported = C.uint32_t(m.RxMessageCountSupported)
 	mem.rx_message_lost_count = C.uint32_t(m.RxMessageLostCount)
 	mem.rx_buffer_overruns = C.uint32_t(m.RxBufferOverruns)
 	mem.rx_parse_errors = C.uint32_t(m.RxParseErrors)
@@ -265,7 +261,6 @@ func (t _TelemetryStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_
 	m.TxBufferOverruns = uint32(mem.tx_buffer_overruns)
 	m.RxRateAvg = float32(mem.rx_rate_avg)
 	m.RxMessageCount = uint32(mem.rx_message_count)
-	m.RxMessageCountSupported = uint32(mem.rx_message_count_supported)
 	m.RxMessageLostCount = uint32(mem.rx_message_lost_count)
 	m.RxBufferOverruns = uint32(mem.rx_buffer_overruns)
 	m.RxParseErrors = uint32(mem.rx_parse_errors)

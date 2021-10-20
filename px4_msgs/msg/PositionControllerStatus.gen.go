@@ -42,9 +42,9 @@ type PositionControllerStatus struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
 	NavRoll float32 `yaml:"nav_roll"`
 	NavPitch float32 `yaml:"nav_pitch"`
-	NavBearing float32 `yaml:"nav_bearing"`
-	TargetBearing float32 `yaml:"target_bearing"`
-	XtrackError float32 `yaml:"xtrack_error"`
+	NavBearing float32 `yaml:"nav_bearing"`// set to NAN if not valid
+	TargetBearing float32 `yaml:"target_bearing"`// set to NAN if not valid
+	XtrackError float32 `yaml:"xtrack_error"`// set to NAN if not valid
 	WpDist float32 `yaml:"wp_dist"`
 	AcceptanceRadius float32 `yaml:"acceptance_radius"`// the optimal distance to a waypoint to switch to the next
 	YawAcceptance float32 `yaml:"yaw_acceptance"`// NaN if not set

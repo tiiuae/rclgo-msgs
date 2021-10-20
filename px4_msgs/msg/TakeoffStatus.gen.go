@@ -49,6 +49,7 @@ const (
 type TakeoffStatus struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
 	TakeoffState uint8 `yaml:"takeoff_state"`
+	TiltLimit float32 `yaml:"tilt_limit"`// limited tilt feasability during takeoff, contains maximum tilt otherwise
 }
 
 // NewTakeoffStatus creates a new TakeoffStatus with default values.
@@ -62,6 +63,7 @@ func (t *TakeoffStatus) Clone() *TakeoffStatus {
 	c := &TakeoffStatus{}
 	c.Timestamp = t.Timestamp
 	c.TakeoffState = t.TakeoffState
+	c.TiltLimit = t.TiltLimit
 	return c
 }
 
@@ -72,6 +74,7 @@ func (t *TakeoffStatus) CloneMsg() types.Message {
 func (t *TakeoffStatus) SetDefaults() {
 	t.Timestamp = 0
 	t.TakeoffState = 0
+	t.TiltLimit = 0
 }
 
 // CloneTakeoffStatusSlice clones src to dst by calling Clone for each element in
@@ -104,6 +107,7 @@ func (t _TakeoffStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Messa
 	mem := (*C.px4_msgs__msg__TakeoffStatus)(dst)
 	mem.timestamp = C.uint64_t(m.Timestamp)
 	mem.takeoff_state = C.uint8_t(m.TakeoffState)
+	mem.tilt_limit = C.float(m.TiltLimit)
 }
 
 func (t _TakeoffStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -111,6 +115,7 @@ func (t _TakeoffStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_bu
 	mem := (*C.px4_msgs__msg__TakeoffStatus)(ros2_message_buffer)
 	m.Timestamp = uint64(mem.timestamp)
 	m.TakeoffState = uint8(mem.takeoff_state)
+	m.TiltLimit = float32(mem.tilt_limit)
 }
 
 func (t _TakeoffStatusTypeSupport) TypeSupport() unsafe.Pointer {

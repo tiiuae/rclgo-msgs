@@ -41,28 +41,30 @@ const (
 	RcChannels_FUNCTION_ROLL uint8 = 1
 	RcChannels_FUNCTION_PITCH uint8 = 2
 	RcChannels_FUNCTION_YAW uint8 = 3
-	RcChannels_FUNCTION_MODE uint8 = 4
-	RcChannels_FUNCTION_RETURN uint8 = 5
-	RcChannels_FUNCTION_POSCTL uint8 = 6
-	RcChannels_FUNCTION_LOITER uint8 = 7
-	RcChannels_FUNCTION_OFFBOARD uint8 = 8
-	RcChannels_FUNCTION_ACRO uint8 = 9
-	RcChannels_FUNCTION_FLAPS uint8 = 10
-	RcChannels_FUNCTION_AUX_1 uint8 = 11
-	RcChannels_FUNCTION_AUX_2 uint8 = 12
-	RcChannels_FUNCTION_AUX_3 uint8 = 13
-	RcChannels_FUNCTION_AUX_4 uint8 = 14
-	RcChannels_FUNCTION_AUX_5 uint8 = 15
-	RcChannels_FUNCTION_PARAM_1 uint8 = 16
-	RcChannels_FUNCTION_PARAM_2 uint8 = 17
-	RcChannels_FUNCTION_PARAM_3_5 uint8 = 18
-	RcChannels_FUNCTION_KILLSWITCH uint8 = 19
-	RcChannels_FUNCTION_TRANSITION uint8 = 20
-	RcChannels_FUNCTION_GEAR uint8 = 21
-	RcChannels_FUNCTION_ARMSWITCH uint8 = 22
-	RcChannels_FUNCTION_STAB uint8 = 23
-	RcChannels_FUNCTION_AUX_6 uint8 = 24
-	RcChannels_FUNCTION_MAN uint8 = 25
+	RcChannels_FUNCTION_RETURN uint8 = 4
+	RcChannels_FUNCTION_LOITER uint8 = 5
+	RcChannels_FUNCTION_OFFBOARD uint8 = 6
+	RcChannels_FUNCTION_FLAPS uint8 = 7
+	RcChannels_FUNCTION_AUX_1 uint8 = 8
+	RcChannels_FUNCTION_AUX_2 uint8 = 9
+	RcChannels_FUNCTION_AUX_3 uint8 = 10
+	RcChannels_FUNCTION_AUX_4 uint8 = 11
+	RcChannels_FUNCTION_AUX_5 uint8 = 12
+	RcChannels_FUNCTION_AUX_6 uint8 = 13
+	RcChannels_FUNCTION_PARAM_1 uint8 = 14
+	RcChannels_FUNCTION_PARAM_2 uint8 = 15
+	RcChannels_FUNCTION_PARAM_3_5 uint8 = 16
+	RcChannels_FUNCTION_KILLSWITCH uint8 = 17
+	RcChannels_FUNCTION_TRANSITION uint8 = 18
+	RcChannels_FUNCTION_GEAR uint8 = 19
+	RcChannels_FUNCTION_ARMSWITCH uint8 = 20
+	RcChannels_FUNCTION_FLTBTN_SLOT_1 uint8 = 21
+	RcChannels_FUNCTION_FLTBTN_SLOT_2 uint8 = 22
+	RcChannels_FUNCTION_FLTBTN_SLOT_3 uint8 = 23
+	RcChannels_FUNCTION_FLTBTN_SLOT_4 uint8 = 24
+	RcChannels_FUNCTION_FLTBTN_SLOT_5 uint8 = 25
+	RcChannels_FUNCTION_FLTBTN_SLOT_6 uint8 = 26
+	RcChannels_FUNCTION_FLTBTN_SLOT_COUNT uint8 = 6
 )
 
 // Do not create instances of this type directly. Always use NewRcChannels
@@ -72,7 +74,7 @@ type RcChannels struct {
 	TimestampLastValid uint64 `yaml:"timestamp_last_valid"`// Timestamp of last valid RC signal
 	Channels [18]float32 `yaml:"channels"`// Scaled to -1..1 (throttle: 0..1)
 	ChannelCount uint8 `yaml:"channel_count"`// Number of valid channels
-	Function [26]int8 `yaml:"function"`// Functions mapping
+	Function [27]int8 `yaml:"function"`// Functions mapping
 	Rssi uint8 `yaml:"rssi"`// Receive signal strength index
 	SignalLost bool `yaml:"signal_lost"`// Control signal lost, should be checked together with topic timeout
 	FrameDropCount uint32 `yaml:"frame_drop_count"`// Number of dropped frames
@@ -107,7 +109,7 @@ func (t *RcChannels) SetDefaults() {
 	t.TimestampLastValid = 0
 	t.Channels = [18]float32{}
 	t.ChannelCount = 0
-	t.Function = [26]int8{}
+	t.Function = [27]int8{}
 	t.Rssi = 0
 	t.SignalLost = false
 	t.FrameDropCount = 0

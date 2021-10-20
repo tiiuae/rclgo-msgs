@@ -42,8 +42,6 @@ type Safety struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
 	SafetySwitchAvailable bool `yaml:"safety_switch_available"`// Set to true if a safety switch is connected
 	SafetyOff bool `yaml:"safety_off"`// Set to true if safety is off
-	OverrideAvailable bool `yaml:"override_available"`// Set to true if external override system is connected
-	OverrideEnabled bool `yaml:"override_enabled"`// Set to true if override is engaged
 }
 
 // NewSafety creates a new Safety with default values.
@@ -58,8 +56,6 @@ func (t *Safety) Clone() *Safety {
 	c.Timestamp = t.Timestamp
 	c.SafetySwitchAvailable = t.SafetySwitchAvailable
 	c.SafetyOff = t.SafetyOff
-	c.OverrideAvailable = t.OverrideAvailable
-	c.OverrideEnabled = t.OverrideEnabled
 	return c
 }
 
@@ -71,8 +67,6 @@ func (t *Safety) SetDefaults() {
 	t.Timestamp = 0
 	t.SafetySwitchAvailable = false
 	t.SafetyOff = false
-	t.OverrideAvailable = false
-	t.OverrideEnabled = false
 }
 
 // CloneSafetySlice clones src to dst by calling Clone for each element in
@@ -106,8 +100,6 @@ func (t _SafetyTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Message) {
 	mem.timestamp = C.uint64_t(m.Timestamp)
 	mem.safety_switch_available = C.bool(m.SafetySwitchAvailable)
 	mem.safety_off = C.bool(m.SafetyOff)
-	mem.override_available = C.bool(m.OverrideAvailable)
-	mem.override_enabled = C.bool(m.OverrideEnabled)
 }
 
 func (t _SafetyTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -116,8 +108,6 @@ func (t _SafetyTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer un
 	m.Timestamp = uint64(mem.timestamp)
 	m.SafetySwitchAvailable = bool(mem.safety_switch_available)
 	m.SafetyOff = bool(mem.safety_off)
-	m.OverrideAvailable = bool(mem.override_available)
-	m.OverrideEnabled = bool(mem.override_enabled)
 }
 
 func (t _SafetyTypeSupport) TypeSupport() unsafe.Pointer {

@@ -44,44 +44,33 @@ type Px4IoStatus struct {
 	FreeMemoryBytes uint16 `yaml:"free_memory_bytes"`
 	VoltageV float32 `yaml:"voltage_v"`// Servo rail voltage in volts
 	RssiV float32 `yaml:"rssi_v"`// RSSI pin voltage in volts
-	StatusOutputsArmed bool `yaml:"status_outputs_armed"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusOverride bool `yaml:"status_override"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusRcOk bool `yaml:"status_rc_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusRcPpm bool `yaml:"status_rc_ppm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusRcDsm bool `yaml:"status_rc_dsm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusRcSbus bool `yaml:"status_rc_sbus"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusFmuOk bool `yaml:"status_fmu_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusRawPwm bool `yaml:"status_raw_pwm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusMixerOk bool `yaml:"status_mixer_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	StatusArmSync bool `yaml:"status_arm_sync"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusInitOk bool `yaml:"status_init_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	StatusFailsafe bool `yaml:"status_failsafe"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	StatusSafetyOff bool `yaml:"status_safety_off"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	StatusFmuInitialized bool `yaml:"status_fmu_initialized"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusFmuOk bool `yaml:"status_fmu_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusInitOk bool `yaml:"status_init_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusOutputsArmed bool `yaml:"status_outputs_armed"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusRawPwm bool `yaml:"status_raw_pwm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusRcOk bool `yaml:"status_rc_ok"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusRcDsm bool `yaml:"status_rc_dsm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusRcPpm bool `yaml:"status_rc_ppm"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
+	StatusRcSbus bool `yaml:"status_rc_sbus"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	StatusRcSt24 bool `yaml:"status_rc_st24"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	StatusRcSumd bool `yaml:"status_rc_sumd"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
-	AlarmVbattLow bool `yaml:"alarm_vbatt_low"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmTemperature bool `yaml:"alarm_temperature"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmServoCurrent bool `yaml:"alarm_servo_current"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmAccCurrent bool `yaml:"alarm_acc_current"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmFmuLost bool `yaml:"alarm_fmu_lost"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmRcLost bool `yaml:"alarm_rc_lost"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
+	StatusSafetyOff bool `yaml:"status_safety_off"`// PX4IO status flags (PX4IO_P_STATUS_FLAGS)
 	AlarmPwmError bool `yaml:"alarm_pwm_error"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	AlarmVservoFault bool `yaml:"alarm_vservo_fault"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
-	ArmingIoArmOk bool `yaml:"arming_io_arm_ok"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
+	AlarmRcLost bool `yaml:"alarm_rc_lost"`// PX4IO alarms (PX4IO_P_STATUS_ALARMS)
+	ArmingFailsafeCustom bool `yaml:"arming_failsafe_custom"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
 	ArmingFmuArmed bool `yaml:"arming_fmu_armed"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
 	ArmingFmuPrearmed bool `yaml:"arming_fmu_prearmed"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingManualOverrideOk bool `yaml:"arming_manual_override_ok"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingFailsafeCustom bool `yaml:"arming_failsafe_custom"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingInairRestartOk bool `yaml:"arming_inair_restart_ok"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingAlwaysPwmEnable bool `yaml:"arming_always_pwm_enable"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingRcHandlingDisabled bool `yaml:"arming_rc_handling_disabled"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingLockdown bool `yaml:"arming_lockdown"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
 	ArmingForceFailsafe bool `yaml:"arming_force_failsafe"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
+	ArmingIoArmOk bool `yaml:"arming_io_arm_ok"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
+	ArmingLockdown bool `yaml:"arming_lockdown"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
 	ArmingTerminationFailsafe bool `yaml:"arming_termination_failsafe"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	ArmingOverrideImmediate bool `yaml:"arming_override_immediate"`// PX4IO arming (PX4IO_P_SETUP_ARMING)
-	Actuators [8]int16 `yaml:"actuators"`
-	Servos [8]uint16 `yaml:"servos"`
+	Pwm [8]uint16 `yaml:"pwm"`
+	PwmDisarmed [8]uint16 `yaml:"pwm_disarmed"`
+	PwmFailsafe [8]uint16 `yaml:"pwm_failsafe"`
+	PwmRateHz [8]uint16 `yaml:"pwm_rate_hz"`
 	RawInputs [18]uint16 `yaml:"raw_inputs"`
 }
 
@@ -98,44 +87,33 @@ func (t *Px4IoStatus) Clone() *Px4IoStatus {
 	c.FreeMemoryBytes = t.FreeMemoryBytes
 	c.VoltageV = t.VoltageV
 	c.RssiV = t.RssiV
-	c.StatusOutputsArmed = t.StatusOutputsArmed
-	c.StatusOverride = t.StatusOverride
-	c.StatusRcOk = t.StatusRcOk
-	c.StatusRcPpm = t.StatusRcPpm
-	c.StatusRcDsm = t.StatusRcDsm
-	c.StatusRcSbus = t.StatusRcSbus
-	c.StatusFmuOk = t.StatusFmuOk
-	c.StatusRawPwm = t.StatusRawPwm
-	c.StatusMixerOk = t.StatusMixerOk
 	c.StatusArmSync = t.StatusArmSync
-	c.StatusInitOk = t.StatusInitOk
 	c.StatusFailsafe = t.StatusFailsafe
-	c.StatusSafetyOff = t.StatusSafetyOff
 	c.StatusFmuInitialized = t.StatusFmuInitialized
+	c.StatusFmuOk = t.StatusFmuOk
+	c.StatusInitOk = t.StatusInitOk
+	c.StatusOutputsArmed = t.StatusOutputsArmed
+	c.StatusRawPwm = t.StatusRawPwm
+	c.StatusRcOk = t.StatusRcOk
+	c.StatusRcDsm = t.StatusRcDsm
+	c.StatusRcPpm = t.StatusRcPpm
+	c.StatusRcSbus = t.StatusRcSbus
 	c.StatusRcSt24 = t.StatusRcSt24
 	c.StatusRcSumd = t.StatusRcSumd
-	c.AlarmVbattLow = t.AlarmVbattLow
-	c.AlarmTemperature = t.AlarmTemperature
-	c.AlarmServoCurrent = t.AlarmServoCurrent
-	c.AlarmAccCurrent = t.AlarmAccCurrent
-	c.AlarmFmuLost = t.AlarmFmuLost
-	c.AlarmRcLost = t.AlarmRcLost
+	c.StatusSafetyOff = t.StatusSafetyOff
 	c.AlarmPwmError = t.AlarmPwmError
-	c.AlarmVservoFault = t.AlarmVservoFault
-	c.ArmingIoArmOk = t.ArmingIoArmOk
+	c.AlarmRcLost = t.AlarmRcLost
+	c.ArmingFailsafeCustom = t.ArmingFailsafeCustom
 	c.ArmingFmuArmed = t.ArmingFmuArmed
 	c.ArmingFmuPrearmed = t.ArmingFmuPrearmed
-	c.ArmingManualOverrideOk = t.ArmingManualOverrideOk
-	c.ArmingFailsafeCustom = t.ArmingFailsafeCustom
-	c.ArmingInairRestartOk = t.ArmingInairRestartOk
-	c.ArmingAlwaysPwmEnable = t.ArmingAlwaysPwmEnable
-	c.ArmingRcHandlingDisabled = t.ArmingRcHandlingDisabled
-	c.ArmingLockdown = t.ArmingLockdown
 	c.ArmingForceFailsafe = t.ArmingForceFailsafe
+	c.ArmingIoArmOk = t.ArmingIoArmOk
+	c.ArmingLockdown = t.ArmingLockdown
 	c.ArmingTerminationFailsafe = t.ArmingTerminationFailsafe
-	c.ArmingOverrideImmediate = t.ArmingOverrideImmediate
-	c.Actuators = t.Actuators
-	c.Servos = t.Servos
+	c.Pwm = t.Pwm
+	c.PwmDisarmed = t.PwmDisarmed
+	c.PwmFailsafe = t.PwmFailsafe
+	c.PwmRateHz = t.PwmRateHz
 	c.RawInputs = t.RawInputs
 	return c
 }
@@ -149,44 +127,33 @@ func (t *Px4IoStatus) SetDefaults() {
 	t.FreeMemoryBytes = 0
 	t.VoltageV = 0
 	t.RssiV = 0
-	t.StatusOutputsArmed = false
-	t.StatusOverride = false
-	t.StatusRcOk = false
-	t.StatusRcPpm = false
-	t.StatusRcDsm = false
-	t.StatusRcSbus = false
-	t.StatusFmuOk = false
-	t.StatusRawPwm = false
-	t.StatusMixerOk = false
 	t.StatusArmSync = false
-	t.StatusInitOk = false
 	t.StatusFailsafe = false
-	t.StatusSafetyOff = false
 	t.StatusFmuInitialized = false
+	t.StatusFmuOk = false
+	t.StatusInitOk = false
+	t.StatusOutputsArmed = false
+	t.StatusRawPwm = false
+	t.StatusRcOk = false
+	t.StatusRcDsm = false
+	t.StatusRcPpm = false
+	t.StatusRcSbus = false
 	t.StatusRcSt24 = false
 	t.StatusRcSumd = false
-	t.AlarmVbattLow = false
-	t.AlarmTemperature = false
-	t.AlarmServoCurrent = false
-	t.AlarmAccCurrent = false
-	t.AlarmFmuLost = false
-	t.AlarmRcLost = false
+	t.StatusSafetyOff = false
 	t.AlarmPwmError = false
-	t.AlarmVservoFault = false
-	t.ArmingIoArmOk = false
+	t.AlarmRcLost = false
+	t.ArmingFailsafeCustom = false
 	t.ArmingFmuArmed = false
 	t.ArmingFmuPrearmed = false
-	t.ArmingManualOverrideOk = false
-	t.ArmingFailsafeCustom = false
-	t.ArmingInairRestartOk = false
-	t.ArmingAlwaysPwmEnable = false
-	t.ArmingRcHandlingDisabled = false
-	t.ArmingLockdown = false
 	t.ArmingForceFailsafe = false
+	t.ArmingIoArmOk = false
+	t.ArmingLockdown = false
 	t.ArmingTerminationFailsafe = false
-	t.ArmingOverrideImmediate = false
-	t.Actuators = [8]int16{}
-	t.Servos = [8]uint16{}
+	t.Pwm = [8]uint16{}
+	t.PwmDisarmed = [8]uint16{}
+	t.PwmFailsafe = [8]uint16{}
+	t.PwmRateHz = [8]uint16{}
 	t.RawInputs = [18]uint16{}
 }
 
@@ -222,46 +189,37 @@ func (t _Px4IoStatusTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.Message
 	mem.free_memory_bytes = C.uint16_t(m.FreeMemoryBytes)
 	mem.voltage_v = C.float(m.VoltageV)
 	mem.rssi_v = C.float(m.RssiV)
-	mem.status_outputs_armed = C.bool(m.StatusOutputsArmed)
-	mem.status_override = C.bool(m.StatusOverride)
-	mem.status_rc_ok = C.bool(m.StatusRcOk)
-	mem.status_rc_ppm = C.bool(m.StatusRcPpm)
-	mem.status_rc_dsm = C.bool(m.StatusRcDsm)
-	mem.status_rc_sbus = C.bool(m.StatusRcSbus)
-	mem.status_fmu_ok = C.bool(m.StatusFmuOk)
-	mem.status_raw_pwm = C.bool(m.StatusRawPwm)
-	mem.status_mixer_ok = C.bool(m.StatusMixerOk)
 	mem.status_arm_sync = C.bool(m.StatusArmSync)
-	mem.status_init_ok = C.bool(m.StatusInitOk)
 	mem.status_failsafe = C.bool(m.StatusFailsafe)
-	mem.status_safety_off = C.bool(m.StatusSafetyOff)
 	mem.status_fmu_initialized = C.bool(m.StatusFmuInitialized)
+	mem.status_fmu_ok = C.bool(m.StatusFmuOk)
+	mem.status_init_ok = C.bool(m.StatusInitOk)
+	mem.status_outputs_armed = C.bool(m.StatusOutputsArmed)
+	mem.status_raw_pwm = C.bool(m.StatusRawPwm)
+	mem.status_rc_ok = C.bool(m.StatusRcOk)
+	mem.status_rc_dsm = C.bool(m.StatusRcDsm)
+	mem.status_rc_ppm = C.bool(m.StatusRcPpm)
+	mem.status_rc_sbus = C.bool(m.StatusRcSbus)
 	mem.status_rc_st24 = C.bool(m.StatusRcSt24)
 	mem.status_rc_sumd = C.bool(m.StatusRcSumd)
-	mem.alarm_vbatt_low = C.bool(m.AlarmVbattLow)
-	mem.alarm_temperature = C.bool(m.AlarmTemperature)
-	mem.alarm_servo_current = C.bool(m.AlarmServoCurrent)
-	mem.alarm_acc_current = C.bool(m.AlarmAccCurrent)
-	mem.alarm_fmu_lost = C.bool(m.AlarmFmuLost)
-	mem.alarm_rc_lost = C.bool(m.AlarmRcLost)
+	mem.status_safety_off = C.bool(m.StatusSafetyOff)
 	mem.alarm_pwm_error = C.bool(m.AlarmPwmError)
-	mem.alarm_vservo_fault = C.bool(m.AlarmVservoFault)
-	mem.arming_io_arm_ok = C.bool(m.ArmingIoArmOk)
+	mem.alarm_rc_lost = C.bool(m.AlarmRcLost)
+	mem.arming_failsafe_custom = C.bool(m.ArmingFailsafeCustom)
 	mem.arming_fmu_armed = C.bool(m.ArmingFmuArmed)
 	mem.arming_fmu_prearmed = C.bool(m.ArmingFmuPrearmed)
-	mem.arming_manual_override_ok = C.bool(m.ArmingManualOverrideOk)
-	mem.arming_failsafe_custom = C.bool(m.ArmingFailsafeCustom)
-	mem.arming_inair_restart_ok = C.bool(m.ArmingInairRestartOk)
-	mem.arming_always_pwm_enable = C.bool(m.ArmingAlwaysPwmEnable)
-	mem.arming_rc_handling_disabled = C.bool(m.ArmingRcHandlingDisabled)
-	mem.arming_lockdown = C.bool(m.ArmingLockdown)
 	mem.arming_force_failsafe = C.bool(m.ArmingForceFailsafe)
+	mem.arming_io_arm_ok = C.bool(m.ArmingIoArmOk)
+	mem.arming_lockdown = C.bool(m.ArmingLockdown)
 	mem.arming_termination_failsafe = C.bool(m.ArmingTerminationFailsafe)
-	mem.arming_override_immediate = C.bool(m.ArmingOverrideImmediate)
-	cSlice_actuators := mem.actuators[:]
-	primitives.Int16__Array_to_C(*(*[]primitives.CInt16)(unsafe.Pointer(&cSlice_actuators)), m.Actuators[:])
-	cSlice_servos := mem.servos[:]
-	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_servos)), m.Servos[:])
+	cSlice_pwm := mem.pwm[:]
+	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm)), m.Pwm[:])
+	cSlice_pwm_disarmed := mem.pwm_disarmed[:]
+	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_disarmed)), m.PwmDisarmed[:])
+	cSlice_pwm_failsafe := mem.pwm_failsafe[:]
+	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_failsafe)), m.PwmFailsafe[:])
+	cSlice_pwm_rate_hz := mem.pwm_rate_hz[:]
+	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_rate_hz)), m.PwmRateHz[:])
 	cSlice_raw_inputs := mem.raw_inputs[:]
 	primitives.Uint16__Array_to_C(*(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_raw_inputs)), m.RawInputs[:])
 }
@@ -273,46 +231,37 @@ func (t _Px4IoStatusTypeSupport) AsGoStruct(msg types.Message, ros2_message_buff
 	m.FreeMemoryBytes = uint16(mem.free_memory_bytes)
 	m.VoltageV = float32(mem.voltage_v)
 	m.RssiV = float32(mem.rssi_v)
-	m.StatusOutputsArmed = bool(mem.status_outputs_armed)
-	m.StatusOverride = bool(mem.status_override)
-	m.StatusRcOk = bool(mem.status_rc_ok)
-	m.StatusRcPpm = bool(mem.status_rc_ppm)
-	m.StatusRcDsm = bool(mem.status_rc_dsm)
-	m.StatusRcSbus = bool(mem.status_rc_sbus)
-	m.StatusFmuOk = bool(mem.status_fmu_ok)
-	m.StatusRawPwm = bool(mem.status_raw_pwm)
-	m.StatusMixerOk = bool(mem.status_mixer_ok)
 	m.StatusArmSync = bool(mem.status_arm_sync)
-	m.StatusInitOk = bool(mem.status_init_ok)
 	m.StatusFailsafe = bool(mem.status_failsafe)
-	m.StatusSafetyOff = bool(mem.status_safety_off)
 	m.StatusFmuInitialized = bool(mem.status_fmu_initialized)
+	m.StatusFmuOk = bool(mem.status_fmu_ok)
+	m.StatusInitOk = bool(mem.status_init_ok)
+	m.StatusOutputsArmed = bool(mem.status_outputs_armed)
+	m.StatusRawPwm = bool(mem.status_raw_pwm)
+	m.StatusRcOk = bool(mem.status_rc_ok)
+	m.StatusRcDsm = bool(mem.status_rc_dsm)
+	m.StatusRcPpm = bool(mem.status_rc_ppm)
+	m.StatusRcSbus = bool(mem.status_rc_sbus)
 	m.StatusRcSt24 = bool(mem.status_rc_st24)
 	m.StatusRcSumd = bool(mem.status_rc_sumd)
-	m.AlarmVbattLow = bool(mem.alarm_vbatt_low)
-	m.AlarmTemperature = bool(mem.alarm_temperature)
-	m.AlarmServoCurrent = bool(mem.alarm_servo_current)
-	m.AlarmAccCurrent = bool(mem.alarm_acc_current)
-	m.AlarmFmuLost = bool(mem.alarm_fmu_lost)
-	m.AlarmRcLost = bool(mem.alarm_rc_lost)
+	m.StatusSafetyOff = bool(mem.status_safety_off)
 	m.AlarmPwmError = bool(mem.alarm_pwm_error)
-	m.AlarmVservoFault = bool(mem.alarm_vservo_fault)
-	m.ArmingIoArmOk = bool(mem.arming_io_arm_ok)
+	m.AlarmRcLost = bool(mem.alarm_rc_lost)
+	m.ArmingFailsafeCustom = bool(mem.arming_failsafe_custom)
 	m.ArmingFmuArmed = bool(mem.arming_fmu_armed)
 	m.ArmingFmuPrearmed = bool(mem.arming_fmu_prearmed)
-	m.ArmingManualOverrideOk = bool(mem.arming_manual_override_ok)
-	m.ArmingFailsafeCustom = bool(mem.arming_failsafe_custom)
-	m.ArmingInairRestartOk = bool(mem.arming_inair_restart_ok)
-	m.ArmingAlwaysPwmEnable = bool(mem.arming_always_pwm_enable)
-	m.ArmingRcHandlingDisabled = bool(mem.arming_rc_handling_disabled)
-	m.ArmingLockdown = bool(mem.arming_lockdown)
 	m.ArmingForceFailsafe = bool(mem.arming_force_failsafe)
+	m.ArmingIoArmOk = bool(mem.arming_io_arm_ok)
+	m.ArmingLockdown = bool(mem.arming_lockdown)
 	m.ArmingTerminationFailsafe = bool(mem.arming_termination_failsafe)
-	m.ArmingOverrideImmediate = bool(mem.arming_override_immediate)
-	cSlice_actuators := mem.actuators[:]
-	primitives.Int16__Array_to_Go(m.Actuators[:], *(*[]primitives.CInt16)(unsafe.Pointer(&cSlice_actuators)))
-	cSlice_servos := mem.servos[:]
-	primitives.Uint16__Array_to_Go(m.Servos[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_servos)))
+	cSlice_pwm := mem.pwm[:]
+	primitives.Uint16__Array_to_Go(m.Pwm[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm)))
+	cSlice_pwm_disarmed := mem.pwm_disarmed[:]
+	primitives.Uint16__Array_to_Go(m.PwmDisarmed[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_disarmed)))
+	cSlice_pwm_failsafe := mem.pwm_failsafe[:]
+	primitives.Uint16__Array_to_Go(m.PwmFailsafe[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_failsafe)))
+	cSlice_pwm_rate_hz := mem.pwm_rate_hz[:]
+	primitives.Uint16__Array_to_Go(m.PwmRateHz[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_pwm_rate_hz)))
 	cSlice_raw_inputs := mem.raw_inputs[:]
 	primitives.Uint16__Array_to_Go(m.RawInputs[:], *(*[]primitives.CUint16)(unsafe.Pointer(&cSlice_raw_inputs)))
 }

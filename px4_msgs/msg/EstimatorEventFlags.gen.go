@@ -67,6 +67,7 @@ type EstimatorEventFlags struct {
 	StoppingMagUse bool `yaml:"stopping_mag_use"`// 8 - true when the filter has detected bad magnetometer data and is stopping further use of the magnetomer data. warning events
 	VisionDataStopped bool `yaml:"vision_data_stopped"`// 9 - true when the vision system data has stopped for a significant time period. warning events
 	EmergencyYawResetMagStopped bool `yaml:"emergency_yaw_reset_mag_stopped"`// 10 - true when the filter has detected bad magnetometer data, has reset the yaw to anothter source of data and has stopped further use of the magnetomer data. warning events
+	EmergencyYawResetGpsYawStopped bool `yaml:"emergency_yaw_reset_gps_yaw_stopped"`// 11 - true when the filter has detected bad GNSS yaw data, has reset the yaw to anothter source of data and has stopped further use of the GNSS yaw data. warning events
 }
 
 // NewEstimatorEventFlags creates a new EstimatorEventFlags with default values.
@@ -106,6 +107,7 @@ func (t *EstimatorEventFlags) Clone() *EstimatorEventFlags {
 	c.StoppingMagUse = t.StoppingMagUse
 	c.VisionDataStopped = t.VisionDataStopped
 	c.EmergencyYawResetMagStopped = t.EmergencyYawResetMagStopped
+	c.EmergencyYawResetGpsYawStopped = t.EmergencyYawResetGpsYawStopped
 	return c
 }
 
@@ -142,6 +144,7 @@ func (t *EstimatorEventFlags) SetDefaults() {
 	t.StoppingMagUse = false
 	t.VisionDataStopped = false
 	t.EmergencyYawResetMagStopped = false
+	t.EmergencyYawResetGpsYawStopped = false
 }
 
 // CloneEstimatorEventFlagsSlice clones src to dst by calling Clone for each element in
@@ -200,6 +203,7 @@ func (t _EstimatorEventFlagsTypeSupport) AsCStruct(dst unsafe.Pointer, msg types
 	mem.stopping_mag_use = C.bool(m.StoppingMagUse)
 	mem.vision_data_stopped = C.bool(m.VisionDataStopped)
 	mem.emergency_yaw_reset_mag_stopped = C.bool(m.EmergencyYawResetMagStopped)
+	mem.emergency_yaw_reset_gps_yaw_stopped = C.bool(m.EmergencyYawResetGpsYawStopped)
 }
 
 func (t _EstimatorEventFlagsTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -233,6 +237,7 @@ func (t _EstimatorEventFlagsTypeSupport) AsGoStruct(msg types.Message, ros2_mess
 	m.StoppingMagUse = bool(mem.stopping_mag_use)
 	m.VisionDataStopped = bool(mem.vision_data_stopped)
 	m.EmergencyYawResetMagStopped = bool(mem.emergency_yaw_reset_mag_stopped)
+	m.EmergencyYawResetGpsYawStopped = bool(mem.emergency_yaw_reset_gps_yaw_stopped)
 }
 
 func (t _EstimatorEventFlagsTypeSupport) TypeSupport() unsafe.Pointer {

@@ -41,7 +41,7 @@ func init() {
 type VehicleControlMode struct {
 	Timestamp uint64 `yaml:"timestamp"`// time since system start (microseconds)
 	FlagArmed bool `yaml:"flag_armed"`// synonym for actuator_armed.armed
-	FlagExternalManualOverrideOk bool `yaml:"flag_external_manual_override_ok"`// external override non-fatal for system. Only true for fixed wing
+	FlagMulticopterPositionControlEnabled bool `yaml:"flag_multicopter_position_control_enabled"`
 	FlagControlManualEnabled bool `yaml:"flag_control_manual_enabled"`// true if manual input is mixed in
 	FlagControlAutoEnabled bool `yaml:"flag_control_auto_enabled"`// true if onboard autopilot should act
 	FlagControlOffboardEnabled bool `yaml:"flag_control_offboard_enabled"`// true if offboard control should be used
@@ -66,7 +66,7 @@ func (t *VehicleControlMode) Clone() *VehicleControlMode {
 	c := &VehicleControlMode{}
 	c.Timestamp = t.Timestamp
 	c.FlagArmed = t.FlagArmed
-	c.FlagExternalManualOverrideOk = t.FlagExternalManualOverrideOk
+	c.FlagMulticopterPositionControlEnabled = t.FlagMulticopterPositionControlEnabled
 	c.FlagControlManualEnabled = t.FlagControlManualEnabled
 	c.FlagControlAutoEnabled = t.FlagControlAutoEnabled
 	c.FlagControlOffboardEnabled = t.FlagControlOffboardEnabled
@@ -88,7 +88,7 @@ func (t *VehicleControlMode) CloneMsg() types.Message {
 func (t *VehicleControlMode) SetDefaults() {
 	t.Timestamp = 0
 	t.FlagArmed = false
-	t.FlagExternalManualOverrideOk = false
+	t.FlagMulticopterPositionControlEnabled = false
 	t.FlagControlManualEnabled = false
 	t.FlagControlAutoEnabled = false
 	t.FlagControlOffboardEnabled = false
@@ -132,7 +132,7 @@ func (t _VehicleControlModeTypeSupport) AsCStruct(dst unsafe.Pointer, msg types.
 	mem := (*C.px4_msgs__msg__VehicleControlMode)(dst)
 	mem.timestamp = C.uint64_t(m.Timestamp)
 	mem.flag_armed = C.bool(m.FlagArmed)
-	mem.flag_external_manual_override_ok = C.bool(m.FlagExternalManualOverrideOk)
+	mem.flag_multicopter_position_control_enabled = C.bool(m.FlagMulticopterPositionControlEnabled)
 	mem.flag_control_manual_enabled = C.bool(m.FlagControlManualEnabled)
 	mem.flag_control_auto_enabled = C.bool(m.FlagControlAutoEnabled)
 	mem.flag_control_offboard_enabled = C.bool(m.FlagControlOffboardEnabled)
@@ -151,7 +151,7 @@ func (t _VehicleControlModeTypeSupport) AsGoStruct(msg types.Message, ros2_messa
 	mem := (*C.px4_msgs__msg__VehicleControlMode)(ros2_message_buffer)
 	m.Timestamp = uint64(mem.timestamp)
 	m.FlagArmed = bool(mem.flag_armed)
-	m.FlagExternalManualOverrideOk = bool(mem.flag_external_manual_override_ok)
+	m.FlagMulticopterPositionControlEnabled = bool(mem.flag_multicopter_position_control_enabled)
 	m.FlagControlManualEnabled = bool(mem.flag_control_manual_enabled)
 	m.FlagControlAutoEnabled = bool(mem.flag_control_auto_enabled)
 	m.FlagControlOffboardEnabled = bool(mem.flag_control_offboard_enabled)

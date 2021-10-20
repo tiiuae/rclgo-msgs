@@ -146,6 +146,9 @@ const (
 	VehicleCommand_VEHICLE_CAMERA_ZOOM_TYPE_CONTINUOUS uint8 = 1// Continuous zoom up/down until stopped
 	VehicleCommand_VEHICLE_CAMERA_ZOOM_TYPE_RANGE uint8 = 2// Zoom value as proportion of full camera range
 	VehicleCommand_VEHICLE_CAMERA_ZOOM_TYPE_FOCAL_LENGTH uint8 = 3// Zoom to a focal length
+	VehicleCommand_PARACHUTE_ACTION_DISABLE uint8 = 0
+	VehicleCommand_PARACHUTE_ACTION_ENABLE uint8 = 1
+	VehicleCommand_PARACHUTE_ACTION_RELEASE uint8 = 2
 	VehicleCommand_FAILURE_UNIT_SENSOR_GYRO uint8 = 0
 	VehicleCommand_FAILURE_UNIT_SENSOR_ACCEL uint8 = 1
 	VehicleCommand_FAILURE_UNIT_SENSOR_MAG uint8 = 2

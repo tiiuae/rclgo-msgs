@@ -63,11 +63,6 @@ type ManualControlSwitches struct {
 	KillSwitch uint8 `yaml:"kill_switch"`// throttle kill: _NORMAL_, KILL
 	GearSwitch uint8 `yaml:"gear_switch"`// landing gear switch: _DOWN_, UP
 	TransitionSwitch uint8 `yaml:"transition_switch"`// VTOL transition switch: _HOVER, FORWARD_FLIGHT
-	ModeSwitch uint8 `yaml:"mode_switch"`// main mode 3 position switch (mandatory): _MANUAL_, ASSIST, AUTO. legacy "advanced" switch configuration (will be removed soon)
-	ManSwitch uint8 `yaml:"man_switch"`// manual switch (only relevant for fixed wings, optional): _STABILIZED_, MANUAL. legacy "advanced" switch configuration (will be removed soon)
-	AcroSwitch uint8 `yaml:"acro_switch"`// acro 2 position switch (optional): _MANUAL_, ACRO. legacy "advanced" switch configuration (will be removed soon)
-	StabSwitch uint8 `yaml:"stab_switch"`// stabilize switch (only relevant for fixed wings, optional): _MANUAL, STABILIZED. legacy "advanced" switch configuration (will be removed soon)
-	PosctlSwitch uint8 `yaml:"posctl_switch"`// position control 2 position switch (optional): _ALTCTL_, POSCTL. legacy "advanced" switch configuration (will be removed soon)
 	SwitchChanges uint32 `yaml:"switch_changes"`// number of switch changes
 }
 
@@ -90,11 +85,6 @@ func (t *ManualControlSwitches) Clone() *ManualControlSwitches {
 	c.KillSwitch = t.KillSwitch
 	c.GearSwitch = t.GearSwitch
 	c.TransitionSwitch = t.TransitionSwitch
-	c.ModeSwitch = t.ModeSwitch
-	c.ManSwitch = t.ManSwitch
-	c.AcroSwitch = t.AcroSwitch
-	c.StabSwitch = t.StabSwitch
-	c.PosctlSwitch = t.PosctlSwitch
 	c.SwitchChanges = t.SwitchChanges
 	return c
 }
@@ -114,11 +104,6 @@ func (t *ManualControlSwitches) SetDefaults() {
 	t.KillSwitch = 0
 	t.GearSwitch = 0
 	t.TransitionSwitch = 0
-	t.ModeSwitch = 0
-	t.ManSwitch = 0
-	t.AcroSwitch = 0
-	t.StabSwitch = 0
-	t.PosctlSwitch = 0
 	t.SwitchChanges = 0
 }
 
@@ -160,11 +145,6 @@ func (t _ManualControlSwitchesTypeSupport) AsCStruct(dst unsafe.Pointer, msg typ
 	mem.kill_switch = C.uint8_t(m.KillSwitch)
 	mem.gear_switch = C.uint8_t(m.GearSwitch)
 	mem.transition_switch = C.uint8_t(m.TransitionSwitch)
-	mem.mode_switch = C.uint8_t(m.ModeSwitch)
-	mem.man_switch = C.uint8_t(m.ManSwitch)
-	mem.acro_switch = C.uint8_t(m.AcroSwitch)
-	mem.stab_switch = C.uint8_t(m.StabSwitch)
-	mem.posctl_switch = C.uint8_t(m.PosctlSwitch)
 	mem.switch_changes = C.uint32_t(m.SwitchChanges)
 }
 
@@ -181,11 +161,6 @@ func (t _ManualControlSwitchesTypeSupport) AsGoStruct(msg types.Message, ros2_me
 	m.KillSwitch = uint8(mem.kill_switch)
 	m.GearSwitch = uint8(mem.gear_switch)
 	m.TransitionSwitch = uint8(mem.transition_switch)
-	m.ModeSwitch = uint8(mem.mode_switch)
-	m.ManSwitch = uint8(mem.man_switch)
-	m.AcroSwitch = uint8(mem.acro_switch)
-	m.StabSwitch = uint8(mem.stab_switch)
-	m.PosctlSwitch = uint8(mem.posctl_switch)
 	m.SwitchChanges = uint32(mem.switch_changes)
 }
 

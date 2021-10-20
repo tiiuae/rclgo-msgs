@@ -54,6 +54,7 @@ const (
 	InputRc_RC_INPUT_SOURCE_PX4FMU_CRSF uint8 = 14
 	InputRc_RC_INPUT_SOURCE_PX4FMU_GHST uint8 = 15
 	InputRc_RC_INPUT_MAX_CHANNELS uint8 = 18// Maximum number of R/C input channels in the system. S.Bus has up to 18 channels.
+	InputRc_RSSI_MAX int8 = 100
 )
 
 // Do not create instances of this type directly. Always use NewInputRc
