@@ -46,9 +46,10 @@ type NavigationDiagnostics struct {
 	State string `yaml:"state"`
 	WaypointsInBuffer uint8 `yaml:"waypoints_in_buffer"`
 	CurrentWaypointId uint8 `yaml:"current_waypoint_id"`
-	BumperActive bool `yaml:"bumper_active"`
-	LastNavGoal [3]float64 `yaml:"last_nav_goal"`
 	CurrentNavGoal [3]float64 `yaml:"current_nav_goal"`
+	CurrentWaypointStatus string `yaml:"current_waypoint_status"`
+	LastNavGoal [3]float64 `yaml:"last_nav_goal"`
+	BumperActive bool `yaml:"bumper_active"`
 }
 
 // NewNavigationDiagnostics creates a new NavigationDiagnostics with default values.
@@ -64,9 +65,10 @@ func (t *NavigationDiagnostics) Clone() *NavigationDiagnostics {
 	c.State = t.State
 	c.WaypointsInBuffer = t.WaypointsInBuffer
 	c.CurrentWaypointId = t.CurrentWaypointId
-	c.BumperActive = t.BumperActive
-	c.LastNavGoal = t.LastNavGoal
 	c.CurrentNavGoal = t.CurrentNavGoal
+	c.CurrentWaypointStatus = t.CurrentWaypointStatus
+	c.LastNavGoal = t.LastNavGoal
+	c.BumperActive = t.BumperActive
 	return c
 }
 
@@ -79,9 +81,10 @@ func (t *NavigationDiagnostics) SetDefaults() {
 	t.State = ""
 	t.WaypointsInBuffer = 0
 	t.CurrentWaypointId = 0
-	t.BumperActive = false
-	t.LastNavGoal = [3]float64{}
 	t.CurrentNavGoal = [3]float64{}
+	t.CurrentWaypointStatus = ""
+	t.LastNavGoal = [3]float64{}
+	t.BumperActive = false
 }
 
 // CloneNavigationDiagnosticsSlice clones src to dst by calling Clone for each element in
@@ -116,11 +119,12 @@ func (t _NavigationDiagnosticsTypeSupport) AsCStruct(dst unsafe.Pointer, msg typ
 	primitives.StringAsCStruct(unsafe.Pointer(&mem.state), m.State)
 	mem.waypoints_in_buffer = C.uint8_t(m.WaypointsInBuffer)
 	mem.current_waypoint_id = C.uint8_t(m.CurrentWaypointId)
-	mem.bumper_active = C.bool(m.BumperActive)
-	cSlice_last_nav_goal := mem.last_nav_goal[:]
-	primitives.Float64__Array_to_C(*(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_last_nav_goal)), m.LastNavGoal[:])
 	cSlice_current_nav_goal := mem.current_nav_goal[:]
 	primitives.Float64__Array_to_C(*(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_current_nav_goal)), m.CurrentNavGoal[:])
+	primitives.StringAsCStruct(unsafe.Pointer(&mem.current_waypoint_status), m.CurrentWaypointStatus)
+	cSlice_last_nav_goal := mem.last_nav_goal[:]
+	primitives.Float64__Array_to_C(*(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_last_nav_goal)), m.LastNavGoal[:])
+	mem.bumper_active = C.bool(m.BumperActive)
 }
 
 func (t _NavigationDiagnosticsTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -130,11 +134,12 @@ func (t _NavigationDiagnosticsTypeSupport) AsGoStruct(msg types.Message, ros2_me
 	primitives.StringAsGoStruct(&m.State, unsafe.Pointer(&mem.state))
 	m.WaypointsInBuffer = uint8(mem.waypoints_in_buffer)
 	m.CurrentWaypointId = uint8(mem.current_waypoint_id)
-	m.BumperActive = bool(mem.bumper_active)
-	cSlice_last_nav_goal := mem.last_nav_goal[:]
-	primitives.Float64__Array_to_Go(m.LastNavGoal[:], *(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_last_nav_goal)))
 	cSlice_current_nav_goal := mem.current_nav_goal[:]
 	primitives.Float64__Array_to_Go(m.CurrentNavGoal[:], *(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_current_nav_goal)))
+	primitives.StringAsGoStruct(&m.CurrentWaypointStatus, unsafe.Pointer(&mem.current_waypoint_status))
+	cSlice_last_nav_goal := mem.last_nav_goal[:]
+	primitives.Float64__Array_to_Go(m.LastNavGoal[:], *(*[]primitives.CFloat64)(unsafe.Pointer(&cSlice_last_nav_goal)))
+	m.BumperActive = bool(mem.bumper_active)
 }
 
 func (t _NavigationDiagnosticsTypeSupport) TypeSupport() unsafe.Pointer {
