@@ -46,12 +46,11 @@ type ControlInterfaceDiagnostics struct {
 	Airborne bool `yaml:"airborne"`
 	Moving bool `yaml:"moving"`
 	MissionFinished bool `yaml:"mission_finished"`
-	LastMissionSize uint8 `yaml:"last_mission_size"`
-	GpsOriginSet bool `yaml:"gps_origin_set"`
+	BufferedMissionItems uint8 `yaml:"buffered_mission_items"`
+	GettingGps bool `yaml:"getting_gps"`
 	GettingOdom bool `yaml:"getting_odom"`
 	GettingControlMode bool `yaml:"getting_control_mode"`
 	GettingLandSensor bool `yaml:"getting_land_sensor"`
-	ManualControl bool `yaml:"manual_control"`
 }
 
 // NewControlInterfaceDiagnostics creates a new ControlInterfaceDiagnostics with default values.
@@ -68,12 +67,11 @@ func (t *ControlInterfaceDiagnostics) Clone() *ControlInterfaceDiagnostics {
 	c.Airborne = t.Airborne
 	c.Moving = t.Moving
 	c.MissionFinished = t.MissionFinished
-	c.LastMissionSize = t.LastMissionSize
-	c.GpsOriginSet = t.GpsOriginSet
+	c.BufferedMissionItems = t.BufferedMissionItems
+	c.GettingGps = t.GettingGps
 	c.GettingOdom = t.GettingOdom
 	c.GettingControlMode = t.GettingControlMode
 	c.GettingLandSensor = t.GettingLandSensor
-	c.ManualControl = t.ManualControl
 	return c
 }
 
@@ -87,12 +85,11 @@ func (t *ControlInterfaceDiagnostics) SetDefaults() {
 	t.Airborne = false
 	t.Moving = false
 	t.MissionFinished = false
-	t.LastMissionSize = 0
-	t.GpsOriginSet = false
+	t.BufferedMissionItems = 0
+	t.GettingGps = false
 	t.GettingOdom = false
 	t.GettingControlMode = false
 	t.GettingLandSensor = false
-	t.ManualControl = false
 }
 
 // CloneControlInterfaceDiagnosticsSlice clones src to dst by calling Clone for each element in
@@ -128,12 +125,11 @@ func (t _ControlInterfaceDiagnosticsTypeSupport) AsCStruct(dst unsafe.Pointer, m
 	mem.airborne = C.bool(m.Airborne)
 	mem.moving = C.bool(m.Moving)
 	mem.mission_finished = C.bool(m.MissionFinished)
-	mem.last_mission_size = C.uint8_t(m.LastMissionSize)
-	mem.gps_origin_set = C.bool(m.GpsOriginSet)
+	mem.buffered_mission_items = C.uint8_t(m.BufferedMissionItems)
+	mem.getting_gps = C.bool(m.GettingGps)
 	mem.getting_odom = C.bool(m.GettingOdom)
 	mem.getting_control_mode = C.bool(m.GettingControlMode)
 	mem.getting_land_sensor = C.bool(m.GettingLandSensor)
-	mem.manual_control = C.bool(m.ManualControl)
 }
 
 func (t _ControlInterfaceDiagnosticsTypeSupport) AsGoStruct(msg types.Message, ros2_message_buffer unsafe.Pointer) {
@@ -144,12 +140,11 @@ func (t _ControlInterfaceDiagnosticsTypeSupport) AsGoStruct(msg types.Message, r
 	m.Airborne = bool(mem.airborne)
 	m.Moving = bool(mem.moving)
 	m.MissionFinished = bool(mem.mission_finished)
-	m.LastMissionSize = uint8(mem.last_mission_size)
-	m.GpsOriginSet = bool(mem.gps_origin_set)
+	m.BufferedMissionItems = uint8(mem.buffered_mission_items)
+	m.GettingGps = bool(mem.getting_gps)
 	m.GettingOdom = bool(mem.getting_odom)
 	m.GettingControlMode = bool(mem.getting_control_mode)
 	m.GettingLandSensor = bool(mem.getting_land_sensor)
-	m.ManualControl = bool(mem.manual_control)
 }
 
 func (t _ControlInterfaceDiagnosticsTypeSupport) TypeSupport() unsafe.Pointer {
