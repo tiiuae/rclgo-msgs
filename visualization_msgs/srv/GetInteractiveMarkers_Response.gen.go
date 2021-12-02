@@ -17,7 +17,7 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	visualization_msgs_msg "github.com/tiiuae/rclgo-msgs/visualization_msgs/msg"
+	visualization_msgs_msg "github.com/mehmetkillioglu/rclgo-msgs/visualization_msgs/msg"
 	
 )
 /*

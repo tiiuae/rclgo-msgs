@@ -17,7 +17,7 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	rcl_interfaces_msg "github.com/tiiuae/rclgo-msgs/rcl_interfaces/msg"
+	rcl_interfaces_msg "github.com/mehmetkillioglu/rclgo-msgs/rcl_interfaces/msg"
 	primitives "github.com/tiiuae/rclgo/pkg/rclgo/primitives"
 	
 )

@@ -17,8 +17,8 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	builtin_interfaces_msg "github.com/tiiuae/rclgo-msgs/builtin_interfaces/msg"
-	geometry_msgs_msg "github.com/tiiuae/rclgo-msgs/geometry_msgs/msg"
+	builtin_interfaces_msg "github.com/mehmetkillioglu/rclgo-msgs/builtin_interfaces/msg"
+	geometry_msgs_msg "github.com/mehmetkillioglu/rclgo-msgs/geometry_msgs/msg"
 	
 )
 /*
