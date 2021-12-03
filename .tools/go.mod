@@ -1,4 +1,4 @@
-module github.com/mehmetkillioglu/rclgo-msgs/.tools
+module github.com/tiiuae/rclgo-msgs/.tools
 
 go 1.16
 

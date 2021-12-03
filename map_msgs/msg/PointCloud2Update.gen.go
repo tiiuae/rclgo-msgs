@@ -17,8 +17,8 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	sensor_msgs_msg "github.com/mehmetkillioglu/rclgo-msgs/sensor_msgs/msg"
-	std_msgs_msg "github.com/mehmetkillioglu/rclgo-msgs/std_msgs/msg"
+	sensor_msgs_msg "github.com/tiiuae/rclgo-msgs/sensor_msgs/msg"
+	std_msgs_msg "github.com/tiiuae/rclgo-msgs/std_msgs/msg"
 	
 )
 /*

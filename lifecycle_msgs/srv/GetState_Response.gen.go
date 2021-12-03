@@ -17,7 +17,7 @@ import (
 
 	"github.com/tiiuae/rclgo/pkg/rclgo/types"
 	"github.com/tiiuae/rclgo/pkg/rclgo/typemap"
-	lifecycle_msgs_msg "github.com/mehmetkillioglu/rclgo-msgs/lifecycle_msgs/msg"
+	lifecycle_msgs_msg "github.com/tiiuae/rclgo-msgs/lifecycle_msgs/msg"
 	
 )
 /*
